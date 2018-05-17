@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="login.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'FACCT.dbo.useraccount' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="useraccount">
+    <Key>
+      <PropertyRef Name="UserName" />
+      <PropertyRef Name="Password" />
+    </Key>
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Designation" Type="nvarchar" MaxLength="30" />
+    <Property Name="Section" Type="nvarchar" MaxLength="20" />
+    <Property Name="Process" Type="nvarchar" MaxLength="20" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="15" Nullable="false" />
+    <Property Name="UserType" Type="nvarchar" MaxLength="20" />
+  </EntityType>
+  <EntityContainer Name="loginStoreContainer">
+    <EntitySet Name="useraccount" EntityType="Self.useraccount" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [useraccount].[Name] AS [Name], 
+    [useraccount].[Designation] AS [Designation], 
+    [useraccount].[Section] AS [Section], 
+    [useraccount].[Process] AS [Process], 
+    [useraccount].[UserName] AS [UserName], 
+    [useraccount].[Password] AS [Password], 
+    [useraccount].[UserType] AS [UserType]
+    FROM [dbo].[useraccount] AS [useraccount]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+</Schema>

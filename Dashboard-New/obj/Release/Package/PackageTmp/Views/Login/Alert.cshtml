@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewBag.Title = "Alert";
+}
+
+
+    @*@if (ViewData["Message"] != null)
+    {
+        <script language="javascript">
+            alert('@ViewData["Message"]');
+        </script>
+    }*@
+    <script src="~/plugins/alert/sweetalert.min.js"></script>
+
+        <script>
+            $(function () {
+                //if (ViewData["Message"] != null)
+                {
+                    swal("Oops", " Invalid user !", "error");
+                }
+            });
+     </script>

@@ -1,0 +1,85 @@
+﻿@model Dashboard_New.Models.login
+@{
+    ViewBag.Title = "login";
+}
+<h2>login</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="images/favicon.ico" type="image/ico" />
+    <link href="~/plugins/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/plugins/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/plugins/vendors/nprogress/nprogress.css" rel="stylesheet" />
+    <link href="~/plugins/vendors/iCheck/skins/flat/green.css" rel="stylesheet" />
+    <link href="~/plugins/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet" />
+    <link href="~/plugins/vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet" />
+    <link href="~/plugins/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" />
+    <link href="~/plugins/build/css/custom.min.css" rel="stylesheet" />
+    <script src="~/plugins/vendors/jquery/dist/jquery.min.js"></script>
+    <script src="~/plugins/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/plugins/vendors/fastclick/lib/fastclick.js"></script>
+    <script src="~/plugins/vendors/nprogress/nprogress.js"></script>
+    <script src="~/plugins/vendors/Chart.js/dist/Chart.min.js"></script>
+    <script src="~/plugins/vendors/gauge.js/dist/gauge.min.js"></script>
+    <script src="~/plugins/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+    <script src="~/plugins/vendors/iCheck/icheck.min.js"></script>
+    <script src="~/plugins/vendors/skycons/skycons.js"></script>
+    <script src="~/plugins/vendors/Flot/jquery.flot.js"></script>
+    <script src="~/plugins/vendors/Flot/jquery.flot.pie.js"></script>
+    <script src="~/plugins/vendors/Flot/jquery.flot.time.js"></script>
+    <script src="~/plugins/vendors/Flot/jquery.flot.stack.js"></script>
+    <script src="~/plugins/vendors/Flot/jquery.flot.resize.js"></script>
+    <script src="~/plugins/vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
+    <script src="~/plugins/vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
+    <script src="~/plugins/vendors/flot.curvedlines/curvedLines.js"></script>
+    <script src="~/plugins/vendors/DateJS/build/date.js"></script>
+    <script src="~/plugins/vendors/jqvmap/dist/jquery.vmap.js"></script>
+    <script src="~/plugins/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+    <script src="~/plugins/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+    <script src="~/plugins/vendors/moment/min/moment.min.js"></script>
+    <script src="~/plugins/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <script src="~/plugins/build/js/custom.min.js"></script>
+    <script src="~/Scripts/datepicker/jquery-ui.js"></script>
+    <link href="~/Content/datepicker/jquery-ui.css" rel="stylesheet" />
+    <link href="~/Content/datepicker/table.css" rel="stylesheet" />
+   
+</head>
+<body class="nav-md">
+    <style>
+        .field-validation-error {
+            color: goldenrod;
+        }
+    </style>
+    <div class="container body">
+        @using (Html.BeginForm("login", "Home", FormMethod.Post))
+        {
+            <table cellpadding="0" cellspacing="0">
+                <tr>
+                    <td>UserName: </td>
+                    <td> &nbsp;</td>
+                    <td>
+                        @Html.TextBoxFor(m => m.UserName)
+                        @Html.ValidationMessageFor(m => m.UserName)
+                    </td>
+               
+                    <td> &nbsp; &nbsp; &nbsp; &nbsp;</td>
+                    <td>Password: </td>
+                    <td> &nbsp;</td>
+                    <td>
+                        @Html.TextBoxFor(m => m.Password)
+                        @Html.ValidationMessageFor(m => m.Password)
+                    </td>
+                    <td> &nbsp;</td>
+                    <td><input type="submit" value="Submit" name="grid" /></td>                 
+                    
+                </tr>            
+            </table>
+        }
+    </div>
+    <br />  
+</body>
+</html>

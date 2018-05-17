@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FACCTModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="DVOUCH">
+    <Key>
+      <PropertyRef Name="DINP" />
+      <PropertyRef Name="BRNO" />
+      <PropertyRef Name="ASSTCK" />
+      <PropertyRef Name="LUSER" />
+    </Key>
+    <Property Name="DINP" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="DCTRNO" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+    <Property Name="AMOUNT" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="NPRNO" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="ICCNO" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="COMNO" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="VRNO" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+    <Property Name="BRNO" Type="String" MaxLength="12" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DCID" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+    <Property Name="ASSTCK" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ACCTCK" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="ACCT1CK" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="SOCK" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="DRCK" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="CRDATE" Type="DateTime" Precision="0" />
+    <Property Name="DCTRBNO" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+    <Property Name="LUSER" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="vcEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="DVOUCHes" EntityType="Self.DVOUCH" />
+    <EntitySet Name="VCVOUCHes" EntityType="FACCTModel.VCVOUCH" />
+    <EntitySet Name="VendorMasters" EntityType="FACCTModel.VendorMaster" />
+    <EntitySet Name="REC1718" EntityType="FACCTModel.REC1718" />
+    <EntitySet Name="MSTLSTs" EntityType="FACCTModel.MSTLST" />
+  </EntityContainer>
+  <EntityType Name="VCVOUCH">
+    <Key>
+      <PropertyRef Name="DINP" />
+      <PropertyRef Name="BRNO" />
+      <PropertyRef Name="ASSTCK" />
+      <PropertyRef Name="LUSER" />
+    </Key>
+    <Property Name="DINP" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="VCTRNO" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+    <Property Name="AMOUNT" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="NPRNO" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="ICCNO" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="COMNO" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="VRNO" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+    <Property Name="BRNO" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="true" />
+    <Property Name="VPartyCode" Type="String" MaxLength="7" FixedLength="false" Unicode="true" />
+    <Property Name="ASSTCK" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="ACCTCK" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="ACCT1CK" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="SOCK" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="DRCK" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="CRDATE" Type="DateTime" Precision="0" />
+    <Property Name="VCTRBNO" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+    <Property Name="LUSER" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="VendorMaster">
+    <Key>
+      <PropertyRef Name="VPartyCode" />
+    </Key>
+    <Property Name="DINP" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="VPartyCode" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="true" />
+    <Property Name="VName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="VAddress" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="VPinCode" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+    <Property Name="VMobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="VPhoneNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="VEmailId" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+    <Property Name="VPanNo" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+    <Property Name="VTinNo" Type="String" MaxLength="18" FixedLength="false" Unicode="true" />
+    <Property Name="VSerTaxRegNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="VAcctNameInBank" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="VBankName" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+    <Property Name="VBranchName" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+    <Property Name="VIFSCCode" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="VBankAcctNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="VBankNature" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="VBankMICRCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="VBankPhoneNumber" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+    <Property Name="VBankEmailID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Luser" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="REC1718">
+    <Key>
+      <PropertyRef Name="PRAMOUNT" />
+      <PropertyRef Name="CONAMOUNT" />
+      <PropertyRef Name="OTRAMOUNT" />
+      <PropertyRef Name="RT" />
+      <PropertyRef Name="AMOUNT" />
+      <PropertyRef Name="NPRNO" />
+    </Key>
+    <Property Name="DINP" Type="DateTime" Precision="0" />
+    <Property Name="RTNO" Type="String" MaxLength="7" FixedLength="false" Unicode="true" />
+    <Property Name="DATE" Type="DateTime" Precision="0" />
+    <Property Name="SPONS" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+    <Property Name="ADDRESS" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+    <Property Name="SANCTNO" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PRAMOUNT" Type="Double" Nullable="false" />
+    <Property Name="CONAMOUNT" Type="Double" Nullable="false" />
+    <Property Name="OTRAMOUNT" Type="Double" Nullable="false" />
+    <Property Name="RT" Type="Double" Nullable="false" />
+    <Property Name="AMOUNT" Type="Double" Nullable="false" />
+    <Property Name="HEAD" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+    <Property Name="NPRNO" Type="String" Nullable="false" MaxLength="18" FixedLength="false" Unicode="true" />
+    <Property Name="ICCNO" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="CQNO" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="CDATE" Type="DateTime" Precision="0" />
+    <Property Name="BANKNAME" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="BRANCH" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="STATION" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+    <Property Name="OPTION" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="BK_OPT" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="BK_ADJ" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+    <Property Name="NATURE" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="CURYNAME" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="MSTLST">
+    <Key>
+      <PropertyRef Name="NPRNO" />
+    </Key>
+    <Property Name="NPRNO" Type="String" Nullable="false" MaxLength="18" FixedLength="false" Unicode="true" />
+    <Property Name="TITLE" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="COOR_NAME" Type="String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="true" />
+    <Property Name="START_DATE" Type="DateTime" Precision="3" />
+    <Property Name="CLOSE_DATE" Type="DateTime" Precision="3" />
+    <Property Name="PRAMOUNT" Type="Double" Nullable="false" />
+    <Property Name="SANCTNNO" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SANCTDTE" Type="DateTime" Precision="3" />
+    <Property Name="INSTID" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
+    <Property Name="COOR_NAME1" Type="String" MaxLength="35" FixedLength="false" Unicode="true" />
+    <Property Name="INSTID1" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+    <Property Name="USERNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ACCOUNTTYPE" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+  </EntityType>
+</Schema>
