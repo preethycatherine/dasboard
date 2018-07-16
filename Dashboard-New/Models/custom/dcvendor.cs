@@ -33,13 +33,6 @@ namespace Dashboard_New.Models.custom
         public string DCTRBNO { get; set; }
         public string LUSER { get; set; }
         public string vname { get; set; }
-        //public List<Dashboard_New.Models.custom.vcvendor> vm { get; set; }
-        //public List<Dashboard_New.Models.custom.dcvendor> dm { get; set; }
-        //public dcvendor()
-        //{
-           
-        //    vm = new List<Dashboard_New.Models.custom.vcvendor>();
-        //    dm = new List<Dashboard_New.Models.custom.dcvendor>();
-        //}
+      
     }
 }

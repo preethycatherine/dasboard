@@ -1,0 +1,88 @@
+﻿@model Dashboard_New.Models.VModel
+@using System.Globalization
+@*@model List<Dashboard_New.Models.custom.vcvendor>*@
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/datepicker/table.css" rel="stylesheet" />
+<link href="~/Content/datepicker/jquery-ui.css" rel="stylesheet" />
+<script src="~/Scripts/datepicker/jquery-ui.js"></script>
+<script>
+
+        $(function () {
+            $(".datepicker").datepicker({
+                dateFormat: 'dd/mm/yy'
+            });
+
+        });
+</script>
+
+<style>
+    .field-validation-error {
+        color: goldenrod;
+    }
+    /*.vctable{
+            height:75vh;
+            width:85vw;
+            overflow-y:scroll;
+           overflow-x:scroll;
+        }*/
+</style>
+<div class="">
+    @using (Html.BeginForm("ppopost", "Home", FormMethod.Post))
+    {
+        <table cellpadding="0" cellspacing="0" align="center">
+            <tr>
+                <td>From Date : </td>
+                <td> &nbsp;</td>
+                <td class="datepicker">
+                    @Html.TextBoxFor(m => m.from_dt, new { Class = "datepicker" })
+                    @Html.ValidationMessageFor(m => m.from_dt)
+                </td>
+                <td> &nbsp; &nbsp; &nbsp; &nbsp;</td>
+                <td>To Date : </td>
+                <td> &nbsp;</td>
+                <td>
+                    @Html.TextBoxFor(m => m.to_dt, new { Class = "datepicker" })
+                @Html.ValidationMessageFor(m => m.to_dt)
+            </td>
+            <td> &nbsp;</td>
+            <td><input type="submit" value="Submit" name="grid" /></td>
+            <td> &nbsp;</td>
+            <td><input type="submit" value="Export To Excel" name="export" /></td>
+        </tr>
+        <tr>
+            <td align="center">(dd/mm/yyyy)</td>
+            <td> &nbsp; &nbsp; &nbsp; &nbsp;</td>
+            <td> &nbsp; &nbsp; &nbsp; &nbsp;</td>
+            <td> &nbsp; &nbsp; </td>
+            <td align="center">(dd/mm/yyyy)</td>
+        </tr>
+    </table>
+    }
+</div>
+<br />
+<div class="vclist" id='scrolly'>
+    <table border="1" id="customers">
+        <tr style="color:#024b72">
+            <th>Indent No</th>
+            <th>Indent Date</th>
+            <th>Name</th>
+            <th>Indent Value</th>
+            <th>Department</th>
+          
+       
+        </tr>
+        @foreach (var rec in Model.ppoo)
+        {
+            <tr>
+                <td>@rec.indent_no</td>
+                <td>@rec.indent_date.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)</td>    
+                <td>@rec.name</td>           
+                <td>@rec.indent_value</td>
+                <td>@rec.dept</td>
+              
+            </tr>
+        }
+    </table>
+</div>

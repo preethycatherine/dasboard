@@ -16,7 +16,6 @@ namespace Dashboard_New.Models
     {
         public Nullable<System.DateTime> DINP { get; set; }
         public string RTNO { get; set; }
-  
         public Nullable<System.DateTime> DATE { get; set; }
         public string SPONS { get; set; }
         public string ADDRESS { get; set; }

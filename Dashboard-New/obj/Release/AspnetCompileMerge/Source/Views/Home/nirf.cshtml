@@ -24,27 +24,39 @@
 
 
 <script>
-    $(function () {
+   $(function () {
         var sd = new Date(), ed = new Date();
         var temp2; 
         var temp;
         $('#from_year').datetimepicker({
-            format: "YYYY",
+            format: "YY",
             //defaultDate: sd,
             //maxDate: ed,
             minDate: '1990'          
         });
+
         //temp2 = $('#from_year').data('date');
         //temp = new Date(temp2);
         //$('#to_year').val(temp.getFullYear() + 1);
 
-        $("#from_year").on("dp.change", function (e) {
+        /*$("#from_year").on("dp.change", function (e) {
             temp2 = $('#from_year').data('date');
             temp = new Date(temp2);
             $('#to_year').val(temp.getFullYear() + 1);
+        });*/
+
+
+        $('#to_year').datetimepicker({
+            //format: "YYYY",
+            format: 'MM',
+            //defaultDate: sd,
+            //maxDate: ed,
+            minDate: '1990'
         });
 
     });
+    
+
 </script>
 <style>
  .field-validation-error 
@@ -60,16 +72,22 @@
             <tr>
                 <td>From Year: </td>
                 <td> &nbsp;</td>
-                <td>        
-                    @*<input id="from_year" name="from_year" type="text" class="form-control" />*@           
+                <td>
+                    @*<input id="from_year" name="from_year" type="text" class="form-control" />*@
                     @Html.TextBoxFor(m => m.from_year, new { @Class = "startDate" })
-                   @* @Html.ValidationMessageFor(m => m.from_year)*@
+
+
+
+                    @* @Html.ValidationMessageFor(m => m.from_year)*@
                 </td>
                 <td> &nbsp; &nbsp; &nbsp; &nbsp;</td>
                 <td>To Year: </td>
                 <td> &nbsp;</td>
                 <td>
                     @Html.TextBoxFor(m => m.to_year, new { @Class = "endDate" })
+
+
+
                     @*@Html.ValidationMessageFor(m => m.to_year)*@
                     @*<input id="to_year" name="to_year" type="text" class="form-control" />*@
                 </td>
@@ -83,37 +101,56 @@
                 <td> &nbsp; &nbsp; &nbsp; &nbsp;</td>
                 <td> &nbsp; &nbsp; &nbsp; &nbsp;</td>
                 <td> &nbsp; &nbsp; </td>
-                <td align="center">(yyyy)</td>
+                <td align="center">(MM)</td>
             </tr>
         </table>
-    }
+       
+            <table>
+
+                <tr>
+                    <td align="center">
+                        &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+                        &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;
+                        &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+                        &nbsp;  &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;(Example: R1805)
+                    </td>
+                </tr>
+            </table>
+
+
+
+            }
 </div>
 <br />
 <div class="dclist" id='scrolly'>
     <table border="1" id="customers">
         <tr style="color:#024b72">
-            <th>YEAR</th>
-            <th>SDM</th>
-            <th>PROJECT NUMBER</th>
+            <th>Receipt</th>
+            <th>Date</th>
+            <th>Months</th>
+            <th>CPRNO</th>           
+            <th>CONS_TYPE</th>
+            <th>DEPARTMENT CODE</th>
             <th>COORDINATOR NAME</th>
+            <th>AGENCY CODE</th>
             <th>AGENCY</th>
-            <th>TITILE</th>
-            <th>SANCTION NUMBER</th>
-            <th>SANCTION DATE</th>
-            <th>AMOUNT</th>
+            <th>DESCRIPTION</th>
+            <th>RT</th>
         </tr>
         @foreach (var rec in Model.nirf)
         {
             <tr>
-                <td>@rec.YEAR</td>
-                <td>@rec.sdm</td>
-                <td>@rec.NPRNO</td>
-                <td>@rec.COOR_NAME</td>
+                <td>@rec.Receipt</td>  
+                <td>@rec.Date</td>   
+                <td>@rec.Months</td>       
+                <td>@rec.CPRNO</td>
+                <td>@rec.CONS_TYPE</td>
+                <td>@rec.DEPT_CODE</td>
+                <td>@rec.COOR_NAME1</td>
+                <td>@rec.AGENCY_CODE</td>
                 <td>@rec.AGENCY</td>
-                <td>@rec.TITLE</td>
-                <td>@rec.SANCTNNO</td>
-                <td>@rec.SANCTDTE</td>
-                <td>@rec.amount</td>
+                <td>@rec.DESCRIPTION</td>
+                <td>@rec.RT</td>
             </tr>
         }
     </table>

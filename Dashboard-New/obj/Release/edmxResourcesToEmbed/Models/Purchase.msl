@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="FoxOfficeModelStoreContainer" CdmEntityContainer="FoxOfficeEntities">
+    <EntitySetMapping Name="indent_master">
+      <EntityTypeMapping TypeName="FoxOfficeModel.indent_master">
+        <MappingFragment StoreEntitySet="indent_master">
+          <ScalarProperty Name="indent_no" ColumnName="indent_no" />
+          <ScalarProperty Name="dept" ColumnName="dept" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="indent_date" ColumnName="indent_date" />
+          <ScalarProperty Name="purch_desc" ColumnName="purch_desc" />
+          <ScalarProperty Name="category" ColumnName="category" />
+          <ScalarProperty Name="indent_value" ColumnName="indent_value" />
+          <ScalarProperty Name="IndentValueRs" ColumnName="IndentValueRs" />
+          <ScalarProperty Name="cocode" ColumnName="cocode" />
+          <ScalarProperty Name="gcode" ColumnName="gcode" />
+          <ScalarProperty Name="currency" ColumnName="currency" />
+          <ScalarProperty Name="IndentType" ColumnName="IndentType" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="remarks" ColumnName="remarks" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

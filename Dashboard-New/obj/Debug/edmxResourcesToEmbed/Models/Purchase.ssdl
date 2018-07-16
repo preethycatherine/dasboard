@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FoxOfficeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="indent_master">
+    <Key>
+      <PropertyRef Name="indent_no" />
+    </Key>
+    <Property Name="indent_no" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="dept" Type="nvarchar" MaxLength="3" />
+    <Property Name="name" Type="nvarchar" MaxLength="45" />
+    <Property Name="indent_date" Type="datetime" />
+    <Property Name="purch_desc" Type="nvarchar" MaxLength="200" />
+    <Property Name="category" Type="nvarchar" MaxLength="20" />
+    <Property Name="indent_value" Type="float" />
+    <Property Name="IndentValueRs" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="cocode" Type="nvarchar" MaxLength="4" />
+    <Property Name="gcode" Type="nvarchar" MaxLength="2" />
+    <Property Name="currency" Type="varchar" MaxLength="50" />
+    <Property Name="IndentType" Type="varchar" MaxLength="2" />
+    <Property Name="status" Type="nvarchar" MaxLength="20" />
+    <Property Name="remarks" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityContainer Name="FoxOfficeModelStoreContainer">
+    <EntitySet Name="indent_master" EntityType="Self.indent_master" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>
