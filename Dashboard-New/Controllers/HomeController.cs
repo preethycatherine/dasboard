@@ -301,25 +301,25 @@ namespace Dashboard_New.Controllers
                      DataTable dt = new DataTable("Grid");
                     // string from_dt = v4.from_dt;
                     // string to_dt = v4.to_dt;
-                    dt.Columns.AddRange(new DataColumn[6] { new DataColumn("INDENT NUMBER"), new DataColumn("INDENT DATE"), new DataColumn("NAME"),  new DataColumn("INDENT VALUE"),new DataColumn("DEPARTMENT"), new DataColumn("STATUS") });
+                    dt.Columns.AddRange(new DataColumn[8] { new DataColumn("INDENT NUMBER"), new DataColumn("INDENT DATE"), new DataColumn("NAME"), new DataColumn("CURRENCY"), new DataColumn("INDENT VALUE"),new DataColumn("DEPARTMENT"), new DataColumn("STATUS"), new DataColumn("REMARKS") });
                     
                     DateTime fromdt = DateTime.ParseExact(v4.from_dt, "dd/MM/yyyy", CultureInfo.InvariantCulture);
                     DateTime todt = DateTime.ParseExact(v4.to_dt, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-                    var disp = entities.Database.SqlQuery<Dashboard_New.Models.custom.ppo>(string.Format("select indent_no,indent_date,name,indent_value,dept from indent_master where indent_date>= '{0}' AND indent_date<= '{1}'", fromdt.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture), todt.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture))).ToList();
-                    dt.Columns[3].DataType = typeof(Int32);
+                    var disp = entities.Database.SqlQuery<Dashboard_New.Models.custom.ppo>(string.Format("select indent_no,indent_date,[name],currency,indent_value,dept,[status],remarks from indent_master where indent_date>= '{0}' AND indent_date<= '{1}'", fromdt.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture), todt.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture))).ToList();
+                    dt.Columns[4].DataType = typeof(Int32);
                     foreach (var x in disp)
                     {                        
-                        dt.Rows.Add(x.indent_no, x.indent_date.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),x.name,x.indent_value, x.dept);
+                        dt.Rows.Add(x.indent_no, x.indent_date.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),x.name,x.currency,x.indent_value, x.dept,x.status,x.remarks);
                     }
                     using (XLWorkbook wb = new XLWorkbook())
                     {
-                        wb.Worksheets.Add("Pending_Indent");
+                        wb.Worksheets.Add("Pending_Purchase_Order");
                         wb.Worksheet(1).Cell(3, 1).InsertTable(dt);
                         wb.Worksheet(1).Cell(1, 7).Value = "Pending Indent : " + v4.from_dt +" To " + v4.to_dt;
                         wb.Worksheet(1).Cell(1, 7).Style.Font.Bold = true;
                         var wbs = wb.Worksheets.FirstOrDefault();
                         wbs.Tables.FirstOrDefault().ShowAutoFilter = false;
-                        wb.Properties.Title = "Pending Indent Report";
+                        wb.Properties.Title = "Pending Purchase Order Report";
                         using (MemoryStream stream = new MemoryStream())
                         {
                             wb.SaveAs(stream);
@@ -338,7 +338,7 @@ namespace Dashboard_New.Controllers
                     {
                         FoxOfficeEntities vcobj = new FoxOfficeEntities();
                         //vcEntities vcobj = new vcEntities();
-                        records = vcobj.Database.SqlQuery<ppo>(string.Format("select indent_no,indent_date,name,indent_value,dept from indent_master where indent_date>= '{0}' AND indent_date<= '{1}'", fromdt.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture), todt.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture))).ToList();
+                        records = vcobj.Database.SqlQuery<ppo>(string.Format("select indent_no,indent_date,[name],currency,indent_value,dept,[status],remarks from indent_master where indent_date>= '{0}' AND indent_date<= '{1}'", fromdt.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture), todt.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture))).ToList();
                         Dashboard_New.Models.VModel dv = new VModel();
                         dv.ppoo = records;
                         return View("Ppo", dv);

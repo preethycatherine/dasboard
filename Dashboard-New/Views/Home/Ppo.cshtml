@@ -57,7 +57,7 @@
             <td> &nbsp; &nbsp; &nbsp; &nbsp;</td>
             <td> &nbsp; &nbsp; </td>
             <td align="center">(dd/mm/yyyy)</td>
-        </tr>]
+        </tr>
     </table>
     }
 </div>
@@ -68,17 +68,23 @@
             <th>Indent No</th>
             <th>Indent Date</th>
             <th>Name</th>
+            <th>Currency</th>
             <th>Indent Value</th>
             <th>Department</th>       
+            <th>Status</th>
+            <th>Remarks</th>
         </tr>
         @foreach (var rec in Model.ppoo)
         {
             <tr>
                 <td>@rec.indent_no</td>
                 <td>@rec.indent_date.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)</td>    
-                <td>@rec.name</td>           
+                <td>@rec.name</td>      
+                <td>@rec.currency</td>     
                 <td>@rec.indent_value</td>
                 <td>@rec.dept</td>
+                <td>@rec.status</td>
+                <td>@rec.remarks</td>
             </tr>
         }
     </table>

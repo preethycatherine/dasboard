@@ -19,7 +19,7 @@ namespace Dashboard_New.Models.custom
         public System.DateTime indent_date { get; set; }      
         public string purch_desc { get; set; }
         public string category { get; set; }
-        public Nullable<double> indent_value { get; set; }
+        public Nullable<double> indent_value { get; set; }    
         public decimal IndentValueRs { get; set; }
         public string cocode { get; set; }
         public string gcode { get; set; }
