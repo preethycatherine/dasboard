@@ -6,6 +6,7 @@ using System.Web;
 namespace Dashboard_New.Models.custom
 {    public class nirf
     {
+        public string id { get; set; }
         public string from_year { get; set; }
         public string to_year { get; set; }
         public Nullable<System.DateTime> DINP { get; set; }

@@ -181,12 +181,13 @@ namespace Dashboard_New.Controllers
         }
 
         [DashboardAutherisation("nirf")]
-        public ActionResult nirf()
+        public ActionResult nirf(string id)
         {
+            Session["idd"] = id;           
             return View(new VModel());
         }
 
-        public ActionResult nirfpost(Dashboard_New.Models.custom.nirf v3,string grid, string export)
+        public ActionResult nirfpost(Dashboard_New.Models.custom.nirf v3,string grid, string export,string id)
         {
             if (string.IsNullOrEmpty(v3.from_year))
             {
@@ -198,8 +199,10 @@ namespace Dashboard_New.Controllers
             }
             if (ModelState.IsValid)
             {
-                if (string.Equals("Export To Excel", export))
-                {
+                //if (string.Equals("Export To Excel", export))
+                    if ((string.Equals("Export To Excel", export)) && (string.Equals("spons", Session["idd"])))
+                    {
+                    string idd = v3.id;
                     vcEntities entities = new vcEntities();
                     DataTable dt = new DataTable("Grid");
                     string from_dt = v3.from_year;
@@ -238,9 +241,10 @@ namespace Dashboard_New.Controllers
                         }
                     }
                 }
-                if (string.Equals("Submit", grid))
+                 if((string.Equals("Submit", grid)) && (string.Equals("spons", Session["idd"])))              
                 {
-                   // string from_dt = v3.from_year.Substring(2);
+                    // string from_dt = v3.from_year.Substring(2);
+                    string idd = id;
                     string from_dt = v3.from_year;
                     string to_dt = v3.to_year;
                     DateTime fromdt = DateTime.ParseExact(v3.from_year, "yy", CultureInfo.InvariantCulture);
@@ -269,6 +273,39 @@ namespace Dashboard_New.Controllers
                     vd.to_year = v3.to_year;
                     return View("NIRF", vd);
                 }
+                if ((string.Equals("Submit", grid)) && (string.Equals("cons", Session["idd"])))
+              
+                {
+                    // string from_dt = v3.from_year.Substring(2);
+                  
+                    string from_dt = v3.from_year;
+                    string to_dt = v3.to_year;
+                    DateTime fromdt = DateTime.ParseExact(v3.from_year, "yy", CultureInfo.InvariantCulture);
+                    DateTime todt = DateTime.ParseExact(v3.to_year, "MM", CultureInfo.InvariantCulture);
+                    // string tabname = "REC" + from_dt + to_dt;
+                    //string tabname = "R" + from_dt + to_dt;
+                    string tabname = "R1805";
+                    List<NIRF_RPT> records = new List<NIRF_RPT>();
+                    try
+                    {
+                        vcEntities vcobj = new vcEntities();
+
+                        //records = vcobj.Database.SqlQuery<NIRF_RPT>(string.Format("select '" + v3.from_year + " - " + v3.to_year + "' as YEAR,datepart(month,(R.date)) as sdm,m.NPRNO,m.COOR_NAME,SUBSTRING(m.NPRNO,11,4)as AGENCY, REPLACE(M.TITLE, CHAR(13) + char(10), '') AS TITLE, m.SANCTNNO, m.SANCTDTE, sum(r.rt) as amount  from " + tabname + " r , mstlst m where m.NPRNO = r.NPRNO and((r.RTNO like '0%') or(r.RTNO like 'SO%') or(r.RTNO like 'MO%') or (r.RTNO like 'B%' and r.rt < 0)) and r.HEAD is null and substring(m.NPRNO, 11, 4) not  in (select researchCode from FoxOffice.dbo.InternalProjectCode where ResearchCode != 'IITM')and m.NPRNO not like 'FDR' and m.NPRNO not like 'ACC%' and m.NPRNO not like 'ICC' and m.NPRNO not like '%DEVP%' and m.NPRNO not like 'OAA'and m.NPRNO not like '%EQPT%' and m.NPRNO not like 'FDR' and m.NPRNO not like 'ICSROH' and m.NPRNO not like 'ACC%' and m.NPRNO not like 'OTHERS' and m.NPRNO not like '%BMF%' and m.NPRNO not like '%DADM%' and m.NPRNO not like '%DARE%' and m.NPRNO not like '%ACCT%' and m.NPRNO not like '%RMF%'and m.NPRNO not like '%DPLA%' and m.NPRNO not in('DIA1213001IITMDIAR','DIA1718005IITMDIAR','DIA17148007ALUMDIAR') AND M.NPRNO NOT LIKE 'RSI%' AND M.NPRNO not like '%IPRC%' and spons not like 'IIT A%' and m.NPRNO not like 'CCE0910008IITMSHAN' and m.NPRNO not like 'COM%' group by m.NPRNO,m.COOR_NAME,m.SANCTDTE,m.SANCTNNO,DATEPART(Month, (R.Date)),m.TITLE order by DATEPART(MONTH,(R.date)),SUBSTRING(M.nprno, 1, 3),m.NPRNO", fromdt.ToString("yy", CultureInfo.InvariantCulture), todt.ToString("yy", CultureInfo.InvariantCulture))).ToList();
+                        records = vcobj.Database.SqlQuery<NIRF_RPT>(string.Format("select 'R" + v3.from_year + v3.to_year + "' as Receipt,(R.date) as Date,datepart(month,R.[Date]) as Months,C.CPRNO,SUBSTRING(C.CPRNO,1,2) AS CONS_TYPE,SUBSTRING(C.CPRNO,7,3) AS DEPT_CODE, C.COOR_NAME1, C.AGENC_CODE AS 'AGENCY_CODE', REPLACE(C.AGENCY, CHAR(13) + CHAR(10), '')  AS AGENCY,   REPLACE(C.C_TITLE,CHAR(13)+CHAR(10),'') as 'DESCRIPTION',RT from " + tabname + " r , CMSTLST C WHERE C.CPRNO=R.ICCNO AND  ((R.RTNO LIKE'0%') OR (R.RTNO LIKE 'S0%')OR  (R.RTNO LIKE 'M0%'))  AND C.CPRNO NOT LIKE'IT%'and r.HEAD is null AND C.CPRNO NOT IN ('IC0405001OTERPAYCTEO','IC1718001OTERPAYCTEO','IC1718002OTERGSTDEAN','IC1718ICS003GRANDEAN') AND R.NPRNO = 'ICC' ORDER BY DATEPART(MONTH,(R.DATE)),SUBSTRING(C.CPRNO,7,3)", fromdt.ToString("yy", CultureInfo.InvariantCulture), todt.ToString("MM", CultureInfo.InvariantCulture))).ToList();
+                        Dashboard_New.Models.VModel dv = new VModel();
+                        dv.from_year = v3.from_year;
+                        dv.to_year = v3.to_year;
+                        dv.nirf = records;
+                        return View("NIRF", dv);
+                    }
+                    catch (Exception e)
+                    { Console.WriteLine("Erorrr : " + e); }
+                    VModel vd = new VModel();
+                    vd.nirf = records;
+                    vd.from_year = v3.from_year;
+                    vd.to_year = v3.to_year;
+                    return View("NIRF", vd);
+                }
             }
             else
             {
@@ -279,9 +316,10 @@ namespace Dashboard_New.Controllers
 
         [DashboardAutherisation("ppo")]
         public ActionResult ppo()
-        {
+        {          
             return View(new VModel());
         }
+       
         public ActionResult ppopost(Dashboard_New.Models.custom.ppo v4, string grid, string export)
         {
             if (string.IsNullOrEmpty(v4.from_dt))
@@ -301,6 +339,8 @@ namespace Dashboard_New.Controllers
                      DataTable dt = new DataTable("Grid");
                     // string from_dt = v4.from_dt;
                     // string to_dt = v4.to_dt;
+
+                                     
                     dt.Columns.AddRange(new DataColumn[8] { new DataColumn("INDENT NUMBER"), new DataColumn("INDENT DATE"), new DataColumn("NAME"), new DataColumn("CURRENCY"), new DataColumn("INDENT VALUE"),new DataColumn("DEPARTMENT"), new DataColumn("STATUS"), new DataColumn("REMARKS") });
                     
                     DateTime fromdt = DateTime.ParseExact(v4.from_dt, "dd/MM/yyyy", CultureInfo.InvariantCulture);
@@ -328,7 +368,8 @@ namespace Dashboard_New.Controllers
                     }
                 }
                 if (string.Equals("Submit", grid))
-                {                   
+                {
+                   
                     string from_dt = v4.from_dt;
                     string to_dt = v4.to_dt;
                     DateTime fromdt = DateTime.ParseExact(v4.from_dt, "dd/MM/yyyy", CultureInfo.InvariantCulture);
@@ -356,8 +397,7 @@ namespace Dashboard_New.Controllers
             }
             return null;
         }
-
-
+        
 
         public ActionResult Contact()
         { return View(); }

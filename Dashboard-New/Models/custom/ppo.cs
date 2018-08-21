@@ -7,6 +7,7 @@ namespace Dashboard_New.Models.custom
 {
     public class ppo
     {
+       
         public string from_dt { get; set; }
         //[Required]
         public string to_dt { get; set; }

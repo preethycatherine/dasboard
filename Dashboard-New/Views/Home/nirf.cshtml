@@ -4,7 +4,11 @@
 @{
     ViewBag.Title = "nirf";
     Layout = "~/Views/Shared/_Layout.cshtml";
+  //  var emp = Session["idd"];
 }
+
+  
+
 @*<script src="~/Scripts/datepicker/jquery-ui.js"></script>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -92,7 +96,9 @@
                     @*<input id="to_year" name="to_year" type="text" class="form-control" />*@
                 </td>
                 <td> &nbsp;</td>
+               <!-- <td><input type="hidden" value=emp name="id" /></td>-->
                 <td><input type="submit" value="Submit" name="grid" /></td>
+
                 <td> &nbsp;</td>
                 <td><input type="submit" value="Export To Excel" name="export" /></td>
             </tr>
@@ -103,10 +109,8 @@
                 <td> &nbsp; &nbsp; </td>
                 <td align="center">(MM)</td>
             </tr>
-        </table>
-       
+        </table>       
             <table>
-
                 <tr>
                     <td align="center">
                         &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
@@ -116,9 +120,6 @@
                     </td>
                 </tr>
             </table>
-
-
-
             }
 </div>
 <br />

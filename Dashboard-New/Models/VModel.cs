@@ -9,6 +9,8 @@ namespace Dashboard_New.Models
     public class VModel
     {
         //[Required(ErrorMessage = "Date is required")]
+
+        public string id { get; set; }
         public string from_dt { get; set; }
         //[Required]
         public string to_dt { get; set; }
