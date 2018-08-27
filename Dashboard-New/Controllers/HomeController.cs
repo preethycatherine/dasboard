@@ -187,6 +187,12 @@ namespace Dashboard_New.Controllers
             return View(new VModel());
         }
 
+        public ActionResult nirfcons(string id)
+        {
+            Session["idd"] = id;
+            return View(new VModel());
+        }
+
         public ActionResult nirfpost(Dashboard_New.Models.custom.nirf v3,string grid, string export,string id)
         {
             if (string.IsNullOrEmpty(v3.from_year))
@@ -199,71 +205,92 @@ namespace Dashboard_New.Controllers
             }
             if (ModelState.IsValid)
             {
-                //if (string.Equals("Export To Excel", export))
-                    if ((string.Equals("Export To Excel", export)) && (string.Equals("spons", Session["idd"])))
+                if ((string.Equals("Export To Excel", export)) && (string.Equals("spons", Session["idd"])))
                     {
                     string idd = v3.id;
                     vcEntities entities = new vcEntities();
-                    DataTable dt = new DataTable("Grid");
-                    string from_dt = v3.from_year;
-                    string to_dt = v3.to_year;
-                    DateTime fromdt = DateTime.ParseExact(v3.from_year, "yy", CultureInfo.InvariantCulture);
-                    DateTime todt = DateTime.ParseExact(v3.to_year, "MM", CultureInfo.InvariantCulture);
-                    // string tabname = "REC" + from_dt + to_dt;
-                    string tabname = "R" + from_dt + to_dt;
-                    // string tabname = "R1805";
-                    dt.Columns.AddRange(new DataColumn[11] { new DataColumn("RECEIPT"), new DataColumn("Date"), new DataColumn("MONTHS"), new DataColumn("CPRNO"), new DataColumn("CONS_TYPE"), new DataColumn("DEPT_CODE"), new DataColumn("COOR_NAME1"), new DataColumn("AGENCY_CODE"), new DataColumn("AGENCY"), new DataColumn("DESCRIPTION"), new DataColumn("RT") });
-                    //dt.Columns.AddRange(new DataColumn[9] { new DataColumn("YEAR"),new DataColumn("D"),new DataColumn("PROJECT NUMBER"),new DataColumn("COORDINATOR NAME"), new DataColumn("AGENCY"), new DataColumn("TITLE"), new DataColumn("SANCTION NUMBER"), new DataColumn("SANCTION DATE"), new DataColumn("AMOUNT")});
-                    //dt.Columns.AddRange(new DataColumn[10] { new DataColumn("RECEIPT"), new DataColumn("DATE"), new DataColumn("MONTHS"), new DataColumn("CPRNO"), new DataColumn("CONS_TYPE"), new DataColumn("DEPT_CODE"), new DataColumn("COOR_NAME1"), new DataColumn("AGENCY_CODE"), new DataColumn("AGENCY"), new DataColumn("RT") });
-                    //var disp = entities.Database.SqlQuery<Dashboard_New.Models.custom.NIRF_RPT>(string.Format("select '"+ v3.from_year + " - "+ v3.to_year + "' as YEAR,datepart(month,(R.date)) as sdm,m.NPRNO,m.COOR_NAME,SUBSTRING(m.NPRNO,11,4)as AGENCY, REPLACE(M.TITLE, CHAR(13) + char(10), '') AS TITLE, m.SANCTNNO, m.SANCTDTE, sum(r.rt) as amount  from " + tabname + " r , mstlst m where m.NPRNO = r.NPRNO and((r.RTNO like '0%') or(r.RTNO like 'SO%') or(r.RTNO like 'MO%') or (r.RTNO like 'B%' and r.rt < 0)) and r.HEAD is null and substring(m.NPRNO, 11, 4) not  in (select researchCode from FoxOffice.dbo.InternalProjectCode where ResearchCode != 'IITM')and m.NPRNO not like 'FDR' and m.NPRNO not like 'ACC%' and m.NPRNO not like 'ICC' and m.NPRNO not like '%DEVP%' and m.NPRNO not like 'OAA'and m.NPRNO not like '%EQPT%' and m.NPRNO not like 'FDR' and m.NPRNO not like 'ICSROH' and m.NPRNO not like 'ACC%' and m.NPRNO not like 'OTHERS' and m.NPRNO not like '%BMF%' and m.NPRNO not like '%DADM%' and m.NPRNO not like '%DARE%' and m.NPRNO not like '%ACCT%' and m.NPRNO not like '%RMF%'and m.NPRNO not like '%DPLA%' and m.NPRNO not in('DIA1213001IITMDIAR','DIA1718005IITMDIAR','DIA17148007ALUMDIAR') AND M.NPRNO NOT LIKE 'RSI%' AND M.NPRNO not like '%IPRC%' and spons not like 'IIT A%' and m.NPRNO not like 'CCE0910008IITMSHAN' and m.NPRNO not like 'COM%' group by m.NPRNO,m.COOR_NAME,m.SANCTDTE,m.SANCTNNO,DATEPART(Month, (R.Date)),m.TITLE order by DATEPART(MONTH,(R.date)),SUBSTRING(M.nprno, 1, 3),m.NPRNO", fromdt.ToString("yy", CultureInfo.InvariantCulture), todt.ToString("yy", CultureInfo.InvariantCulture))).ToList();
-                    var disp = entities.Database.SqlQuery<Dashboard_New.Models.custom.NIRF_RPT>(string.Format("select 'R" + v3.from_year  + v3.to_year + "' as Receipt,(R.date) as Date,datepart(month,R.[Date]) as Months,C.CPRNO,SUBSTRING(C.CPRNO,1,2) AS CONS_TYPE,SUBSTRING(C.CPRNO,7,3) AS DEPT_CODE, C.COOR_NAME1, C.AGENC_CODE AS 'AGENCY_CODE', REPLACE(C.AGENCY, CHAR(13) + CHAR(10), '')  AS AGENCY ,   REPLACE(C.C_TITLE,CHAR(13)+CHAR(10),'') as 'DESCRIPTION',RT from " + tabname + " r , CMSTLST C WHERE C.CPRNO=R.ICCNO AND  ((R.RTNO LIKE'0%') OR (R.RTNO LIKE 'S0%')OR  (R.RTNO LIKE 'M0%'))  AND C.CPRNO NOT LIKE'IT%'and r.HEAD is null AND C.CPRNO NOT IN ('IC0405001OTERPAYCTEO','IC1718001OTERPAYCTEO','IC1718002OTERGSTDEAN','IC1718ICS003GRANDEAN') AND R.NPRNO = 'ICC' ORDER BY DATEPART(MONTH,(R.DATE)),SUBSTRING(C.CPRNO,7,3)", fromdt.ToString("yy", CultureInfo.InvariantCulture), todt.ToString("MM", CultureInfo.InvariantCulture))).ToList();
-                   // dt.Columns[8].DataType = typeof(Int32);
-                  //  dt.Columns[1].DataType = typeof(Int32);
+                    DataTable dt = new DataTable("Grid");               
+                    string from_dt = v3.from_year.Substring(2);
+                    string to_dt = v3.to_year.Substring(2);
+                    DateTime fromdt = DateTime.ParseExact(v3.from_year, "yyyy", CultureInfo.InvariantCulture);
+                    DateTime todt = DateTime.ParseExact(v3.to_year, "yyyy", CultureInfo.InvariantCulture);
+                     string tabname = "REC" + from_dt + to_dt;
+                    dt.Columns.AddRange(new DataColumn[9] { new DataColumn("YEAR"), new DataColumn("MONTH"), new DataColumn("PROJECT NUMBER"), new DataColumn("COORDINATOR NAME"), new DataColumn("AGENCY"), new DataColumn("TITLE"), new DataColumn("SANCTION NUMBER"), new DataColumn("SANCTION DATE"), new DataColumn("AMOUNT") });
+                    var disp = entities.Database.SqlQuery<Dashboard_New.Models.custom.NIRF_RPT>(string.Format("select '" + from_dt + " - " + to_dt + "' as YEAR,DATEPART(MONTH,(R.DATE)) Month,M.NPRNO,M.COOR_NAME,SUBSTRING(M.NPRNO,11,4)AS AGENCY,REPLACE(M.TITLE, CHAR(13) + CHAR(10), '') AS TITLE, M.SANCTNNO, M.SANCTDTE, SUM(R.RT)AS AMOUNT FROM " + tabname + " as  R, MSTLST M WHERE M.NPRNO = R.NPRNO AND((R.RTNO LIKE'P0%') OR(R.RTNO LIKE 'S0%')  OR(R.RTNO LIKE 'M0%')  OR(R.RTNO LIKE 'IH%')OR(R.RTNO LIKE 'NP0%'))AND R.HEAD IS NULL AND SUBSTRING(M.NPRNO, 11, 4)NOT IN(SELECT ResearchCode FROM FOXOFFICE.DBO.InternalProjectCode  WHERE ResearchCode != 'IITM')AND M.NPRNO NOT LIKE'FDR'AND M.NPRNO NOT LIKE'ACC%'AND M.NPRNO NOT LIKE'ICC'AND M.NPRNO NOT LIKE'%DEVP%' AND M.NPRNO NOT LIKE'OAA'AND M.NPRNO NOT LIKE'%EQPT%'AND M.NPRNO NOT LIKE'FDR'AND M.NPRNO NOT LIKE'ICSROH'AND M.NPRNO NOT LIKE'ACC%' AND M.NPRNO NOT LIKE'OTHERS'AND M.NPRNO NOT LIKE'%BMF%'AND M.NPRNO NOT LIKE'%DADM%' AND M.NPRNO NOT LIKE '%DEAN%' AND M.NPRNO NOT LIKE'%DARE%'AND M.NPRNO NOT LIKE'%ACCT%'AND M.NPRNO NOT LIKE'%RMF%' AND M.NPRNO NOT LIKE'%DPLA%' AND M.NPRNO NOT IN('DIA1213001IITMDIAR', 'DIA1718005IITMDIAR', 'DIA1718007ALUMDIAR') AND M.NPRNO NOT LIKE'RSI%' AND M.NPRNO NOT LIKE'%IPRC%' AND M.NPRNO NOT LIKE 'CCE0910008IITMSHAN' AND M.NPRNO NOT LIKE 'COM%' GROUP BY M.NPRNO, M.COOR_NAME, M.SANCTDTE, M.SANCTNNO, DATEPART(MONTH, (R.DATE)), M.TITLE ORDER BY DATEPART(MONTH, (R.DATE)), SUBSTRING(M.NPRNO, 1, 3), M.NPRNO", fromdt.ToString("yyyy", CultureInfo.InvariantCulture), todt.ToString("yyyy", CultureInfo.InvariantCulture))).ToList();
+                    dt.Columns[8].DataType = typeof(Int32);
+                    dt.Columns[1].DataType = typeof(Int32);
                     foreach (var x in disp)
                     {
-                        // dt.Rows.Add(x.Receipt, x.Date, x.Months, x.CPRNO, x.CONS_TYPE, x.DEPT_CODE, x.COOR_NAME1, x.AGENCY_CODE, x.AGENCY, x.RT);
-                        // dt.Rows.Add(x.YEAR, x.sdm, x.NPRNO, x.COOR_NAME, x.AGENCY, x.TITLE, x.SANCTNNO, x.SANCTDTE,x.amount);
-                        dt.Rows.Add(x.Receipt,x.Date,x.Months,x.CPRNO, x.CONS_TYPE, x.DEPT_CODE,x.COOR_NAME1,x.AGENCY_CODE, x.AGENCY,x.DESCRIPTION, x.RT);
+                        dt.Rows.Add(x.YEAR, x.MONTH, x.NPRNO, x.COOR_NAME, x.AGENCY, x.TITLE, x.SANCTNNO, x.SANCTDTE, x.AMOUNT);
                     }
                     using (XLWorkbook wb = new XLWorkbook())
                     {
-                        wb.Worksheets.Add("NIRF");
+                        wb.Worksheets.Add("NIRF SPONSORED");
                         wb.Worksheet(1).Cell(3, 1).InsertTable(dt);
-                        wb.Worksheet(1).Cell(1, 7).Value = "NIRF : R" + v3.from_year + v3.to_year;
+                        wb.Worksheet(1).Cell(1, 7).Value = "NIRF(Sponsored) : R" + v3.from_year + " - "  + v3.to_year;
                         wb.Worksheet(1).Cell(1, 7).Style.Font.Bold = true;
                         var wbs = wb.Worksheets.FirstOrDefault();
                         wbs.Tables.FirstOrDefault().ShowAutoFilter = false;
-                        wb.Properties.Title = "NIRF REPORT";
+                        wb.Properties.Title = "NIRF SPONSORED REPORT";
                         using (MemoryStream stream = new MemoryStream())
                         {
                             wb.SaveAs(stream);
-                            return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "NIRF.xlsx");
+                            return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "NIRF-SPONSORED.xlsx");
                         }
                     }
                 }
-                 if((string.Equals("Submit", grid)) && (string.Equals("spons", Session["idd"])))              
+
+                if ((string.Equals("Export To Excel", export)) && (string.Equals("nirfcons", Session["idd"])))
                 {
-                    // string from_dt = v3.from_year.Substring(2);
-                    string idd = id;
-                    string from_dt = v3.from_year;
-                    string to_dt = v3.to_year;
-                    DateTime fromdt = DateTime.ParseExact(v3.from_year, "yy", CultureInfo.InvariantCulture);
-                    DateTime todt = DateTime.ParseExact(v3.to_year, "MM", CultureInfo.InvariantCulture);
-                    // string tabname = "REC" + from_dt + to_dt;
-                    string tabname = "R" + from_dt + to_dt;
-                   //string tabname = "R1805";
+                    string idd = v3.id;
+                    vcEntities entities = new vcEntities();
+                    DataTable dt = new DataTable("Grid");
+                    string from_dt = v3.from_year.Substring(2);
+                    string to_dt = v3.to_year.Substring(2);
+                    DateTime fromdt = DateTime.ParseExact(v3.from_year, "yyyy", CultureInfo.InvariantCulture);
+                    DateTime todt = DateTime.ParseExact(v3.to_year, "yyyy", CultureInfo.InvariantCulture);
+                    string tabname = "REC" + from_dt + to_dt;
+                    dt.Columns.AddRange(new DataColumn[11] { new DataColumn("YEAR"), new DataColumn("DATE"), new DataColumn("MONTH"), new DataColumn("PROJECT NUMBER"), new DataColumn("CONSULTANCY TYPE"), new DataColumn("DEPARTMENT CODE"), new DataColumn("COORDINATOR NAME"), new DataColumn("AGENCY CODE"), new DataColumn("AGENCY"), new DataColumn("TITLE"), new DataColumn("AMOUNT") });
+                    var disp = entities.Database.SqlQuery<Dashboard_New.Models.custom.NIRF_RPT>(string.Format("select 'REC" + v3.from_year + v3.to_year + "' as YEAR,R.[DATE],DATEPART(MONTH,R.[DATE]) AS MONTH, C.CPRNO,SUBSTRING(C.CPRNO,1,2) AS CONS_TYPE,SUBSTRING(C.CPRNO,7,3) AS DEPT_CODE, C.COOR_NAME1, C.AGENC_CODE AS 'AGENCY_CODE', REPLACE(C.AGENCY, CHAR(13) + CHAR(10), '')  AS AGENCY,   REPLACE(C.C_TITLE, CHAR(13) + CHAR(10), ''), RT FROM " + tabname + " R, CMSTLST C WHERE C.CPRNO = R.ICCNO AND((R.RTNO LIKE'0%') OR(R.RTNO LIKE 'S0%')OR(R.RTNO LIKE 'M0%')) AND C.CPRNO NOT LIKE'IT%'and r.HEAD is null AND C.CPRNO  NOT IN('IC0405001OTERPAYCTEO', 'IC1718001OTERPAYCTEO', 'IC1718002OTERGSTDEAN', 'IC1718ICS003GRANDEAN', 'IC1718IAS004ACCTDEAN') AND R.NPRNO = 'ICC' ORDER BY DATEPART(MONTH, (R.DATE)), SUBSTRING(C.CPRNO, 7, 3)", fromdt.ToString("yyyy", CultureInfo.InvariantCulture), todt.ToString("yyyy", CultureInfo.InvariantCulture))).ToList();
+                    dt.Columns[2].DataType = typeof(Int32);
+                    dt.Columns[10].DataType = typeof(Int32);
+                    foreach (var x in disp)
+                    {
+                        dt.Rows.Add(x.YEAR, x.DATE, x.MONTH, x.CPRNO, x.CONS_TYPE, x.DEPT_CODE, x.COOR_NAME, x.AGENCY_CODE, x.AGENCY, x.TITLE, x.rt);
+                    }
+                    using (XLWorkbook wb = new XLWorkbook())
+                    {
+                        wb.Worksheets.Add("NIRF-CONSULTANCY");
+                        wb.Worksheet(1).Cell(3, 1).InsertTable(dt);
+                        wb.Worksheet(1).Cell(1, 7).Value = "NIRF(Consultancy): R" + v3.from_year +" - " + v3.to_year;
+                        wb.Worksheet(1).Cell(1, 7).Style.Font.Bold = true;
+                        var wbs = wb.Worksheets.FirstOrDefault();
+                        wbs.Tables.FirstOrDefault().ShowAutoFilter = false;
+                        wb.Properties.Title = "NIRF CONSULTANCY REPORT";
+                        using (MemoryStream stream = new MemoryStream())
+                        {
+                            wb.SaveAs(stream);
+                            return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "NIRF-CONSULTANCY.xlsx");
+                        }
+                    }
+                }
+                if ((string.Equals("Submit", grid)) && (string.Equals("spons", Session["idd"])))              
+                {
+                    string from_dt = v3.from_year.Substring(2);
+                    string to_dt = v3.to_year.Substring(2);
+                    DateTime fromdt = DateTime.ParseExact(v3.from_year, "yyyy", CultureInfo.InvariantCulture);
+                    DateTime todt = DateTime.ParseExact(v3.to_year, "yyyy", CultureInfo.InvariantCulture);
+                     string tabname = "REC" + from_dt + to_dt;
                     List<NIRF_RPT> records = new List<NIRF_RPT>();
                     try
                     {
                         vcEntities vcobj = new vcEntities();
-                       
-                        //records = vcobj.Database.SqlQuery<NIRF_RPT>(string.Format("select '" + v3.from_year + " - " + v3.to_year + "' as YEAR,datepart(month,(R.date)) as sdm,m.NPRNO,m.COOR_NAME,SUBSTRING(m.NPRNO,11,4)as AGENCY, REPLACE(M.TITLE, CHAR(13) + char(10), '') AS TITLE, m.SANCTNNO, m.SANCTDTE, sum(r.rt) as amount  from " + tabname + " r , mstlst m where m.NPRNO = r.NPRNO and((r.RTNO like '0%') or(r.RTNO like 'SO%') or(r.RTNO like 'MO%') or (r.RTNO like 'B%' and r.rt < 0)) and r.HEAD is null and substring(m.NPRNO, 11, 4) not  in (select researchCode from FoxOffice.dbo.InternalProjectCode where ResearchCode != 'IITM')and m.NPRNO not like 'FDR' and m.NPRNO not like 'ACC%' and m.NPRNO not like 'ICC' and m.NPRNO not like '%DEVP%' and m.NPRNO not like 'OAA'and m.NPRNO not like '%EQPT%' and m.NPRNO not like 'FDR' and m.NPRNO not like 'ICSROH' and m.NPRNO not like 'ACC%' and m.NPRNO not like 'OTHERS' and m.NPRNO not like '%BMF%' and m.NPRNO not like '%DADM%' and m.NPRNO not like '%DARE%' and m.NPRNO not like '%ACCT%' and m.NPRNO not like '%RMF%'and m.NPRNO not like '%DPLA%' and m.NPRNO not in('DIA1213001IITMDIAR','DIA1718005IITMDIAR','DIA17148007ALUMDIAR') AND M.NPRNO NOT LIKE 'RSI%' AND M.NPRNO not like '%IPRC%' and spons not like 'IIT A%' and m.NPRNO not like 'CCE0910008IITMSHAN' and m.NPRNO not like 'COM%' group by m.NPRNO,m.COOR_NAME,m.SANCTDTE,m.SANCTNNO,DATEPART(Month, (R.Date)),m.TITLE order by DATEPART(MONTH,(R.date)),SUBSTRING(M.nprno, 1, 3),m.NPRNO", fromdt.ToString("yy", CultureInfo.InvariantCulture), todt.ToString("yy", CultureInfo.InvariantCulture))).ToList();
-                        records = vcobj.Database.SqlQuery<NIRF_RPT>(string.Format("select 'R" + v3.from_year + v3.to_year + "' as Receipt,(R.date) as Date,datepart(month,R.[Date]) as Months,C.CPRNO,SUBSTRING(C.CPRNO,1,2) AS CONS_TYPE,SUBSTRING(C.CPRNO,7,3) AS DEPT_CODE, C.COOR_NAME1, C.AGENC_CODE AS 'AGENCY_CODE', REPLACE(C.AGENCY, CHAR(13) + CHAR(10), '')  AS AGENCY,   REPLACE(C.C_TITLE,CHAR(13)+CHAR(10),'') as 'DESCRIPTION',RT from " + tabname + " r , CMSTLST C WHERE C.CPRNO=R.ICCNO AND  ((R.RTNO LIKE'0%') OR (R.RTNO LIKE 'S0%')OR  (R.RTNO LIKE 'M0%'))  AND C.CPRNO NOT LIKE'IT%'and r.HEAD is null AND C.CPRNO NOT IN ('IC0405001OTERPAYCTEO','IC1718001OTERPAYCTEO','IC1718002OTERGSTDEAN','IC1718ICS003GRANDEAN') AND R.NPRNO = 'ICC' ORDER BY DATEPART(MONTH,(R.DATE)),SUBSTRING(C.CPRNO,7,3)", fromdt.ToString("yy", CultureInfo.InvariantCulture), todt.ToString("MM", CultureInfo.InvariantCulture))).ToList();
+                        records = vcobj.Database.SqlQuery<NIRF_RPT>(string.Format("select '" + v3.from_year + " - " + v3.to_year + "' as YEAR,DATEPART(MONTH,(R.DATE)) Month,M.NPRNO,M.COOR_NAME,SUBSTRING(M.NPRNO,11,4)AS AGENCY,REPLACE(M.TITLE, CHAR(13) + CHAR(10), '') AS TITLE , M.SANCTNNO, M.SANCTDTE, SUM(R.RT)AS AMOUNT FROM " + tabname + " as R, MSTLST M WHERE M.NPRNO = R.NPRNO AND((R.RTNO LIKE'P0%') OR(R.RTNO LIKE 'S0%')  OR(R.RTNO LIKE 'M0%')  OR(R.RTNO LIKE 'IH%')OR(R.RTNO LIKE 'NP0%'))AND R.HEAD IS NULL AND SUBSTRING(M.NPRNO, 11, 4)NOT IN(SELECT ResearchCode FROM FOXOFFICE.DBO.InternalProjectCode  WHERE ResearchCode != 'IITM')AND M.NPRNO NOT LIKE'FDR'AND M.NPRNO NOT LIKE'ACC%'AND M.NPRNO NOT LIKE'ICC'AND M.NPRNO NOT LIKE'%DEVP%' AND M.NPRNO NOT LIKE'OAA'AND M.NPRNO NOT LIKE'%EQPT%'AND M.NPRNO NOT LIKE'FDR'AND M.NPRNO NOT LIKE'ICSROH'AND M.NPRNO NOT LIKE'ACC%' AND M.NPRNO NOT LIKE'OTHERS'AND M.NPRNO NOT LIKE'%BMF%'AND M.NPRNO NOT LIKE'%DADM%' AND M.NPRNO NOT LIKE '%DEAN%' AND M.NPRNO NOT LIKE'%DARE%'AND M.NPRNO NOT LIKE'%ACCT%'AND M.NPRNO NOT LIKE'%RMF%' AND M.NPRNO NOT LIKE'%DPLA%' AND M.NPRNO NOT IN('DIA1213001IITMDIAR', 'DIA1718005IITMDIAR', 'DIA1718007ALUMDIAR') AND M.NPRNO NOT LIKE'RSI%' AND M.NPRNO NOT LIKE'%IPRC%' AND M.NPRNO NOT LIKE 'CCE0910008IITMSHAN' AND M.NPRNO NOT LIKE 'COM%' GROUP BY M.NPRNO, M.COOR_NAME, M.SANCTDTE, M.SANCTNNO, DATEPART(MONTH, (R.DATE)), M.TITLE ORDER BY DATEPART(MONTH, (R.DATE)), SUBSTRING(M.NPRNO, 1, 3), M.NPRNO", fromdt.ToString("yyyy", CultureInfo.InvariantCulture), todt.ToString("yyyy", CultureInfo.InvariantCulture))).ToList();
                         Dashboard_New.Models.VModel dv = new VModel();
                         dv.from_year = v3.from_year;
                         dv.to_year = v3.to_year;
                         dv.nirf = records;
-                        return View("NIRF", dv);
+                        return View("nirf", dv);
                     }
                     catch (Exception e)
                     { Console.WriteLine("Erorrr : " + e); }
@@ -271,32 +298,26 @@ namespace Dashboard_New.Controllers
                     vd.nirf = records;
                     vd.from_year = v3.from_year;
                     vd.to_year = v3.to_year;
-                    return View("NIRF", vd);
+                    return View("nirf", vd);
                 }
-                if ((string.Equals("Submit", grid)) && (string.Equals("cons", Session["idd"])))
+                if ((string.Equals("Submit", grid)) && (string.Equals("nirfcons", Session["idd"])))
               
                 {
-                    // string from_dt = v3.from_year.Substring(2);
-                  
-                    string from_dt = v3.from_year;
-                    string to_dt = v3.to_year;
-                    DateTime fromdt = DateTime.ParseExact(v3.from_year, "yy", CultureInfo.InvariantCulture);
-                    DateTime todt = DateTime.ParseExact(v3.to_year, "MM", CultureInfo.InvariantCulture);
-                    // string tabname = "REC" + from_dt + to_dt;
-                    //string tabname = "R" + from_dt + to_dt;
-                    string tabname = "R1805";
+                    string from_dt = v3.from_year.Substring(2);
+                    string to_dt = v3.to_year.Substring(2);
+                    DateTime fromdt = DateTime.ParseExact(v3.from_year, "yyyy", CultureInfo.InvariantCulture);
+                    DateTime todt = DateTime.ParseExact(v3.to_year, "yyyy", CultureInfo.InvariantCulture);
+                     string tabname = "REC" + from_dt + to_dt;
                     List<NIRF_RPT> records = new List<NIRF_RPT>();
                     try
                     {
                         vcEntities vcobj = new vcEntities();
-
-                        //records = vcobj.Database.SqlQuery<NIRF_RPT>(string.Format("select '" + v3.from_year + " - " + v3.to_year + "' as YEAR,datepart(month,(R.date)) as sdm,m.NPRNO,m.COOR_NAME,SUBSTRING(m.NPRNO,11,4)as AGENCY, REPLACE(M.TITLE, CHAR(13) + char(10), '') AS TITLE, m.SANCTNNO, m.SANCTDTE, sum(r.rt) as amount  from " + tabname + " r , mstlst m where m.NPRNO = r.NPRNO and((r.RTNO like '0%') or(r.RTNO like 'SO%') or(r.RTNO like 'MO%') or (r.RTNO like 'B%' and r.rt < 0)) and r.HEAD is null and substring(m.NPRNO, 11, 4) not  in (select researchCode from FoxOffice.dbo.InternalProjectCode where ResearchCode != 'IITM')and m.NPRNO not like 'FDR' and m.NPRNO not like 'ACC%' and m.NPRNO not like 'ICC' and m.NPRNO not like '%DEVP%' and m.NPRNO not like 'OAA'and m.NPRNO not like '%EQPT%' and m.NPRNO not like 'FDR' and m.NPRNO not like 'ICSROH' and m.NPRNO not like 'ACC%' and m.NPRNO not like 'OTHERS' and m.NPRNO not like '%BMF%' and m.NPRNO not like '%DADM%' and m.NPRNO not like '%DARE%' and m.NPRNO not like '%ACCT%' and m.NPRNO not like '%RMF%'and m.NPRNO not like '%DPLA%' and m.NPRNO not in('DIA1213001IITMDIAR','DIA1718005IITMDIAR','DIA17148007ALUMDIAR') AND M.NPRNO NOT LIKE 'RSI%' AND M.NPRNO not like '%IPRC%' and spons not like 'IIT A%' and m.NPRNO not like 'CCE0910008IITMSHAN' and m.NPRNO not like 'COM%' group by m.NPRNO,m.COOR_NAME,m.SANCTDTE,m.SANCTNNO,DATEPART(Month, (R.Date)),m.TITLE order by DATEPART(MONTH,(R.date)),SUBSTRING(M.nprno, 1, 3),m.NPRNO", fromdt.ToString("yy", CultureInfo.InvariantCulture), todt.ToString("yy", CultureInfo.InvariantCulture))).ToList();
-                        records = vcobj.Database.SqlQuery<NIRF_RPT>(string.Format("select 'R" + v3.from_year + v3.to_year + "' as Receipt,(R.date) as Date,datepart(month,R.[Date]) as Months,C.CPRNO,SUBSTRING(C.CPRNO,1,2) AS CONS_TYPE,SUBSTRING(C.CPRNO,7,3) AS DEPT_CODE, C.COOR_NAME1, C.AGENC_CODE AS 'AGENCY_CODE', REPLACE(C.AGENCY, CHAR(13) + CHAR(10), '')  AS AGENCY,   REPLACE(C.C_TITLE,CHAR(13)+CHAR(10),'') as 'DESCRIPTION',RT from " + tabname + " r , CMSTLST C WHERE C.CPRNO=R.ICCNO AND  ((R.RTNO LIKE'0%') OR (R.RTNO LIKE 'S0%')OR  (R.RTNO LIKE 'M0%'))  AND C.CPRNO NOT LIKE'IT%'and r.HEAD is null AND C.CPRNO NOT IN ('IC0405001OTERPAYCTEO','IC1718001OTERPAYCTEO','IC1718002OTERGSTDEAN','IC1718ICS003GRANDEAN') AND R.NPRNO = 'ICC' ORDER BY DATEPART(MONTH,(R.DATE)),SUBSTRING(C.CPRNO,7,3)", fromdt.ToString("yy", CultureInfo.InvariantCulture), todt.ToString("MM", CultureInfo.InvariantCulture))).ToList();
+                        records = vcobj.Database.SqlQuery<NIRF_RPT>(string.Format("select 'REC" + v3.from_year + v3.to_year + "' as YEAR,R.[DATE],DATEPART(MONTH,R.[DATE]) AS MONTH, C.CPRNO,SUBSTRING(C.CPRNO,1,2) AS CONS_TYPE,SUBSTRING(C.CPRNO,7,3) AS DEPT_CODE, C.COOR_NAME1, C.AGENC_CODE AS 'AGENCY_CODE', REPLACE(C.AGENCY, CHAR(13) + CHAR(10), '')  AS AGENCY,   REPLACE(C.C_TITLE, CHAR(13) + CHAR(10), '') as TITLE, rt FROM " + tabname + " R, CMSTLST C WHERE C.CPRNO = R.ICCNO AND((R.RTNO LIKE'0%') OR(R.RTNO LIKE 'S0%')OR(R.RTNO LIKE 'M0%')) AND C.CPRNO NOT LIKE'IT%'and r.HEAD is null AND C.CPRNO  NOT IN('IC0405001OTERPAYCTEO', 'IC1718001OTERPAYCTEO', 'IC1718002OTERGSTDEAN', 'IC1718ICS003GRANDEAN', 'IC1718IAS004ACCTDEAN') AND R.NPRNO = 'ICC' ORDER BY DATEPART(MONTH, (R.DATE)), SUBSTRING(C.CPRNO, 7, 3)", fromdt.ToString("yyyy", CultureInfo.InvariantCulture), todt.ToString("yyyy", CultureInfo.InvariantCulture))).ToList();
                         Dashboard_New.Models.VModel dv = new VModel();
                         dv.from_year = v3.from_year;
                         dv.to_year = v3.to_year;
                         dv.nirf = records;
-                        return View("NIRF", dv);
+                        return View("nirfcons", dv);
                     }
                     catch (Exception e)
                     { Console.WriteLine("Erorrr : " + e); }
@@ -304,7 +325,7 @@ namespace Dashboard_New.Controllers
                     vd.nirf = records;
                     vd.from_year = v3.from_year;
                     vd.to_year = v3.to_year;
-                    return View("NIRF", vd);
+                    return View("nirfcons", vd);
                 }
             }
             else
@@ -334,16 +355,10 @@ namespace Dashboard_New.Controllers
             {
                 if (string.Equals("Export To Excel", export))
                 {
-                    // vcEntities entities = new vcEntities();
                     FoxOfficeEntities entities = new FoxOfficeEntities();
                      DataTable dt = new DataTable("Grid");
-                    // string from_dt = v4.from_dt;
-                    // string to_dt = v4.to_dt;
-
-                                     
                     dt.Columns.AddRange(new DataColumn[8] { new DataColumn("INDENT NUMBER"), new DataColumn("INDENT DATE"), new DataColumn("NAME"), new DataColumn("CURRENCY"), new DataColumn("INDENT VALUE"),new DataColumn("DEPARTMENT"), new DataColumn("STATUS"), new DataColumn("REMARKS") });
-                    
-                    DateTime fromdt = DateTime.ParseExact(v4.from_dt, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                     DateTime fromdt = DateTime.ParseExact(v4.from_dt, "dd/MM/yyyy", CultureInfo.InvariantCulture);
                     DateTime todt = DateTime.ParseExact(v4.to_dt, "dd/MM/yyyy", CultureInfo.InvariantCulture);
                     var disp = entities.Database.SqlQuery<Dashboard_New.Models.custom.ppo>(string.Format("select indent_no,indent_date,[name],currency,indent_value,dept,[status],remarks from indent_master where indent_date>= '{0}' AND indent_date<= '{1}'", fromdt.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture), todt.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture))).ToList();
                     dt.Columns[4].DataType = typeof(Int32);
@@ -378,7 +393,6 @@ namespace Dashboard_New.Controllers
                     try
                     {
                         FoxOfficeEntities vcobj = new FoxOfficeEntities();
-                        //vcEntities vcobj = new vcEntities();
                         records = vcobj.Database.SqlQuery<ppo>(string.Format("select indent_no,indent_date,[name],currency,indent_value,dept,[status],remarks from indent_master where indent_date>= '{0}' AND indent_date<= '{1}'", fromdt.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture), todt.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture))).ToList();
                         Dashboard_New.Models.VModel dv = new VModel();
                         dv.ppoo = records;
