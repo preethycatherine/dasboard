@@ -35,5 +35,10 @@ namespace Dashboard_New.Models.custom
         public Nullable<System.DateTime> DATE { get; set; }
         public double AMOUNT { get; set; }
         public double rt { get; set; }
+
+
+
+        
+      
     }
 }

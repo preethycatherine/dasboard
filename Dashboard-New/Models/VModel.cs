@@ -31,8 +31,7 @@ namespace Dashboard_New.Models
         public List<Dashboard_New.Models.custom.dcvendor> dm { get; set; }
         public List<Dashboard_New.Models.custom.NIRF_RPT> nirf { get; set; }
         public List<Dashboard_New.Models.custom.ppo> ppoo { get; set; }
-        
-
+        public List<Dashboard_New.Models.custom.pfms_vc> pfm_vclist { get; set; }
         public VModel()
         {
             vclist = new List<VCVOUCH>();
@@ -42,7 +41,8 @@ namespace Dashboard_New.Models
             vm = new List<Dashboard_New.Models.custom.vcvendor>();
             dm = new List<Dashboard_New.Models.custom.dcvendor>();
             nirf = new List<Dashboard_New.Models.custom.NIRF_RPT>();
-            ppoo = new List<Dashboard_New.Models.custom.ppo>();           
+            ppoo = new List<Dashboard_New.Models.custom.ppo>();
+            pfm_vclist = new List<Dashboard_New.Models.custom.pfms_vc>();
         }
     }
 }

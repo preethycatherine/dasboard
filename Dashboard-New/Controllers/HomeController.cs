@@ -192,7 +192,7 @@ namespace Dashboard_New.Controllers
             Session["idd"] = id;
             return View(new VModel());
         }
-
+        [HttpPost]
         public ActionResult nirfpost(Dashboard_New.Models.custom.nirf v3,string grid, string export,string id)
         {
             if (string.IsNullOrEmpty(v3.from_year))
@@ -252,8 +252,8 @@ namespace Dashboard_New.Controllers
                     string tabname = "REC" + from_dt + to_dt;
                     dt.Columns.AddRange(new DataColumn[11] { new DataColumn("YEAR"), new DataColumn("DATE"), new DataColumn("MONTH"), new DataColumn("PROJECT NUMBER"), new DataColumn("CONSULTANCY TYPE"), new DataColumn("DEPARTMENT CODE"), new DataColumn("COORDINATOR NAME"), new DataColumn("AGENCY CODE"), new DataColumn("AGENCY"), new DataColumn("TITLE"), new DataColumn("AMOUNT") });
                     var disp = entities.Database.SqlQuery<Dashboard_New.Models.custom.NIRF_RPT>(string.Format("select 'REC" + v3.from_year + v3.to_year + "' as YEAR,R.[DATE],DATEPART(MONTH,R.[DATE]) AS MONTH, C.CPRNO,SUBSTRING(C.CPRNO,1,2) AS CONS_TYPE,SUBSTRING(C.CPRNO,7,3) AS DEPT_CODE, C.COOR_NAME1, C.AGENC_CODE AS 'AGENCY_CODE', REPLACE(C.AGENCY, CHAR(13) + CHAR(10), '')  AS AGENCY,   REPLACE(C.C_TITLE, CHAR(13) + CHAR(10), ''), RT FROM " + tabname + " R, CMSTLST C WHERE C.CPRNO = R.ICCNO AND((R.RTNO LIKE'0%') OR(R.RTNO LIKE 'S0%')OR(R.RTNO LIKE 'M0%')) AND C.CPRNO NOT LIKE'IT%'and r.HEAD is null AND C.CPRNO  NOT IN('IC0405001OTERPAYCTEO', 'IC1718001OTERPAYCTEO', 'IC1718002OTERGSTDEAN', 'IC1718ICS003GRANDEAN', 'IC1718IAS004ACCTDEAN') AND R.NPRNO = 'ICC' ORDER BY DATEPART(MONTH, (R.DATE)), SUBSTRING(C.CPRNO, 7, 3)", fromdt.ToString("yyyy", CultureInfo.InvariantCulture), todt.ToString("yyyy", CultureInfo.InvariantCulture))).ToList();
-                    dt.Columns[2].DataType = typeof(Int32);
-                    dt.Columns[10].DataType = typeof(Int32);
+                    
+                     dt.Columns[10].DataType = typeof(Int32);
                     foreach (var x in disp)
                     {
                         dt.Rows.Add(x.YEAR, x.DATE, x.MONTH, x.CPRNO, x.CONS_TYPE, x.DEPT_CODE, x.COOR_NAME, x.AGENCY_CODE, x.AGENCY, x.TITLE, x.rt);
@@ -293,7 +293,7 @@ namespace Dashboard_New.Controllers
                         return View("nirf", dv);
                     }
                     catch (Exception e)
-                    { Console.WriteLine("Erorrr : " + e); }
+                    { Console.WriteLine("Error : " + e); }
                     VModel vd = new VModel();
                     vd.nirf = records;
                     vd.from_year = v3.from_year;
@@ -340,7 +340,7 @@ namespace Dashboard_New.Controllers
         {          
             return View(new VModel());
         }
-       
+        [HttpPost]
         public ActionResult ppopost(Dashboard_New.Models.custom.ppo v4, string grid, string export)
         {
             if (string.IsNullOrEmpty(v4.from_dt))
@@ -384,7 +384,7 @@ namespace Dashboard_New.Controllers
                 }
                 if (string.Equals("Submit", grid))
                 {
-                   
+                    string strddval = Request.Form["menu1"].ToString();
                     string from_dt = v4.from_dt;
                     string to_dt = v4.to_dt;
                     DateTime fromdt = DateTime.ParseExact(v4.from_dt, "dd/MM/yyyy", CultureInfo.InvariantCulture);
@@ -411,8 +411,94 @@ namespace Dashboard_New.Controllers
             }
             return null;
         }
-        
 
+
+        public ActionResult pfms_vc()
+        { return View(new VModel()); }
+
+        [HttpPost]
+
+        public ActionResult pfms_vc_post(Dashboard_New.Models.custom.nirf v5, string grid, string export)
+        {
+            if (string.IsNullOrEmpty(v5.from_year))
+            {
+                ModelState.AddModelError("From year", "Year Required");
+            }
+            if (string.IsNullOrEmpty(v5.to_year))
+            {
+                ModelState.AddModelError("To year", "Year Required");
+            }
+            if (ModelState.IsValid)
+            {
+                if (string.Equals("Export To Excel", export))
+                {
+                   
+                    vcEntities entities = new vcEntities();
+                    DataTable dt = new DataTable("Grid");
+                    string from_dt = v5.from_year.Substring(2);
+                    string to_dt = v5.to_year.Substring(2);
+                    DateTime fromdt = DateTime.ParseExact(v5.from_year, "yyyy", CultureInfo.InvariantCulture);
+                    DateTime todt = DateTime.ParseExact(v5.to_year, "yyyy", CultureInfo.InvariantCulture);
+                    string tabname = "REC" + from_dt + to_dt;
+                    dt.Columns.AddRange(new DataColumn[9] { new DataColumn("YEAR"), new DataColumn("MONTH"), new DataColumn("PROJECT NUMBER"), new DataColumn("COORDINATOR NAME"), new DataColumn("AGENCY"), new DataColumn("TITLE"), new DataColumn("SANCTION NUMBER"), new DataColumn("SANCTION DATE"), new DataColumn("AMOUNT") });
+                    var disp = entities.Database.SqlQuery<Dashboard_New.Models.custom.pfms_vc>(string.Format("select '" + from_dt + " - " + to_dt + "' as YEAR,DATEPART(MONTH,(R.DATE)) Month,M.NPRNO,M.COOR_NAME,SUBSTRING(M.NPRNO,11,4)AS AGENCY,REPLACE(M.TITLE, CHAR(13) + CHAR(10), '') AS TITLE, M.SANCTNNO, M.SANCTDTE, SUM(R.RT)AS AMOUNT FROM " + tabname + " as  R, MSTLST M WHERE M.NPRNO = R.NPRNO AND((R.RTNO LIKE'P0%') OR(R.RTNO LIKE 'S0%')  OR(R.RTNO LIKE 'M0%')  OR(R.RTNO LIKE 'IH%')OR(R.RTNO LIKE 'NP0%'))AND R.HEAD IS NULL AND SUBSTRING(M.NPRNO, 11, 4)NOT IN(SELECT ResearchCode FROM FOXOFFICE.DBO.InternalProjectCode  WHERE ResearchCode != 'IITM')AND M.NPRNO NOT LIKE'FDR'AND M.NPRNO NOT LIKE'ACC%'AND M.NPRNO NOT LIKE'ICC'AND M.NPRNO NOT LIKE'%DEVP%' AND M.NPRNO NOT LIKE'OAA'AND M.NPRNO NOT LIKE'%EQPT%'AND M.NPRNO NOT LIKE'FDR'AND M.NPRNO NOT LIKE'ICSROH'AND M.NPRNO NOT LIKE'ACC%' AND M.NPRNO NOT LIKE'OTHERS'AND M.NPRNO NOT LIKE'%BMF%'AND M.NPRNO NOT LIKE'%DADM%' AND M.NPRNO NOT LIKE '%DEAN%' AND M.NPRNO NOT LIKE'%DARE%'AND M.NPRNO NOT LIKE'%ACCT%'AND M.NPRNO NOT LIKE'%RMF%' AND M.NPRNO NOT LIKE'%DPLA%' AND M.NPRNO NOT IN('DIA1213001IITMDIAR', 'DIA1718005IITMDIAR', 'DIA1718007ALUMDIAR') AND M.NPRNO NOT LIKE'RSI%' AND M.NPRNO NOT LIKE'%IPRC%' AND M.NPRNO NOT LIKE 'CCE0910008IITMSHAN' AND M.NPRNO NOT LIKE 'COM%' GROUP BY M.NPRNO, M.COOR_NAME, M.SANCTDTE, M.SANCTNNO, DATEPART(MONTH, (R.DATE)), M.TITLE ORDER BY DATEPART(MONTH, (R.DATE)), SUBSTRING(M.NPRNO, 1, 3), M.NPRNO", fromdt.ToString("yyyy", CultureInfo.InvariantCulture), todt.ToString("yyyy", CultureInfo.InvariantCulture))).ToList();
+                    dt.Columns[8].DataType = typeof(Int32);
+                    dt.Columns[1].DataType = typeof(Int32);
+                    foreach (var x in disp)
+                    {
+                        //dt.Rows.Add(x.YEAR, x.MONTH, x.NPRNO, x.COOR_NAME, x.AGENCY, x.TITLE, x.SANCTNNO, x.SANCTDTE, x.AMOUNT);
+                    }
+                    using (XLWorkbook wb = new XLWorkbook())
+                    {
+                        wb.Worksheets.Add("NIRF SPONSORED");
+                        wb.Worksheet(1).Cell(3, 1).InsertTable(dt);
+                        wb.Worksheet(1).Cell(1, 7).Value = "NIRF(Sponsored) : R" + v5.from_year + " - " + v5.to_year;
+                        wb.Worksheet(1).Cell(1, 7).Style.Font.Bold = true;
+                        var wbs = wb.Worksheets.FirstOrDefault();
+                        wbs.Tables.FirstOrDefault().ShowAutoFilter = false;
+                        wb.Properties.Title = "NIRF SPONSORED REPORT";
+                        using (MemoryStream stream = new MemoryStream())
+                        {
+                            wb.SaveAs(stream);
+                            return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "NIRF-SPONSORED.xlsx");
+                        }
+                    }
+                }              
+                if (string.Equals("Submit", grid))
+                {
+                    string from_dt = v5.from_year.Substring(2);
+                    string to_dt = v5.to_year.Substring(2);
+                    DateTime fromdt = DateTime.ParseExact(v5.from_year, "yyyy", CultureInfo.InvariantCulture);
+                    DateTime todt = DateTime.ParseExact(v5.to_year, "yyyy", CultureInfo.InvariantCulture);
+                    string tabname = "VOU" + from_dt + to_dt;
+                    List<NIRF_RPT> records = new List<NIRF_RPT>();
+                    try
+                    {
+                        vcEntities vcobj = new vcEntities();
+                        records = vcobj.Database.SqlQuery<NIRF_RPT>(string.Format("select '" + v5.from_year + " - " + v5.to_year + "' as YEAR,DATEPART(MONTH,(R.DATE)) Month,M.NPRNO,M.COOR_NAME,SUBSTRING(M.NPRNO,11,4)AS AGENCY,REPLACE(M.TITLE, CHAR(13) + CHAR(10), '') AS TITLE , M.SANCTNNO, M.SANCTDTE, SUM(R.RT)AS AMOUNT FROM " + tabname + " as R, MSTLST M WHERE M.NPRNO = R.NPRNO AND((R.RTNO LIKE'P0%') OR(R.RTNO LIKE 'S0%')  OR(R.RTNO LIKE 'M0%')  OR(R.RTNO LIKE 'IH%')OR(R.RTNO LIKE 'NP0%'))AND R.HEAD IS NULL AND SUBSTRING(M.NPRNO, 11, 4)NOT IN(SELECT ResearchCode FROM FOXOFFICE.DBO.InternalProjectCode  WHERE ResearchCode != 'IITM')AND M.NPRNO NOT LIKE'FDR'AND M.NPRNO NOT LIKE'ACC%'AND M.NPRNO NOT LIKE'ICC'AND M.NPRNO NOT LIKE'%DEVP%' AND M.NPRNO NOT LIKE'OAA'AND M.NPRNO NOT LIKE'%EQPT%'AND M.NPRNO NOT LIKE'FDR'AND M.NPRNO NOT LIKE'ICSROH'AND M.NPRNO NOT LIKE'ACC%' AND M.NPRNO NOT LIKE'OTHERS'AND M.NPRNO NOT LIKE'%BMF%'AND M.NPRNO NOT LIKE'%DADM%' AND M.NPRNO NOT LIKE '%DEAN%' AND M.NPRNO NOT LIKE'%DARE%'AND M.NPRNO NOT LIKE'%ACCT%'AND M.NPRNO NOT LIKE'%RMF%' AND M.NPRNO NOT LIKE'%DPLA%' AND M.NPRNO NOT IN('DIA1213001IITMDIAR', 'DIA1718005IITMDIAR', 'DIA1718007ALUMDIAR') AND M.NPRNO NOT LIKE'RSI%' AND M.NPRNO NOT LIKE'%IPRC%' AND M.NPRNO NOT LIKE 'CCE0910008IITMSHAN' AND M.NPRNO NOT LIKE 'COM%' GROUP BY M.NPRNO, M.COOR_NAME, M.SANCTDTE, M.SANCTNNO, DATEPART(MONTH, (R.DATE)), M.TITLE ORDER BY DATEPART(MONTH, (R.DATE)), SUBSTRING(M.NPRNO, 1, 3), M.NPRNO", fromdt.ToString("yyyy", CultureInfo.InvariantCulture), todt.ToString("yyyy", CultureInfo.InvariantCulture))).ToList();
+                      //  records=vcobj.Database.SqlQuery<pfms_vc>(string.Format("SELECT * FROM  " + tabname + " as V,VENDORDRAWN C,VendorMaster M WHERE V.VRNO=C.VRNO AND C.VPartyCode=M.VPartyCode and v.nprno in (select nprno from mstlst where ACCOUNTTYPE='pfms')", fromdt.ToString("yyyy", CultureInfo.InvariantCulture), todt.ToString("yyyy", CultureInfo.InvariantCulture))).ToList();
+                        Dashboard_New.Models.VModel dv = new VModel();
+                        dv.from_year = v5.from_year;
+                        dv.to_year = v5.to_year;
+                        dv.nirf = records;
+                        return View("pfms_vc", dv);
+                    }
+                    catch (Exception e)
+                    { Console.WriteLine("Error : " + e); }
+                    VModel vd = new VModel();
+                    vd.nirf = records;
+                    vd.from_year = v5.from_year;
+                    vd.to_year = v5.to_year;
+                    return View("pfms_vc", vd);
+                }
+               
+            }
+            else
+            {
+                return View("pfms_vc", v5);
+            }
+            return null;
+        }
         public ActionResult Contact()
         { return View(); }
 

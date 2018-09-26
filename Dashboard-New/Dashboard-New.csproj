@@ -223,7 +223,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="C:\Users\Administrator\Desktop\HomeController.cs">
+      <Link>Controllers\HomeController.cs</Link>
+    </Compile>
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\nirfrpt.cs" />
@@ -238,6 +240,7 @@
     <Compile Include="Models\custom\dcvendor.cs" />
     <Compile Include="Models\custom\nirf.cs" />
     <Compile Include="Models\custom\NIRF_RPT.cs" />
+    <Compile Include="Models\custom\pfms_vc.cs" />
     <Compile Include="Models\custom\ppo.cs" />
     <Compile Include="Models\custom\vcvendor.cs" />
     <Compile Include="Models\dashboard.Context.cs">
@@ -328,7 +331,6 @@
       <DependentUpon>VCModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\VModel.cs" />
-    <Compile Include="Multiplemodel\multiple_data.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -4909,13 +4911,15 @@
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Shared\_Layout1.cshtml" />
     <Content Include="Views\Login\Alert.cshtml" />
-    <Content Include="Views\Test\Index.cshtml" />
     <Content Include="Views\Home\Ppo.cshtml" />
+    <Content Include="Views\Home\nirfcons.cshtml" />
+    <Content Include="Views\Home\pfms_vc.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\dcvendor\" />
     <Folder Include="Views\nirfrpt\" />
+    <Folder Include="Views\pfms_vc\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

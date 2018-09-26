@@ -2,7 +2,7 @@
 @using System.Globalization
 @*@model Dashboard_New.Models.custom.rec*@
 @{
-    ViewBag.Title = "nirfcons";
+    ViewBag.Title = "nirf";
     Layout = "~/Views/Shared/_Layout.cshtml";
     //  var emp = Session["idd"];
 }
@@ -103,7 +103,7 @@
 </style>
 
 <div class="container body">
-    @using (Html.BeginForm("nirfpost", "Home", FormMethod.Post))
+    @using (Html.BeginForm("pfms_vc_post", "Home", FormMethod.Post))
     {
         <table cellpadding="0" cellspacing="0" align="center">
             <tr>
@@ -112,9 +112,6 @@
                 <td>
                     @*<input id="from_year" name="from_year" type="text" class="form-control" />*@
                     @Html.TextBoxFor(m => m.from_year, new { @Class = "startDate" })
-
-
-
                     @* @Html.ValidationMessageFor(m => m.from_year)*@
                 </td>
                 <td> &nbsp; &nbsp; &nbsp; &nbsp;</td>
@@ -128,6 +125,7 @@
                 <td> &nbsp;</td>
                 <!-- <td><input type="hidden" value=emp name="id" /></td>-->
                 <td><input type="submit" value="Submit" name="grid" /></td>
+
                 <td> &nbsp;</td>
                 <td><input type="submit" value="Export To Excel" name="export" /></td>
             </tr>
@@ -154,33 +152,111 @@
 <br />
 <div class="dclist" id='scrolly'>
     <table border="1" id="customers">
-        <tr style="color:#024b72">
-            <th>YEAR</th>
-            <th>DATE</th>
-            <th>MONTH</th>
-            <th>PROJECT NUMBER</th>
-            <th>CONSULTANCY TYPE</th>
-            <th>DEPATMENT CODE</th>
-            <th>COORDINATOR NAME</th>
-            <th>AGENCY CODE</th>
-            <th>AGENCY</th>
-            <th>TITLE</th>            
+        <tr style="color:#024b72">   
+            <th>DATE</th>            
             <th>AMOUNT</th>
+            <th>VRNO</th>
+            <th>NPRNO</th>
+            <th>PART</th>
+            <th>HEAD</th>
+            <th>DISC</th>
+            <th>DIS</th>
+            <th>ICCNO</th>
+            <th>PONO</th>
+            <th>COMNO</th>
+            <th>CQNO</th>
+            <th>BRNO</th>
+            <th>NATURE</th>
+            <th>CHECK</th>
+            <th>REGNO</th>
+            <th>LEDDIS</th>
+            <th>ECODE</th>
+            <th>VCTRNO</th>
+            <th>VPARTYCODE</th>
+            <th>ASSTCK</th>
+            <th>ACC1TCK</th>
+            <th>ACCTCK</th>
+            <th>SOCK</th>
+            <th>DRCK</th>
+            <th>CRDATE</th>
+            <th>CDSTATUS</th>
+            <th>TRANSFERED</th>
+            <th>EMAIL ID</th>
+            <th>VCTRBNO</th>
+            <th>LUSER</th>
+            <th>VENDOR NAME</th>
+            <th>VENDOR ADDRESS</th>
+            <th>VENDOR PINCODE</th>
+            <th>VENDOR MOBILE</th>
+            <th>VENDOR PHONE NO</th>
+            <th>VENDOR MAILID</th>            
+            <th>VENDOR PAN NO</th>
+            <th>VENDOR TIN NO</th>
+            <th>VENDOR SERVICE TAX REGNO</th>
+            <th>VENDOR ACCOUNT NAME IN BANK</th>
+            <th>VENDOR BANK NAME</th>
+            <th>VENDOR BRANCH NAME</th>
+            <th>VENDOR IFSC CODE</th>
+            <th>VENDOR BANK ACCOUTN NO</th>
+            <th>VENDOR BANK NAME</th>
+            <th>VENDOR BANK MICR CODE</th>
+            <th>VEDNOR BANK PHONE</th>
+            <th>VENDOR BANK EMAIL</th>
+            
         </tr>
-        @foreach (var rec in Model.nirf)
+        @foreach (var rec in Model.pfm_vclist)
         {
             <tr>
-                <td>@rec.YEAR</td>
                 <td>@rec.DATE</td>
-                <td>@rec.MONTH</td>
-                <td>@rec.CPRNO</td>
-                <td>@rec.CONS_TYPE</td>
-                <td>@rec.DEPT_CODE</td>
-                <td>@rec.COOR_NAME1</td>
-                <td>@rec.AGENCY_CODE</td>
-                <td>@rec.AGENCY</td>
-                <td>@rec.TITLE</td>
-                <td>@rec.rt</td>
+                <td>@rec.AMOUNT</td>    
+                <td>@rec.VRNO</td>            
+                <td>@rec.NPRNO</td>
+                <td>@rec.PART</td>
+                <td>@rec.HEAD</td>
+                <td>@rec.DISC</td>
+                <td>@rec.DIS</td>
+                <td>@rec.ICCNO</td>
+                <td>@rec.PONO</td>
+                <td>@rec.COMNO</td>
+                <td>@rec.CQNO</td>
+                <td>@rec.BRNO</td>
+                <td>@rec.NATURE</td>
+                <td>@rec.CHECK</td>
+                <td>@rec.REGNO</td>
+                <td>@rec.LEDDIS</td>
+                <td>@rec.ECODE</td>
+                <td>@rec.VCTRNO</td>
+                <td>@rec.VPartyCode</td>
+                <td>@rec.ASSTCK</td>
+                <td>@rec.ACC1TCK</td>
+                <td>@rec.ACCTCK</td>
+                <td>@rec.SOCK</td>
+                <td>@rec.DRCK</td>
+                <td>@rec.CRDATE</td>
+                <td>@rec.CDSTATUS</td>
+                <td>@rec.TRANSFERED</td>
+                <td>@rec.EMAILID</td>
+                <td>@rec.VCTRBNO</td>
+                <td>@rec.LUSER</td>
+                <td>@rec.VName</td>
+                <td>@rec.VAddress</td>
+                <td>@rec.VPinCode</td>
+                <td>@rec.VMobile</td>
+                <td>@rec.VPhoneNumber</td>
+                <td>@rec.VEmailId</td>
+                <td>@rec.VPanNo</td>
+                <td>@rec.VTinNo</td>
+                <td>@rec.VserTaxRegNo</td>
+                <td>@rec.VAcctNameInBank</td>
+                <td>@rec.VBankName</td>
+                <td>@rec.VBranchName</td>
+                <td>@rec.VIFSCCode</td>               
+                <td>@rec.VBankAcctNo</td>
+                <td>@rec.VBankName</td>
+                <td>@rec.VBankMICRCode</td>
+                <td>@rec.VbankPhoneNumber</td>
+                <td>@rec.VBankEmailID</td>
+
             </tr>
         }
     </table>
@@ -189,4 +265,3 @@
             <input type="submit" value="Export" />
         }*@
 </div>
-
