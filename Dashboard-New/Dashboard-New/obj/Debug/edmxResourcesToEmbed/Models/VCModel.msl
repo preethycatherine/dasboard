@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="FACCTModelStoreContainer" CdmEntityContainer="vcEntities">
+    <EntitySetMapping Name="DVOUCHes">
+      <EntityTypeMapping TypeName="FACCTModel.DVOUCH">
+        <MappingFragment StoreEntitySet="DVOUCH">
+          <ScalarProperty Name="DINP" ColumnName="DINP" />
+          <ScalarProperty Name="DCTRNO" ColumnName="DCTRNO" />
+          <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+          <ScalarProperty Name="NPRNO" ColumnName="NPRNO" />
+          <ScalarProperty Name="ICCNO" ColumnName="ICCNO" />
+          <ScalarProperty Name="COMNO" ColumnName="COMNO" />
+          <ScalarProperty Name="VRNO" ColumnName="VRNO" />
+          <ScalarProperty Name="BRNO" ColumnName="BRNO" />
+          <ScalarProperty Name="DCID" ColumnName="DCID" />
+          <ScalarProperty Name="ASSTCK" ColumnName="ASSTCK" />
+          <ScalarProperty Name="ACCTCK" ColumnName="ACCTCK" />
+          <ScalarProperty Name="ACCT1CK" ColumnName="ACCT1CK" />
+          <ScalarProperty Name="SOCK" ColumnName="SOCK" />
+          <ScalarProperty Name="DRCK" ColumnName="DRCK" />
+          <ScalarProperty Name="CRDATE" ColumnName="CRDATE" />
+          <ScalarProperty Name="DCTRBNO" ColumnName="DCTRBNO" />
+          <ScalarProperty Name="LUSER" ColumnName="LUSER" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VCVOUCHes">
+      <EntityTypeMapping TypeName="FACCTModel.VCVOUCH">
+        <MappingFragment StoreEntitySet="VCVOUCH">
+          <ScalarProperty Name="LUSER" ColumnName="LUSER" />
+          <ScalarProperty Name="VCTRBNO" ColumnName="VCTRBNO" />
+          <ScalarProperty Name="CRDATE" ColumnName="CRDATE" />
+          <ScalarProperty Name="DRCK" ColumnName="DRCK" />
+          <ScalarProperty Name="SOCK" ColumnName="SOCK" />
+          <ScalarProperty Name="ACCT1CK" ColumnName="ACCT1CK" />
+          <ScalarProperty Name="ACCTCK" ColumnName="ACCTCK" />
+          <ScalarProperty Name="ASSTCK" ColumnName="ASSTCK" />
+          <ScalarProperty Name="VPartyCode" ColumnName="VPartyCode" />
+          <ScalarProperty Name="BRNO" ColumnName="BRNO" />
+          <ScalarProperty Name="VRNO" ColumnName="VRNO" />
+          <ScalarProperty Name="COMNO" ColumnName="COMNO" />
+          <ScalarProperty Name="ICCNO" ColumnName="ICCNO" />
+          <ScalarProperty Name="NPRNO" ColumnName="NPRNO" />
+          <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+          <ScalarProperty Name="VCTRNO" ColumnName="VCTRNO" />
+          <ScalarProperty Name="DINP" ColumnName="DINP" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VendorMasters">
+      <EntityTypeMapping TypeName="FACCTModel.VendorMaster">
+        <MappingFragment StoreEntitySet="VendorMaster">
+          <ScalarProperty Name="Luser" ColumnName="Luser" />
+          <ScalarProperty Name="VBankEmailID" ColumnName="VBankEmailID" />
+          <ScalarProperty Name="VBankPhoneNumber" ColumnName="VBankPhoneNumber" />
+          <ScalarProperty Name="VBankMICRCode" ColumnName="VBankMICRCode" />
+          <ScalarProperty Name="VBankNature" ColumnName="VBankNature" />
+          <ScalarProperty Name="VBankAcctNo" ColumnName="VBankAcctNo" />
+          <ScalarProperty Name="VIFSCCode" ColumnName="VIFSCCode" />
+          <ScalarProperty Name="VBranchName" ColumnName="VBranchName" />
+          <ScalarProperty Name="VBankName" ColumnName="VBankName" />
+          <ScalarProperty Name="VAcctNameInBank" ColumnName="VAcctNameInBank" />
+          <ScalarProperty Name="VSerTaxRegNo" ColumnName="VSerTaxRegNo" />
+          <ScalarProperty Name="VTinNo" ColumnName="VTinNo" />
+          <ScalarProperty Name="VPanNo" ColumnName="VPanNo" />
+          <ScalarProperty Name="VEmailId" ColumnName="VEmailId" />
+          <ScalarProperty Name="VPhoneNumber" ColumnName="VPhoneNumber" />
+          <ScalarProperty Name="VMobile" ColumnName="VMobile" />
+          <ScalarProperty Name="VPinCode" ColumnName="VPinCode" />
+          <ScalarProperty Name="VAddress" ColumnName="VAddress" />
+          <ScalarProperty Name="VName" ColumnName="VName" />
+          <ScalarProperty Name="VPartyCode" ColumnName="VPartyCode" />
+          <ScalarProperty Name="DINP" ColumnName="DINP" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="REC1718">
+      <EntityTypeMapping TypeName="FACCTModel.REC1718">
+        <MappingFragment StoreEntitySet="REC1718">
+          <ScalarProperty Name="CURYNAME" ColumnName="CURYNAME" />
+          <ScalarProperty Name="NATURE" ColumnName="NATURE" />
+          <ScalarProperty Name="BK_ADJ" ColumnName="BK_ADJ" />
+          <ScalarProperty Name="BK_OPT" ColumnName="BK_OPT" />
+          <ScalarProperty Name="OPTION" ColumnName="OPTION" />
+          <ScalarProperty Name="STATION" ColumnName="STATION" />
+          <ScalarProperty Name="BRANCH" ColumnName="BRANCH" />
+          <ScalarProperty Name="BANKNAME" ColumnName="BANKNAME" />
+          <ScalarProperty Name="CDATE" ColumnName="CDATE" />
+          <ScalarProperty Name="CQNO" ColumnName="CQNO" />
+          <ScalarProperty Name="ICCNO" ColumnName="ICCNO" />
+          <ScalarProperty Name="NPRNO" ColumnName="NPRNO" />
+          <ScalarProperty Name="HEAD" ColumnName="HEAD" />
+          <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+          <ScalarProperty Name="RT" ColumnName="RT" />
+          <ScalarProperty Name="OTRAMOUNT" ColumnName="OTRAMOUNT" />
+          <ScalarProperty Name="CONAMOUNT" ColumnName="CONAMOUNT" />
+          <ScalarProperty Name="PRAMOUNT" ColumnName="PRAMOUNT" />
+          <ScalarProperty Name="SANCTNO" ColumnName="SANCTNO" />
+          <ScalarProperty Name="ADDRESS" ColumnName="ADDRESS" />
+          <ScalarProperty Name="SPONS" ColumnName="SPONS" />
+          <ScalarProperty Name="DATE" ColumnName="DATE" />
+          <ScalarProperty Name="RTNO" ColumnName="RTNO" />
+          <ScalarProperty Name="DINP" ColumnName="DINP" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MSTLSTs">
+      <EntityTypeMapping TypeName="FACCTModel.MSTLST">
+        <MappingFragment StoreEntitySet="MSTLST">
+          <ScalarProperty Name="ACCOUNTTYPE" ColumnName="ACCOUNTTYPE" />
+          <ScalarProperty Name="USERNAME" ColumnName="USERNAME" />
+          <ScalarProperty Name="INSTID1" ColumnName="INSTID1" />
+          <ScalarProperty Name="COOR_NAME1" ColumnName="COOR_NAME1" />
+          <ScalarProperty Name="INSTID" ColumnName="INSTID" />
+          <ScalarProperty Name="SANCTDTE" ColumnName="SANCTDTE" />
+          <ScalarProperty Name="SANCTNNO" ColumnName="SANCTNNO" />
+          <ScalarProperty Name="PRAMOUNT" ColumnName="PRAMOUNT" />
+          <ScalarProperty Name="CLOSE_DATE" ColumnName="CLOSE_DATE" />
+          <ScalarProperty Name="START_DATE" ColumnName="START_DATE" />
+          <ScalarProperty Name="COOR_NAME" ColumnName="COOR_NAME" />
+          <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+          <ScalarProperty Name="NPRNO" ColumnName="NPRNO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

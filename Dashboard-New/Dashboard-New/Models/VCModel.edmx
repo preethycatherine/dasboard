@@ -1,0 +1,506 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="FACCTModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'FACCT.dbo.DVOUCH' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="DVOUCH">
+          <Key>
+            <PropertyRef Name="DINP" />
+            <PropertyRef Name="BRNO" />
+            <PropertyRef Name="ASSTCK" />
+            <PropertyRef Name="LUSER" />
+          </Key>
+          <Property Name="DINP" Type="smalldatetime" Nullable="false" />
+          <Property Name="DCTRNO" Type="nvarchar" MaxLength="8" />
+          <Property Name="AMOUNT" Type="nvarchar" MaxLength="10" />
+          <Property Name="NPRNO" Type="nvarchar" MaxLength="20" />
+          <Property Name="ICCNO" Type="nvarchar" MaxLength="20" />
+          <Property Name="COMNO" Type="nvarchar" MaxLength="20" />
+          <Property Name="VRNO" Type="nvarchar" MaxLength="8" />
+          <Property Name="BRNO" Type="nvarchar" MaxLength="12" Nullable="false" />
+          <Property Name="DCID" Type="nvarchar" MaxLength="6" />
+          <Property Name="ASSTCK" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="ACCTCK" Type="nvarchar" MaxLength="15" />
+          <Property Name="ACCT1CK" Type="nvarchar" MaxLength="15" />
+          <Property Name="SOCK" Type="nvarchar" MaxLength="15" />
+          <Property Name="DRCK" Type="nvarchar" MaxLength="15" />
+          <Property Name="CRDATE" Type="smalldatetime" />
+          <Property Name="DCTRBNO" Type="nvarchar" MaxLength="12" />
+          <Property Name="LUSER" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MSTLST">
+          <Key>
+            <PropertyRef Name="NPRNO" />
+          </Key>
+          <Property Name="NPRNO" Type="nvarchar" MaxLength="18" Nullable="false" />
+          <Property Name="TITLE" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="COOR_NAME" Type="nvarchar" MaxLength="35" Nullable="false" />
+          <Property Name="START_DATE" Type="datetime" />
+          <Property Name="CLOSE_DATE" Type="datetime" />
+          <Property Name="PRAMOUNT" Type="float" Nullable="false" />
+          <Property Name="SANCTNNO" Type="nvarchar" MaxLength="50" />
+          <Property Name="SANCTDTE" Type="datetime" />
+          <Property Name="INSTID" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="COOR_NAME1" Type="nvarchar" MaxLength="35" />
+          <Property Name="INSTID1" Type="char" MaxLength="4" />
+          <Property Name="USERNAME" Type="varchar" MaxLength="50" />
+          <Property Name="ACCOUNTTYPE" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'FACCT.dbo.REC1718' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="REC1718">
+          <Key>
+            <PropertyRef Name="PRAMOUNT" />
+            <PropertyRef Name="CONAMOUNT" />
+            <PropertyRef Name="OTRAMOUNT" />
+            <PropertyRef Name="RT" />
+            <PropertyRef Name="AMOUNT" />
+            <PropertyRef Name="NPRNO" />
+          </Key>
+          <Property Name="DINP" Type="smalldatetime" />
+          <Property Name="RTNO" Type="nvarchar" MaxLength="7" />
+          <Property Name="DATE" Type="smalldatetime" />
+          <Property Name="SPONS" Type="nvarchar" MaxLength="60" />
+          <Property Name="ADDRESS" Type="nvarchar" MaxLength="60" />
+          <Property Name="SANCTNO" Type="nvarchar" MaxLength="50" />
+          <Property Name="PRAMOUNT" Type="float" Nullable="false" />
+          <Property Name="CONAMOUNT" Type="float" Nullable="false" />
+          <Property Name="OTRAMOUNT" Type="float" Nullable="false" />
+          <Property Name="RT" Type="float" Nullable="false" />
+          <Property Name="AMOUNT" Type="float" Nullable="false" />
+          <Property Name="HEAD" Type="nvarchar" MaxLength="4" />
+          <Property Name="NPRNO" Type="nvarchar" MaxLength="18" Nullable="false" />
+          <Property Name="ICCNO" Type="nvarchar" MaxLength="20" />
+          <Property Name="CQNO" Type="nvarchar" MaxLength="15" />
+          <Property Name="CDATE" Type="smalldatetime" />
+          <Property Name="BANKNAME" Type="nvarchar" MaxLength="15" />
+          <Property Name="BRANCH" Type="nvarchar" MaxLength="10" />
+          <Property Name="STATION" Type="nvarchar" MaxLength="3" />
+          <Property Name="OPTION" Type="nvarchar" MaxLength="1" />
+          <Property Name="BK_OPT" Type="nvarchar" MaxLength="1" />
+          <Property Name="BK_ADJ" Type="nvarchar" MaxLength="3" />
+          <Property Name="NATURE" Type="nvarchar" MaxLength="1" />
+          <Property Name="CURYNAME" Type="varchar" MaxLength="3" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'FACCT.dbo.VCVOUCH' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="VCVOUCH">
+          <Key>
+            <PropertyRef Name="DINP" />
+            <PropertyRef Name="BRNO" />
+            <PropertyRef Name="ASSTCK" />
+            <PropertyRef Name="LUSER" />
+          </Key>
+          <Property Name="DINP" Type="smalldatetime" Nullable="false" />
+          <Property Name="VCTRNO" Type="nvarchar" MaxLength="8" />
+          <Property Name="AMOUNT" Type="nvarchar" MaxLength="10" />
+          <Property Name="NPRNO" Type="nvarchar" MaxLength="20" />
+          <Property Name="ICCNO" Type="nvarchar" MaxLength="20" />
+          <Property Name="COMNO" Type="nvarchar" MaxLength="20" />
+          <Property Name="VRNO" Type="nvarchar" MaxLength="8" />
+          <Property Name="BRNO" Type="nvarchar" MaxLength="12" Nullable="false" />
+          <Property Name="VPartyCode" Type="nvarchar" MaxLength="7" />
+          <Property Name="ASSTCK" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="ACCTCK" Type="nvarchar" MaxLength="15" />
+          <Property Name="ACCT1CK" Type="nvarchar" MaxLength="15" />
+          <Property Name="SOCK" Type="nvarchar" MaxLength="15" />
+          <Property Name="DRCK" Type="nvarchar" MaxLength="15" />
+          <Property Name="CRDATE" Type="smalldatetime" />
+          <Property Name="VCTRBNO" Type="nvarchar" MaxLength="12" />
+          <Property Name="LUSER" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VendorMaster">
+          <Key>
+            <PropertyRef Name="VPartyCode" />
+          </Key>
+          <Property Name="DINP" Type="smalldatetime" Nullable="false" />
+          <Property Name="VPartyCode" Type="nvarchar" MaxLength="9" Nullable="false" />
+          <Property Name="VName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="VAddress" Type="nvarchar" MaxLength="250" />
+          <Property Name="VPinCode" Type="nvarchar" MaxLength="6" />
+          <Property Name="VMobile" Type="nvarchar" MaxLength="50" />
+          <Property Name="VPhoneNumber" Type="nvarchar" MaxLength="30" />
+          <Property Name="VEmailId" Type="nvarchar" MaxLength="60" />
+          <Property Name="VPanNo" Type="nvarchar" MaxLength="12" />
+          <Property Name="VTinNo" Type="nvarchar" MaxLength="18" />
+          <Property Name="VSerTaxRegNo" Type="nvarchar" MaxLength="20" />
+          <Property Name="VAcctNameInBank" Type="nvarchar" MaxLength="200" />
+          <Property Name="VBankName" Type="nvarchar" MaxLength="60" />
+          <Property Name="VBranchName" Type="nvarchar" MaxLength="60" />
+          <Property Name="VIFSCCode" Type="nvarchar" MaxLength="15" />
+          <Property Name="VBankAcctNo" Type="nvarchar" MaxLength="20" />
+          <Property Name="VBankNature" Type="nvarchar" MaxLength="20" />
+          <Property Name="VBankMICRCode" Type="nvarchar" MaxLength="20" />
+          <Property Name="VBankPhoneNumber" Type="nvarchar" MaxLength="60" />
+          <Property Name="VBankEmailID" Type="nvarchar" MaxLength="50" />
+          <Property Name="Luser" Type="nvarchar" MaxLength="30" />
+        </EntityType>
+        <EntityContainer Name="FACCTModelStoreContainer">
+          <EntitySet Name="MSTLST" EntityType="Self.MSTLST" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VendorMaster" EntityType="Self.VendorMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DVOUCH" EntityType="Self.DVOUCH" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [DVOUCH].[DINP] AS [DINP], 
+    [DVOUCH].[DCTRNO] AS [DCTRNO], 
+    [DVOUCH].[AMOUNT] AS [AMOUNT], 
+    [DVOUCH].[NPRNO] AS [NPRNO], 
+    [DVOUCH].[ICCNO] AS [ICCNO], 
+    [DVOUCH].[COMNO] AS [COMNO], 
+    [DVOUCH].[VRNO] AS [VRNO], 
+    [DVOUCH].[BRNO] AS [BRNO], 
+    [DVOUCH].[DCID] AS [DCID], 
+    [DVOUCH].[ASSTCK] AS [ASSTCK], 
+    [DVOUCH].[ACCTCK] AS [ACCTCK], 
+    [DVOUCH].[ACCT1CK] AS [ACCT1CK], 
+    [DVOUCH].[SOCK] AS [SOCK], 
+    [DVOUCH].[DRCK] AS [DRCK], 
+    [DVOUCH].[CRDATE] AS [CRDATE], 
+    [DVOUCH].[DCTRBNO] AS [DCTRBNO], 
+    [DVOUCH].[LUSER] AS [LUSER]
+    FROM [dbo].[DVOUCH] AS [DVOUCH]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="REC1718" EntityType="Self.REC1718" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [REC1718].[DINP] AS [DINP], 
+    [REC1718].[RTNO] AS [RTNO], 
+    [REC1718].[DATE] AS [DATE], 
+    [REC1718].[SPONS] AS [SPONS], 
+    [REC1718].[ADDRESS] AS [ADDRESS], 
+    [REC1718].[SANCTNO] AS [SANCTNO], 
+    [REC1718].[PRAMOUNT] AS [PRAMOUNT], 
+    [REC1718].[CONAMOUNT] AS [CONAMOUNT], 
+    [REC1718].[OTRAMOUNT] AS [OTRAMOUNT], 
+    [REC1718].[RT] AS [RT], 
+    [REC1718].[AMOUNT] AS [AMOUNT], 
+    [REC1718].[HEAD] AS [HEAD], 
+    [REC1718].[NPRNO] AS [NPRNO], 
+    [REC1718].[ICCNO] AS [ICCNO], 
+    [REC1718].[CQNO] AS [CQNO], 
+    [REC1718].[CDATE] AS [CDATE], 
+    [REC1718].[BANKNAME] AS [BANKNAME], 
+    [REC1718].[BRANCH] AS [BRANCH], 
+    [REC1718].[STATION] AS [STATION], 
+    [REC1718].[OPTION] AS [OPTION], 
+    [REC1718].[BK_OPT] AS [BK_OPT], 
+    [REC1718].[BK_ADJ] AS [BK_ADJ], 
+    [REC1718].[NATURE] AS [NATURE], 
+    [REC1718].[CURYNAME] AS [CURYNAME]
+    FROM [dbo].[REC1718] AS [REC1718]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VCVOUCH" EntityType="Self.VCVOUCH" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VCVOUCH].[DINP] AS [DINP], 
+    [VCVOUCH].[VCTRNO] AS [VCTRNO], 
+    [VCVOUCH].[AMOUNT] AS [AMOUNT], 
+    [VCVOUCH].[NPRNO] AS [NPRNO], 
+    [VCVOUCH].[ICCNO] AS [ICCNO], 
+    [VCVOUCH].[COMNO] AS [COMNO], 
+    [VCVOUCH].[VRNO] AS [VRNO], 
+    [VCVOUCH].[BRNO] AS [BRNO], 
+    [VCVOUCH].[VPartyCode] AS [VPartyCode], 
+    [VCVOUCH].[ASSTCK] AS [ASSTCK], 
+    [VCVOUCH].[ACCTCK] AS [ACCTCK], 
+    [VCVOUCH].[ACCT1CK] AS [ACCT1CK], 
+    [VCVOUCH].[SOCK] AS [SOCK], 
+    [VCVOUCH].[DRCK] AS [DRCK], 
+    [VCVOUCH].[CRDATE] AS [CRDATE], 
+    [VCVOUCH].[VCTRBNO] AS [VCTRBNO], 
+    [VCVOUCH].[LUSER] AS [LUSER]
+    FROM [dbo].[VCVOUCH] AS [VCVOUCH]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FACCTModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="DVOUCH">
+          <Key>
+            <PropertyRef Name="DINP" />
+            <PropertyRef Name="BRNO" />
+            <PropertyRef Name="ASSTCK" />
+            <PropertyRef Name="LUSER" />
+          </Key>
+          <Property Name="DINP" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DCTRNO" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="AMOUNT" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="NPRNO" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ICCNO" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="COMNO" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="VRNO" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="BRNO" Type="String" MaxLength="12" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DCID" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="ASSTCK" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ACCTCK" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="ACCT1CK" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="SOCK" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="DRCK" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="CRDATE" Type="DateTime" Precision="0" />
+          <Property Name="DCTRBNO" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="LUSER" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="vcEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="DVOUCHes" EntityType="Self.DVOUCH" />
+          <EntitySet Name="VCVOUCHes" EntityType="FACCTModel.VCVOUCH" />
+          <EntitySet Name="VendorMasters" EntityType="FACCTModel.VendorMaster" />
+          <EntitySet Name="REC1718" EntityType="FACCTModel.REC1718" />
+          <EntitySet Name="MSTLSTs" EntityType="FACCTModel.MSTLST" />
+        </EntityContainer>
+        <EntityType Name="VCVOUCH">
+          <Key>
+            <PropertyRef Name="DINP" />
+            <PropertyRef Name="BRNO" />
+            <PropertyRef Name="ASSTCK" />
+            <PropertyRef Name="LUSER" />
+          </Key>
+          <Property Name="DINP" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="VCTRNO" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="AMOUNT" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="NPRNO" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ICCNO" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="COMNO" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="VRNO" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="BRNO" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="VPartyCode" Type="String" MaxLength="7" FixedLength="false" Unicode="true" />
+          <Property Name="ASSTCK" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="ACCTCK" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="ACCT1CK" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="SOCK" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="DRCK" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="CRDATE" Type="DateTime" Precision="0" />
+          <Property Name="VCTRBNO" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="LUSER" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="VendorMaster">
+          <Key>
+            <PropertyRef Name="VPartyCode" />
+          </Key>
+          <Property Name="DINP" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="VPartyCode" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="true" />
+          <Property Name="VName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="VAddress" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="VPinCode" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="VMobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="VPhoneNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="VEmailId" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="VPanNo" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="VTinNo" Type="String" MaxLength="18" FixedLength="false" Unicode="true" />
+          <Property Name="VSerTaxRegNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="VAcctNameInBank" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="VBankName" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="VBranchName" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="VIFSCCode" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="VBankAcctNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="VBankNature" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="VBankMICRCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="VBankPhoneNumber" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="VBankEmailID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Luser" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="REC1718">
+          <Key>
+            <PropertyRef Name="PRAMOUNT" />
+            <PropertyRef Name="CONAMOUNT" />
+            <PropertyRef Name="OTRAMOUNT" />
+            <PropertyRef Name="RT" />
+            <PropertyRef Name="AMOUNT" />
+            <PropertyRef Name="NPRNO" />
+          </Key>
+          <Property Name="DINP" Type="DateTime" Precision="0" />
+          <Property Name="RTNO" Type="String" MaxLength="7" FixedLength="false" Unicode="true" />
+          <Property Name="DATE" Type="DateTime" Precision="0" />
+          <Property Name="SPONS" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="ADDRESS" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="SANCTNO" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PRAMOUNT" Type="Double" Nullable="false" />
+          <Property Name="CONAMOUNT" Type="Double" Nullable="false" />
+          <Property Name="OTRAMOUNT" Type="Double" Nullable="false" />
+          <Property Name="RT" Type="Double" Nullable="false" />
+          <Property Name="AMOUNT" Type="Double" Nullable="false" />
+          <Property Name="HEAD" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+          <Property Name="NPRNO" Type="String" Nullable="false" MaxLength="18" FixedLength="false" Unicode="true" />
+          <Property Name="ICCNO" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CQNO" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="CDATE" Type="DateTime" Precision="0" />
+          <Property Name="BANKNAME" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="BRANCH" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="STATION" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="OPTION" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="BK_OPT" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="BK_ADJ" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="NATURE" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="CURYNAME" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="MSTLST">
+          <Key>
+            <PropertyRef Name="NPRNO" />
+          </Key>
+          <Property Name="NPRNO" Type="String" Nullable="false" MaxLength="18" FixedLength="false" Unicode="true" />
+          <Property Name="TITLE" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="COOR_NAME" Type="String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="true" />
+          <Property Name="START_DATE" Type="DateTime" Precision="3" />
+          <Property Name="CLOSE_DATE" Type="DateTime" Precision="3" />
+          <Property Name="PRAMOUNT" Type="Double" Nullable="false" />
+          <Property Name="SANCTNNO" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SANCTDTE" Type="DateTime" Precision="3" />
+          <Property Name="INSTID" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="COOR_NAME1" Type="String" MaxLength="35" FixedLength="false" Unicode="true" />
+          <Property Name="INSTID1" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="USERNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ACCOUNTTYPE" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FACCTModelStoreContainer" CdmEntityContainer="vcEntities">
+          <EntitySetMapping Name="DVOUCHes">
+            <EntityTypeMapping TypeName="FACCTModel.DVOUCH">
+              <MappingFragment StoreEntitySet="DVOUCH">
+                <ScalarProperty Name="DINP" ColumnName="DINP" />
+                <ScalarProperty Name="DCTRNO" ColumnName="DCTRNO" />
+                <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+                <ScalarProperty Name="NPRNO" ColumnName="NPRNO" />
+                <ScalarProperty Name="ICCNO" ColumnName="ICCNO" />
+                <ScalarProperty Name="COMNO" ColumnName="COMNO" />
+                <ScalarProperty Name="VRNO" ColumnName="VRNO" />
+                <ScalarProperty Name="BRNO" ColumnName="BRNO" />
+                <ScalarProperty Name="DCID" ColumnName="DCID" />
+                <ScalarProperty Name="ASSTCK" ColumnName="ASSTCK" />
+                <ScalarProperty Name="ACCTCK" ColumnName="ACCTCK" />
+                <ScalarProperty Name="ACCT1CK" ColumnName="ACCT1CK" />
+                <ScalarProperty Name="SOCK" ColumnName="SOCK" />
+                <ScalarProperty Name="DRCK" ColumnName="DRCK" />
+                <ScalarProperty Name="CRDATE" ColumnName="CRDATE" />
+                <ScalarProperty Name="DCTRBNO" ColumnName="DCTRBNO" />
+                <ScalarProperty Name="LUSER" ColumnName="LUSER" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VCVOUCHes">
+            <EntityTypeMapping TypeName="FACCTModel.VCVOUCH">
+              <MappingFragment StoreEntitySet="VCVOUCH">
+                <ScalarProperty Name="LUSER" ColumnName="LUSER" />
+                <ScalarProperty Name="VCTRBNO" ColumnName="VCTRBNO" />
+                <ScalarProperty Name="CRDATE" ColumnName="CRDATE" />
+                <ScalarProperty Name="DRCK" ColumnName="DRCK" />
+                <ScalarProperty Name="SOCK" ColumnName="SOCK" />
+                <ScalarProperty Name="ACCT1CK" ColumnName="ACCT1CK" />
+                <ScalarProperty Name="ACCTCK" ColumnName="ACCTCK" />
+                <ScalarProperty Name="ASSTCK" ColumnName="ASSTCK" />
+                <ScalarProperty Name="VPartyCode" ColumnName="VPartyCode" />
+                <ScalarProperty Name="BRNO" ColumnName="BRNO" />
+                <ScalarProperty Name="VRNO" ColumnName="VRNO" />
+                <ScalarProperty Name="COMNO" ColumnName="COMNO" />
+                <ScalarProperty Name="ICCNO" ColumnName="ICCNO" />
+                <ScalarProperty Name="NPRNO" ColumnName="NPRNO" />
+                <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+                <ScalarProperty Name="VCTRNO" ColumnName="VCTRNO" />
+                <ScalarProperty Name="DINP" ColumnName="DINP" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VendorMasters">
+            <EntityTypeMapping TypeName="FACCTModel.VendorMaster">
+              <MappingFragment StoreEntitySet="VendorMaster">
+                <ScalarProperty Name="Luser" ColumnName="Luser" />
+                <ScalarProperty Name="VBankEmailID" ColumnName="VBankEmailID" />
+                <ScalarProperty Name="VBankPhoneNumber" ColumnName="VBankPhoneNumber" />
+                <ScalarProperty Name="VBankMICRCode" ColumnName="VBankMICRCode" />
+                <ScalarProperty Name="VBankNature" ColumnName="VBankNature" />
+                <ScalarProperty Name="VBankAcctNo" ColumnName="VBankAcctNo" />
+                <ScalarProperty Name="VIFSCCode" ColumnName="VIFSCCode" />
+                <ScalarProperty Name="VBranchName" ColumnName="VBranchName" />
+                <ScalarProperty Name="VBankName" ColumnName="VBankName" />
+                <ScalarProperty Name="VAcctNameInBank" ColumnName="VAcctNameInBank" />
+                <ScalarProperty Name="VSerTaxRegNo" ColumnName="VSerTaxRegNo" />
+                <ScalarProperty Name="VTinNo" ColumnName="VTinNo" />
+                <ScalarProperty Name="VPanNo" ColumnName="VPanNo" />
+                <ScalarProperty Name="VEmailId" ColumnName="VEmailId" />
+                <ScalarProperty Name="VPhoneNumber" ColumnName="VPhoneNumber" />
+                <ScalarProperty Name="VMobile" ColumnName="VMobile" />
+                <ScalarProperty Name="VPinCode" ColumnName="VPinCode" />
+                <ScalarProperty Name="VAddress" ColumnName="VAddress" />
+                <ScalarProperty Name="VName" ColumnName="VName" />
+                <ScalarProperty Name="VPartyCode" ColumnName="VPartyCode" />
+                <ScalarProperty Name="DINP" ColumnName="DINP" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="REC1718">
+            <EntityTypeMapping TypeName="FACCTModel.REC1718">
+              <MappingFragment StoreEntitySet="REC1718">
+                <ScalarProperty Name="CURYNAME" ColumnName="CURYNAME" />
+                <ScalarProperty Name="NATURE" ColumnName="NATURE" />
+                <ScalarProperty Name="BK_ADJ" ColumnName="BK_ADJ" />
+                <ScalarProperty Name="BK_OPT" ColumnName="BK_OPT" />
+                <ScalarProperty Name="OPTION" ColumnName="OPTION" />
+                <ScalarProperty Name="STATION" ColumnName="STATION" />
+                <ScalarProperty Name="BRANCH" ColumnName="BRANCH" />
+                <ScalarProperty Name="BANKNAME" ColumnName="BANKNAME" />
+                <ScalarProperty Name="CDATE" ColumnName="CDATE" />
+                <ScalarProperty Name="CQNO" ColumnName="CQNO" />
+                <ScalarProperty Name="ICCNO" ColumnName="ICCNO" />
+                <ScalarProperty Name="NPRNO" ColumnName="NPRNO" />
+                <ScalarProperty Name="HEAD" ColumnName="HEAD" />
+                <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+                <ScalarProperty Name="RT" ColumnName="RT" />
+                <ScalarProperty Name="OTRAMOUNT" ColumnName="OTRAMOUNT" />
+                <ScalarProperty Name="CONAMOUNT" ColumnName="CONAMOUNT" />
+                <ScalarProperty Name="PRAMOUNT" ColumnName="PRAMOUNT" />
+                <ScalarProperty Name="SANCTNO" ColumnName="SANCTNO" />
+                <ScalarProperty Name="ADDRESS" ColumnName="ADDRESS" />
+                <ScalarProperty Name="SPONS" ColumnName="SPONS" />
+                <ScalarProperty Name="DATE" ColumnName="DATE" />
+                <ScalarProperty Name="RTNO" ColumnName="RTNO" />
+                <ScalarProperty Name="DINP" ColumnName="DINP" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MSTLSTs">
+            <EntityTypeMapping TypeName="FACCTModel.MSTLST">
+              <MappingFragment StoreEntitySet="MSTLST">
+                <ScalarProperty Name="ACCOUNTTYPE" ColumnName="ACCOUNTTYPE" />
+                <ScalarProperty Name="USERNAME" ColumnName="USERNAME" />
+                <ScalarProperty Name="INSTID1" ColumnName="INSTID1" />
+                <ScalarProperty Name="COOR_NAME1" ColumnName="COOR_NAME1" />
+                <ScalarProperty Name="INSTID" ColumnName="INSTID" />
+                <ScalarProperty Name="SANCTDTE" ColumnName="SANCTDTE" />
+                <ScalarProperty Name="SANCTNNO" ColumnName="SANCTNNO" />
+                <ScalarProperty Name="PRAMOUNT" ColumnName="PRAMOUNT" />
+                <ScalarProperty Name="CLOSE_DATE" ColumnName="CLOSE_DATE" />
+                <ScalarProperty Name="START_DATE" ColumnName="START_DATE" />
+                <ScalarProperty Name="COOR_NAME" ColumnName="COOR_NAME" />
+                <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+                <ScalarProperty Name="NPRNO" ColumnName="NPRNO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

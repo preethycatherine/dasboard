@@ -418,7 +418,7 @@ namespace Dashboard_New.Controllers
 
         [HttpPost]
 
-        public ActionResult pfms_vc_post(Dashboard_New.Models.custom.nirf v5, string grid, string export)
+        public ActionResult pfms_vc_post(Dashboard_New.Models.custom.pfms_vc v5, string grid, string export)
         {
             if (string.IsNullOrEmpty(v5.from_year))
             {
@@ -439,28 +439,27 @@ namespace Dashboard_New.Controllers
                     string to_dt = v5.to_year.Substring(2);
                     DateTime fromdt = DateTime.ParseExact(v5.from_year, "yyyy", CultureInfo.InvariantCulture);
                     DateTime todt = DateTime.ParseExact(v5.to_year, "yyyy", CultureInfo.InvariantCulture);
-                    string tabname = "REC" + from_dt + to_dt;
-                    dt.Columns.AddRange(new DataColumn[9] { new DataColumn("YEAR"), new DataColumn("MONTH"), new DataColumn("PROJECT NUMBER"), new DataColumn("COORDINATOR NAME"), new DataColumn("AGENCY"), new DataColumn("TITLE"), new DataColumn("SANCTION NUMBER"), new DataColumn("SANCTION DATE"), new DataColumn("AMOUNT") });
-                    var disp = entities.Database.SqlQuery<Dashboard_New.Models.custom.pfms_vc>(string.Format("select '" + from_dt + " - " + to_dt + "' as YEAR,DATEPART(MONTH,(R.DATE)) Month,M.NPRNO,M.COOR_NAME,SUBSTRING(M.NPRNO,11,4)AS AGENCY,REPLACE(M.TITLE, CHAR(13) + CHAR(10), '') AS TITLE, M.SANCTNNO, M.SANCTDTE, SUM(R.RT)AS AMOUNT FROM " + tabname + " as  R, MSTLST M WHERE M.NPRNO = R.NPRNO AND((R.RTNO LIKE'P0%') OR(R.RTNO LIKE 'S0%')  OR(R.RTNO LIKE 'M0%')  OR(R.RTNO LIKE 'IH%')OR(R.RTNO LIKE 'NP0%'))AND R.HEAD IS NULL AND SUBSTRING(M.NPRNO, 11, 4)NOT IN(SELECT ResearchCode FROM FOXOFFICE.DBO.InternalProjectCode  WHERE ResearchCode != 'IITM')AND M.NPRNO NOT LIKE'FDR'AND M.NPRNO NOT LIKE'ACC%'AND M.NPRNO NOT LIKE'ICC'AND M.NPRNO NOT LIKE'%DEVP%' AND M.NPRNO NOT LIKE'OAA'AND M.NPRNO NOT LIKE'%EQPT%'AND M.NPRNO NOT LIKE'FDR'AND M.NPRNO NOT LIKE'ICSROH'AND M.NPRNO NOT LIKE'ACC%' AND M.NPRNO NOT LIKE'OTHERS'AND M.NPRNO NOT LIKE'%BMF%'AND M.NPRNO NOT LIKE'%DADM%' AND M.NPRNO NOT LIKE '%DEAN%' AND M.NPRNO NOT LIKE'%DARE%'AND M.NPRNO NOT LIKE'%ACCT%'AND M.NPRNO NOT LIKE'%RMF%' AND M.NPRNO NOT LIKE'%DPLA%' AND M.NPRNO NOT IN('DIA1213001IITMDIAR', 'DIA1718005IITMDIAR', 'DIA1718007ALUMDIAR') AND M.NPRNO NOT LIKE'RSI%' AND M.NPRNO NOT LIKE'%IPRC%' AND M.NPRNO NOT LIKE 'CCE0910008IITMSHAN' AND M.NPRNO NOT LIKE 'COM%' GROUP BY M.NPRNO, M.COOR_NAME, M.SANCTDTE, M.SANCTNNO, DATEPART(MONTH, (R.DATE)), M.TITLE ORDER BY DATEPART(MONTH, (R.DATE)), SUBSTRING(M.NPRNO, 1, 3), M.NPRNO", fromdt.ToString("yyyy", CultureInfo.InvariantCulture), todt.ToString("yyyy", CultureInfo.InvariantCulture))).ToList();
-                    dt.Columns[8].DataType = typeof(Int32);
-                    dt.Columns[1].DataType = typeof(Int32);
+                    string tabname = "VOU" + from_dt + to_dt;
+                    dt.Columns.AddRange(new DataColumn[49] {new DataColumn("YEAR"), new DataColumn("DATE"), new DataColumn("AMOUNT"), new DataColumn("VRNO"), new DataColumn("NPRNO"), new DataColumn("PART"), new DataColumn("HEAD"), new DataColumn("DISC"), new DataColumn("DIS"), new DataColumn("ICCNO"), new DataColumn("PONO"), new DataColumn("COMNO"), new DataColumn("CQNO"), new DataColumn("BRNO"), new DataColumn("NATURE"), new DataColumn("CHECK"), new DataColumn("REGNO"),new DataColumn("LEDDIS"), new DataColumn("ECODE"), new DataColumn("VCTRNO"),new DataColumn("VPartyCode"), new DataColumn("ASSTCK"),new DataColumn("ACC1TCK"), new DataColumn("ACCTCK"), new DataColumn("SOCK"),new DataColumn("DRCK"), new DataColumn("CRDATE"), new DataColumn("CDSTATUS"), new DataColumn("TRANSFERED"), new DataColumn("EMAILID"), new DataColumn("VCTRBNO"), new DataColumn("LUSER"), new DataColumn("VName"), new DataColumn("VAddress"), new DataColumn("VPinCode"), new DataColumn("VMobile"), new DataColumn("VPhoneNumber"), new DataColumn("VEmailId"), new DataColumn("VPanNo"),new DataColumn("VTinNo"), new DataColumn("VserTaxRegNo"), new DataColumn("VAcctNameInBank"), new DataColumn("VBankName"),new DataColumn("VBranchName"), new DataColumn("VIFSCCode"), new DataColumn("VBankAcctNo"),new DataColumn("VBankMICRCode"), new DataColumn("VbankPhoneNumber"), new DataColumn("VBankEmailID") });
+                    var disp = entities.Database.SqlQuery<Dashboard_New.Models.custom.pfms_vc>(string.Format("select v.DATE,v.AMOUNT,v.VRNO,v.NPRNO,v.PART,v.HEAD,v.DISC,v.DIS , V.ICCNO, V.PONO, V.COMNO, V.CQNO, V.BRNO, v.NATURE, v.[CHECK], v.REGNO,v.LEDDIS, v.ECODE, c.VCTRNO, c.VPartyCode, c.ASSTCK, c.ACCT1CK, c.ACCTCK,c.SOCK, c.DRCK, c.CRDATE, c.CDSTATUS, c.TRANSFERED, c.EMAILID, c.VCTRBNO, C.LUSER, M.VName,m.VAddress, m.VPinCode, m.VMobile, m.VPhoneNumber, m.VEmailId,m.VPanNo, m.VTinNo, m.VSerTaxRegNo, m.VAcctNameInBank, m.VBankName, m.VBranchName, m.VIFSCCode,M.VBankAcctNo, M.VBankName, M.VBankMICRCode, M.VBankPhoneNumber, M.VBankEmailID  from " + tabname + "  V,VENDORDRAWN C,VendorMaster M WHERE V.VRNO=C.VRNO AND C.VPartyCode=M.VPartyCode and v.nprno in (select nprno from mstlst where ACCOUNTTYPE='pfms')", fromdt.ToString("yyyy", CultureInfo.InvariantCulture), todt.ToString("yyyy", CultureInfo.InvariantCulture))).ToList();
+
                     foreach (var x in disp)
                     {
-                        //dt.Rows.Add(x.YEAR, x.MONTH, x.NPRNO, x.COOR_NAME, x.AGENCY, x.TITLE, x.SANCTNNO, x.SANCTDTE, x.AMOUNT);
+                        dt.Rows.Add(x.DATE, x.AMOUNT, x.VRNO, x.NPRNO, x.PART,x.HEAD, x.DISC, x.DIS , x.ICCNO, x.PONO, x.COMNO, x.CQNO, x.BRNO, x.NATURE, x.CHECK, x.REGNO,x.LEDDIS, x.ECODE, x.VCTRNO, x.VPartyCode, x.ASSTCK, x.ACC1TCK, x.ACCTCK,x.SOCK, x.DRCK, x.CRDATE, x.CDSTATUS, x.TRANSFERED,x.EMAILID, x.VCTRBNO, x.LUSER, x.VName,x.VAddress, x.VPinCode, x.VMobile, x.VPhoneNumber, x.VEmailId,x.VPanNo, x.VTinNo, x.VserTaxRegNo, x.VAcctNameInBank, x.VBankName, x.VBranchName, x.VIFSCCode,x.VBankAcctNo, x.VBankMICRCode, x.VbankPhoneNumber, x.VBankEmailID);
                     }
                     using (XLWorkbook wb = new XLWorkbook())
                     {
-                        wb.Worksheets.Add("NIRF SPONSORED");
+                        wb.Worksheets.Add("PFMS -VC");
                         wb.Worksheet(1).Cell(3, 1).InsertTable(dt);
-                        wb.Worksheet(1).Cell(1, 7).Value = "NIRF(Sponsored) : R" + v5.from_year + " - " + v5.to_year;
+                        wb.Worksheet(1).Cell(1, 7).Value = "PFMS (VC) : VOU" + v5.from_year + " - " + v5.to_year;
                         wb.Worksheet(1).Cell(1, 7).Style.Font.Bold = true;
                         var wbs = wb.Worksheets.FirstOrDefault();
                         wbs.Tables.FirstOrDefault().ShowAutoFilter = false;
-                        wb.Properties.Title = "NIRF SPONSORED REPORT";
+                        wb.Properties.Title = "PFMS VC REPORT";
                         using (MemoryStream stream = new MemoryStream())
                         {
                             wb.SaveAs(stream);
-                            return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "NIRF-SPONSORED.xlsx");
+                            return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "PFMS-VC.xlsx");
                         }
                     }
                 }              
@@ -471,22 +470,21 @@ namespace Dashboard_New.Controllers
                     DateTime fromdt = DateTime.ParseExact(v5.from_year, "yyyy", CultureInfo.InvariantCulture);
                     DateTime todt = DateTime.ParseExact(v5.to_year, "yyyy", CultureInfo.InvariantCulture);
                     string tabname = "VOU" + from_dt + to_dt;
-                    List<NIRF_RPT> records = new List<NIRF_RPT>();
+                    List<pfms_vc> records = new List<pfms_vc>();
                     try
                     {
                         vcEntities vcobj = new vcEntities();
-                        records = vcobj.Database.SqlQuery<NIRF_RPT>(string.Format("select '" + v5.from_year + " - " + v5.to_year + "' as YEAR,DATEPART(MONTH,(R.DATE)) Month,M.NPRNO,M.COOR_NAME,SUBSTRING(M.NPRNO,11,4)AS AGENCY,REPLACE(M.TITLE, CHAR(13) + CHAR(10), '') AS TITLE , M.SANCTNNO, M.SANCTDTE, SUM(R.RT)AS AMOUNT FROM " + tabname + " as R, MSTLST M WHERE M.NPRNO = R.NPRNO AND((R.RTNO LIKE'P0%') OR(R.RTNO LIKE 'S0%')  OR(R.RTNO LIKE 'M0%')  OR(R.RTNO LIKE 'IH%')OR(R.RTNO LIKE 'NP0%'))AND R.HEAD IS NULL AND SUBSTRING(M.NPRNO, 11, 4)NOT IN(SELECT ResearchCode FROM FOXOFFICE.DBO.InternalProjectCode  WHERE ResearchCode != 'IITM')AND M.NPRNO NOT LIKE'FDR'AND M.NPRNO NOT LIKE'ACC%'AND M.NPRNO NOT LIKE'ICC'AND M.NPRNO NOT LIKE'%DEVP%' AND M.NPRNO NOT LIKE'OAA'AND M.NPRNO NOT LIKE'%EQPT%'AND M.NPRNO NOT LIKE'FDR'AND M.NPRNO NOT LIKE'ICSROH'AND M.NPRNO NOT LIKE'ACC%' AND M.NPRNO NOT LIKE'OTHERS'AND M.NPRNO NOT LIKE'%BMF%'AND M.NPRNO NOT LIKE'%DADM%' AND M.NPRNO NOT LIKE '%DEAN%' AND M.NPRNO NOT LIKE'%DARE%'AND M.NPRNO NOT LIKE'%ACCT%'AND M.NPRNO NOT LIKE'%RMF%' AND M.NPRNO NOT LIKE'%DPLA%' AND M.NPRNO NOT IN('DIA1213001IITMDIAR', 'DIA1718005IITMDIAR', 'DIA1718007ALUMDIAR') AND M.NPRNO NOT LIKE'RSI%' AND M.NPRNO NOT LIKE'%IPRC%' AND M.NPRNO NOT LIKE 'CCE0910008IITMSHAN' AND M.NPRNO NOT LIKE 'COM%' GROUP BY M.NPRNO, M.COOR_NAME, M.SANCTDTE, M.SANCTNNO, DATEPART(MONTH, (R.DATE)), M.TITLE ORDER BY DATEPART(MONTH, (R.DATE)), SUBSTRING(M.NPRNO, 1, 3), M.NPRNO", fromdt.ToString("yyyy", CultureInfo.InvariantCulture), todt.ToString("yyyy", CultureInfo.InvariantCulture))).ToList();
-                      //  records=vcobj.Database.SqlQuery<pfms_vc>(string.Format("SELECT * FROM  " + tabname + " as V,VENDORDRAWN C,VendorMaster M WHERE V.VRNO=C.VRNO AND C.VPartyCode=M.VPartyCode and v.nprno in (select nprno from mstlst where ACCOUNTTYPE='pfms')", fromdt.ToString("yyyy", CultureInfo.InvariantCulture), todt.ToString("yyyy", CultureInfo.InvariantCulture))).ToList();
+                        records = vcobj.Database.SqlQuery<pfms_vc>(string.Format("select v.DATE,v.AMOUNT,v.VRNO,v.NPRNO,v.PART,v.HEAD,v.DISC,v.DIS , V.ICCNO, V.PONO, V.COMNO, V.CQNO, V.BRNO, v.NATURE, v.[CHECK], v.REGNO,v.LEDDIS, v.ECODE, c.VCTRNO, c.VPartyCode, c.ASSTCK, c.ACCT1CK, c.ACCTCK,c.SOCK, c.DRCK, c.CRDATE, c.CDSTATUS, c.TRANSFERED, c.EMAILID, c.VCTRBNO, C.LUSER, M.VName,m.VAddress, m.VPinCode, m.VMobile, m.VPhoneNumber, m.VEmailId,m.VPanNo, m.VTinNo, m.VSerTaxRegNo, m.VAcctNameInBank, m.VBankName, m.VBranchName, m.VIFSCCode,M.VBankAcctNo, M.VBankName, M.VBankMICRCode, M.VBankPhoneNumber, M.VBankEmailID  from "+ tabname + "  V,VENDORDRAWN C,VendorMaster M WHERE V.VRNO=C.VRNO AND C.VPartyCode=M.VPartyCode and v.nprno in (select nprno from mstlst where ACCOUNTTYPE='pfms')", fromdt.ToString("yyyy", CultureInfo.InvariantCulture), todt.ToString("yyyy", CultureInfo.InvariantCulture))).ToList();
                         Dashboard_New.Models.VModel dv = new VModel();
                         dv.from_year = v5.from_year;
                         dv.to_year = v5.to_year;
-                        dv.nirf = records;
+                        dv.pfm_vclist = records;
                         return View("pfms_vc", dv);
                     }
                     catch (Exception e)
                     { Console.WriteLine("Error : " + e); }
                     VModel vd = new VModel();
-                    vd.nirf = records;
+                    vd.pfm_vclist = records;
                     vd.from_year = v5.from_year;
                     vd.to_year = v5.to_year;
                     return View("pfms_vc", vd);
