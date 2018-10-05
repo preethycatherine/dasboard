@@ -15,9 +15,12 @@ using Dashboard_New.Models.custom;
 namespace Dashboard_New.Controllers
 {
     [DashboardAutherisation]
+
     public class HomeController : Controller
     {
-       // [DashboardAutherisation]
+        string myVar;
+
+        // [DashboardAutherisation]
         public ActionResult Index()
         {
             return View();
@@ -382,9 +385,9 @@ namespace Dashboard_New.Controllers
                         }
                     }
                 }
-                if (string.Equals("Submit", grid))
+                if(string.Equals("Submit", grid))
                 {
-                    string strddval = Request.Form["menu1"].ToString();
+                    //string strddval = Request.Form["menu1"].ToString();
                     string from_dt = v4.from_dt;
                     string to_dt = v4.to_dt;
                     DateTime fromdt = DateTime.ParseExact(v4.from_dt, "dd/MM/yyyy", CultureInfo.InvariantCulture);
@@ -413,13 +416,26 @@ namespace Dashboard_New.Controllers
         }
 
 
-        public ActionResult pfms_vc()
-        { return View(new VModel()); }
+        public ActionResult pfms_vc(string id)
+        {
+            return View(new VModel());
+        }
+
+
+        public ActionResult pvc()
+        {
+            //string myVar = Request.Form["Sortby"];  
+            return View(new VModel());           
+        }
 
         [HttpPost]
 
-        public ActionResult pfms_vc_post(Dashboard_New.Models.custom.pfms_vc v5, string grid, string export)
+        //public ActionResult pfms_vc_post(Dashboard_New.Models.custom.pfms_vc v5, string grid, string export, string id)
+        public ActionResult pvc_post(Dashboard_New.Models.custom.pvc v5, string grid, string export)
         {
+
+            Session["tid"] = Request.Form["Sortby"];
+            myVar = Session["tid"].ToString();
             if (string.IsNullOrEmpty(v5.from_year))
             {
                 ModelState.AddModelError("From year", "Year Required");
@@ -430,6 +446,7 @@ namespace Dashboard_New.Controllers
             }
             if (ModelState.IsValid)
             {
+                //if ((string.Equals("Export To Excel", export))*/&& (string.Equals("Year", Session["tid"])))
                 if (string.Equals("Export To Excel", export))
                 {
                    
@@ -463,23 +480,24 @@ namespace Dashboard_New.Controllers
                         }
                     }
                 }              
-                if (string.Equals("Submit", grid))
+                if ((string.Equals("Submit", grid)) && (string.Equals("Year", myVar)))
                 {
-                    string from_dt = v5.from_year.Substring(2);
-                    string to_dt = v5.to_year.Substring(2);
+                    string from_yr = v5.from_year.Substring(2);
+                    string to_yr = v5.to_year.Substring(2);
                     DateTime fromdt = DateTime.ParseExact(v5.from_year, "yyyy", CultureInfo.InvariantCulture);
                     DateTime todt = DateTime.ParseExact(v5.to_year, "yyyy", CultureInfo.InvariantCulture);
-                    string tabname = "VOU" + from_dt + to_dt;
-                    List<pfms_vc> records = new List<pfms_vc>();
+
+                    string tabname = "VOU" + from_yr + to_yr;
+                    List<pvc> records = new List<pvc>();
                     try
                     {
                         vcEntities vcobj = new vcEntities();
-                        records = vcobj.Database.SqlQuery<pfms_vc>(string.Format("select v.DATE,v.AMOUNT,v.VRNO,v.NPRNO,v.PART,v.HEAD,v.DISC,v.DIS , V.ICCNO, V.PONO, V.COMNO, V.CQNO, V.BRNO, v.NATURE, v.[CHECK], v.REGNO,v.LEDDIS, v.ECODE, c.VCTRNO, c.VPartyCode, c.ASSTCK, c.ACCT1CK, c.ACCTCK,c.SOCK, c.DRCK, c.CRDATE, c.CDSTATUS, c.TRANSFERED, c.EMAILID, c.VCTRBNO, C.LUSER, M.VName,m.VAddress, m.VPinCode, m.VMobile, m.VPhoneNumber, m.VEmailId,m.VPanNo, m.VTinNo, m.VSerTaxRegNo, m.VAcctNameInBank, m.VBankName, m.VBranchName, m.VIFSCCode,M.VBankAcctNo, M.VBankName, M.VBankMICRCode, M.VBankPhoneNumber, M.VBankEmailID  from "+ tabname + "  V,VENDORDRAWN C,VendorMaster M WHERE V.VRNO=C.VRNO AND C.VPartyCode=M.VPartyCode and v.nprno in (select nprno from mstlst where ACCOUNTTYPE='pfms')", fromdt.ToString("yyyy", CultureInfo.InvariantCulture), todt.ToString("yyyy", CultureInfo.InvariantCulture))).ToList();
+                        records = vcobj.Database.SqlQuery<pvc>(string.Format("select v.DATE,v.AMOUNT,v.VRNO,v.NPRNO,v.PART,v.HEAD,v.DISC,v.DIS , V.ICCNO, V.PONO, V.COMNO, V.CQNO, V.BRNO, v.NATURE, v.[CHECK], v.REGNO,v.LEDDIS, v.ECODE, c.VCTRNO, c.VPartyCode, c.ASSTCK, c.ACCT1CK, c.ACCTCK,c.SOCK, c.DRCK, c.CRDATE, c.CDSTATUS, c.TRANSFERED, c.EMAILID, c.VCTRBNO, C.LUSER, M.VName,m.VAddress, m.VPinCode, m.VMobile, m.VPhoneNumber, m.VEmailId,m.VPanNo, m.VTinNo, m.VSerTaxRegNo, m.VAcctNameInBank, m.VBankName, m.VBranchName, m.VIFSCCode,M.VBankAcctNo, M.VBankName, M.VBankMICRCode, M.VBankPhoneNumber, M.VBankEmailID  from "+ tabname + "  V,VENDORDRAWN C,VendorMaster M WHERE V.VRNO=C.VRNO AND C.VPartyCode=M.VPartyCode and v.nprno in (select nprno from mstlst where ACCOUNTTYPE='pfms')", fromdt.ToString("yyyy", CultureInfo.InvariantCulture), todt.ToString("yyyy", CultureInfo.InvariantCulture))).ToList();
                         Dashboard_New.Models.VModel dv = new VModel();
                         dv.from_year = v5.from_year;
                         dv.to_year = v5.to_year;
                         dv.pfm_vclist = records;
-                        return View("pfms_vc", dv);
+                        return View("pvc", dv);
                     }
                     catch (Exception e)
                     { Console.WriteLine("Error : " + e); }
@@ -487,16 +505,46 @@ namespace Dashboard_New.Controllers
                     vd.pfm_vclist = records;
                     vd.from_year = v5.from_year;
                     vd.to_year = v5.to_year;
-                    return View("pfms_vc", vd);
+                    return View("pvc", vd);
                 }
-               
+                if ((string.Equals("Submit", grid)) && (string.Equals("Date", myVar)))
+                {             
+                    string from_dt = v5.from_year.Substring(8);
+                    string to_dt= v5.to_year.Substring(3,2);
+                    DateTime fromdt = DateTime.ParseExact(v5.from_year, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    DateTime todt = DateTime.ParseExact(v5.from_year, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    string tabname = "V" + from_dt + to_dt;
+                    List<pvc> records = new List<pvc>();
+                    try
+                    {
+                        vcEntities vcobj = new vcEntities();
+                        records = vcobj.Database.SqlQuery<pvc>(string.Format("select v.DATE,v.AMOUNT,v.VRNO,v.NPRNO,v.PART,v.HEAD,v.DISC,v.DIS , V.ICCNO, V.PONO, V.COMNO, V.CQNO, V.BRNO, v.NATURE, v.[CHECK], v.REGNO,v.LEDDIS, v.ECODE, c.VCTRNO, c.VPartyCode, c.ASSTCK, c.ACCT1CK, c.ACCTCK,c.SOCK, c.DRCK, c.CRDATE, c.CDSTATUS, c.TRANSFERED, c.EMAILID, c.VCTRBNO, C.LUSER, M.VName,m.VAddress, m.VPinCode, m.VMobile, m.VPhoneNumber, m.VEmailId,m.VPanNo, m.VTinNo, m.VSerTaxRegNo, m.VAcctNameInBank, m.VBankName, m.VBranchName, m.VIFSCCode,M.VBankAcctNo, M.VBankName, M.VBankMICRCode, M.VBankPhoneNumber, M.VBankEmailID  from " + tabname + "  V,VENDORDRAWN C,VendorMaster M WHERE V.VRNO=C.VRNO AND C.VPartyCode=M.VPartyCode and v.nprno in (select nprno from mstlst where ACCOUNTTYPE='pfms')", fromdt.ToString("yyyy", CultureInfo.InvariantCulture), todt.ToString("yyyy", CultureInfo.InvariantCulture))).ToList();
+                        Dashboard_New.Models.VModel dv = new VModel();
+                        dv.from_year = v5.from_year;
+                        dv.to_year = v5.to_year;
+                        dv.pfm_vclist = records;
+                        return View("pvc", dv);
+                    }
+                    catch (Exception e)
+                    { Console.WriteLine("Error : " + e); }
+                    VModel vd = new VModel();
+                    vd.pfm_vclist = records;
+                    vd.from_year = v5.from_year;
+                    vd.to_year = v5.to_year;
+                    return View("pvc", vd);
+                }
+
             }
             else
             {
-                return View("pfms_vc", v5);
+                return View("pvc", v5);
             }
             return null;
         }
+            
+
+      
+
         public ActionResult Contact()
         { return View(); }
 

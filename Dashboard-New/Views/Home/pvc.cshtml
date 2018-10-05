@@ -1,111 +1,110 @@
 ﻿@model Dashboard_New.Models.VModel
 @using System.Globalization
-@*@model Dashboard_New.Models.custom.rec*@
 @{
-    ViewBag.Title = "nirf";
+    ViewBag.Title = "pvc";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    //  var emp = Session["idd"];
 }
 
-
-
-@*<script src="~/Scripts/datepicker/jquery-ui.js"></script>
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="~/plugins/bootstrapDatepicker/js/bootstrap-datetimepicker.min.js"></script>
-
-
-    <link href="~/plugins/bootstrapDatepicker/css/bootstrap-datetimepicker.css" rel="stylesheet" />
-    <link href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"  rel="stylesheet">
-
-    <link href="~/Content/datepicker/jquery-ui.css" rel="stylesheet" />*@
+<link href="~/Content/datepicker/table.css" rel="stylesheet" />
+<link href="~/Content/datepicker/jquery-ui.css" rel="stylesheet" />
 <link href="~/Content/datepicker/table.css" rel="stylesheet" />
 <link href="~/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker-standalone.css" rel="stylesheet" />
 <link href="~/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" rel="stylesheet" />
 <script src="~/Scripts/jquery-1.10.2.js"></script>
 <script src="~/Scripts/moment.js"></script>
 <script src="~/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+<script src="~/Scripts/datepicker/jquery-ui.js"></script>
+<script> 
+    flag = 0;  
+    function CallChangefunc(val)
+    {        
+        if (val == "Date")
+        {
+         
+                      
+            $('#from_year').val = '';
+            $('#from_year').datepicker({
+                dateFormat: 'dd/mm/yy'
+            });
+            if (flag == 1)
+            {
+
+                $('#from_year').data('DateTimePicker').destroy();         
+               
+                $('#from_year').click(function () {
+                    $('#from_year').datepicker('show');
+                });            
+            }
+
+            $('#to_year').datepicker({
+                dateFormat: 'dd/mm/yy'
+            });
+        }
+        else if (val == "Year")
+        {
+            sessionStorage.setItem("stype", "Year");
+            var value = sessionStorage.getItem("stype");       
+            flag = 1;              
+            $('#to_year').datepicker("destroy");
+            $('#from_year').datetimepicker({
+                format: "YYYY",
+                minDate: '1990'
+            });
 
 
-<script>
-   
-    $(function () {
-        var sd = new Date(), ed = new Date();
-        var temp2;
-        var temp;
-        $('#from_year').datetimepicker({
-            format: "YYYY",           
-            minDate: '1990'
-        });
-        
-        $("#from_year").on("dp.change", function (e) {
-            temp2 = $('#from_year').data('date');
-            temp = new Date(temp2);
-            $('#to_year').val(temp.getFullYear() + 1);
-        });
-    });
-
-
-
-</script>
-<style>
-    .field-validation-error {
-        color: goldenrod;
+            $("#from_year").on("dp.change", function (e) {
+                temp2 = $('#from_year').data('date');
+                temp = new Date(temp2);
+                $('#to_year').val(temp.getFullYear() + 1);
+            });          
+        }
     }
-</style>
+</script>
 
 <div class="container body">
-    @using (Html.BeginForm("pfms_vc_post", "Home", FormMethod.Post))
+    @using (Html.BeginForm("pvc_post", "Home", FormMethod.Post))
     {
         <table cellpadding="0" cellspacing="0" align="center">
             <tr>
-                <td>From Year: </td>
-                <td> &nbsp;</td>
+                    
                 <td>
-                    @*<input id="from_year" name="from_year" type="text" class="form-control" />*@
-                    @Html.TextBoxFor(m => m.from_year, new { @Class = "startDate" })
-                    @* @Html.ValidationMessageFor(m => m.from_year)*@
-                </td>
-                <td> &nbsp; &nbsp; &nbsp; &nbsp;</td>
-                <td>To Year: </td>
-                <td> &nbsp;</td>
+                    @Html.DropDownList("Sortby", new SelectListItem[]
+                       {
+                         new SelectListItem() { Text = "Select", Value = "0",Disabled=false },
+                         new SelectListItem() { Text = "Date", Value = "Date" },
+                         new SelectListItem() { Text = "Year", Value = "Year" }
+                       },
+                         new { @onchange = "CallChangefunc(this.value)" })
+                </td>               
+                <td>&nbsp;&nbsp;&nbsp;</td>
+                <td>From Date: </td>
                 <td>
-                    @Html.TextBoxFor(m => m.to_year, new { @Class = "endDate" })
-                    @*@Html.ValidationMessageFor(m => m.to_year)*@
-                    @*<input id="to_year" name="to_year" type="text" class="form-control" />*@
+                    @Html.TextBoxFor(m => m.from_year,new { @id = "from_year" })
+                    @*@Html.TextBoxFor(m => m.from_dt)*@
                 </td>
+                <td>&nbsp;&nbsp;&nbsp;</td>
+                <td>To Date: </td>
+                <td>&nbsp;&nbsp;</td>
+                <td>
+                    @Html.TextBoxFor(m => m.to_year, new { @id = "to_year" })                  
+                </td>  
+                
                 <td> &nbsp;</td>
                 <!-- <td><input type="hidden" value=emp name="id" /></td>-->
-                <td><input type="submit" value="Submit" name="grid" /></td>
+                <td><input type="submit" value="Submit" name="grid" />                  
+                </td>
 
                 <td> &nbsp;</td>
-                <td><input type="submit" value="Export To Excel" name="export" /></td>
-            </tr>
-            <tr>
-                <td align="center">(yyyy)</td>
-                <td> &nbsp; &nbsp; &nbsp; &nbsp;</td>
-                <td> &nbsp; &nbsp; &nbsp; &nbsp;</td>
-                <td> &nbsp; &nbsp; </td>
-                <td align="center">(yyyy)</td>
-            </tr>
-        </table>
-        <table>
-            <tr>
-                <td align="center">
-                    &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
-                    &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;
-                    &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
-                    &nbsp;  &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;(Example: REC1819)
-                </td>
+                <td><input type="submit" value="Export To Excel" name="export" /></td>    
             </tr>
         </table>
     }
 </div>
-<br />
+<br/>
 <div class="dclist" id='scrolly'>
     <table border="1" id="customers">
-        <tr style="color:#024b72">   
-            <th>DATE</th>            
+        <tr style="color:#024b72">
+            <th>DATE</th>
             <th>AMOUNT</th>
             <th>VRNO</th>
             <th>NPRNO</th>
@@ -141,7 +140,7 @@
             <th>VENDOR PINCODE</th>
             <th>VENDOR MOBILE</th>
             <th>VENDOR PHONE NO</th>
-            <th>VENDOR MAILID</th>            
+            <th>VENDOR MAILID</th>
             <th>VENDOR PAN NO</th>
             <th>VENDOR TIN NO</th>
             <th>VENDOR SERVICE TAX REGNO</th>
@@ -154,14 +153,14 @@
             <th>VENDOR BANK MICR CODE</th>
             <th>VEDNOR BANK PHONE</th>
             <th>VENDOR BANK EMAIL</th>
-            
+
         </tr>
         @foreach (var rec in Model.pfm_vclist)
         {
             <tr>
                 <td>@rec.DATE</td>
-                <td>@rec.AMOUNT</td>    
-                <td>@rec.VRNO</td>            
+                <td>@rec.AMOUNT</td>
+                <td>@rec.VRNO</td>
                 <td>@rec.NPRNO</td>
                 <td>@rec.PART</td>
                 <td>@rec.HEAD</td>
@@ -202,7 +201,7 @@
                 <td>@rec.VAcctNameInBank</td>
                 <td>@rec.VBankName</td>
                 <td>@rec.VBranchName</td>
-                <td>@rec.VIFSCCode</td>               
+                <td>@rec.VIFSCCode</td>
                 <td>@rec.VBankAcctNo</td>
                 <td>@rec.VBankName</td>
                 <td>@rec.VBankMICRCode</td>
@@ -212,8 +211,4 @@
             </tr>
         }
     </table>
-    @*@using (Html.BeginForm("Export", "Home", FormMethod.Post))
-        {
-            <input type="submit" value="Export" />
-        }*@
-</div>
+  </div>

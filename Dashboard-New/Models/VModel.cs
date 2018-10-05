@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Dashboard_New.Models
 {
     public class VModel
     {
         //[Required(ErrorMessage = "Date is required")]
-
+        
+        public List<SelectListItem> ftype { get; set; }
         public string id { get; set; }
         public string from_dt { get; set; }
         //[Required]
@@ -31,7 +33,7 @@ namespace Dashboard_New.Models
         public List<Dashboard_New.Models.custom.dcvendor> dm { get; set; }
         public List<Dashboard_New.Models.custom.NIRF_RPT> nirf { get; set; }
         public List<Dashboard_New.Models.custom.ppo> ppoo { get; set; }
-        public List<Dashboard_New.Models.custom.pfms_vc> pfm_vclist { get; set; }
+        public List<Dashboard_New.Models.custom.pvc> pfm_vclist { get; set; }
         public VModel()
         {
             vclist = new List<VCVOUCH>();
@@ -42,7 +44,7 @@ namespace Dashboard_New.Models
             dm = new List<Dashboard_New.Models.custom.dcvendor>();
             nirf = new List<Dashboard_New.Models.custom.NIRF_RPT>();
             ppoo = new List<Dashboard_New.Models.custom.ppo>();
-            pfm_vclist = new List<Dashboard_New.Models.custom.pfms_vc>();
+            pfm_vclist = new List<Dashboard_New.Models.custom.pvc>();
         }
     }
 }
