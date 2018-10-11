@@ -15,29 +15,97 @@
 <script src="~/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
 <script src="~/Scripts/datepicker/jquery-ui.js"></script>
 <script> 
-    flag = 0;  
+
+    function DoAjaxPostAndMore(btnClicked) {
+        var $form = $(btnClicked).parents('form');
+
+        $.ajax({
+            type: "POST",
+            url: $form.attr('action'),
+            data: $form.serialize(),
+            error: function (xhr, status, error) {
+                //do something about the error
+            },
+            success: function (response) {
+                //do something with response
+                LoadBooks();
+
+            }
+        });
+
+        return false;// if it's a link to prevent post
+
+    }
+
+    flag = 0;
+    //$('document').load(function ()
+    //{
+    //    $('#Sortby').val = 'Select';
+    //    localStorage.clear();
+    //});
+   
+
+    $('document').ready(function () {        
+        $("#Sortby").val(window.localStorage.getItem("Sortby"));
+      
+    });
+
+    function chkdrop()
+    {
+        var val = $("#Sortby option:selected").val();
+        if (val == "Date") {
+            //$('#from_year').val = '';
+            $('#from_year').datepicker({
+                dateFormat: 'dd/mm/yy'
+            });
+            if (flag == 1) {
+                $('#from_year').data('DateTimePicker').destroy();
+                $('#from_year').click(function () {
+                    $('#from_year').datepicker('show');
+                });
+            }
+            $('#to_year').datepicker({
+                dateFormat: 'dd/mm/yy'
+            });
+        }
+        else if (val == "Year") {
+            sessionStorage.setItem("stype", "Year");
+            var value = sessionStorage.getItem("stype");
+            flag = 1;
+            $('#to_year').datepicker("destroy");
+            $('#from_year').datetimepicker({
+                format: "YYYY",
+                minDate: '1990'
+            });
+            $("#from_year").on("dp.change", function (e) {
+                temp2 = $('#from_year').data('date');
+                temp = new Date(temp2);
+                $('#to_year').val(temp.getFullYear() + 1);
+            });
+        }
+    }
+
+
     function CallChangefunc(val)
-    {        
+    {
+     
+        window.localStorage.setItem("Sortby", $("#Sortby option:selected").val());
+
         if (val == "Date")
-        {
-         
-                      
+        {                              
             $('#from_year').val = '';
             $('#from_year').datepicker({
                 dateFormat: 'dd/mm/yy'
             });
             if (flag == 1)
             {
-
-                $('#from_year').data('DateTimePicker').destroy();         
-               
+                $('#from_year').data('DateTimePicker').destroy();  
                 $('#from_year').click(function () {
                     $('#from_year').datepicker('show');
                 });            
             }
-
             $('#to_year').datepicker({
-                dateFormat: 'dd/mm/yy'
+                dateFormat: 'dd/mm/yy'            
             });
         }
         else if (val == "Year")
@@ -50,8 +118,6 @@
                 format: "YYYY",
                 minDate: '1990'
             });
-
-
             $("#from_year").on("dp.change", function (e) {
                 temp2 = $('#from_year').data('date');
                 temp = new Date(temp2);
@@ -63,35 +129,37 @@
 
 <div class="container body">
     @using (Html.BeginForm("pvc_post", "Home", FormMethod.Post))
+
     {
         <table cellpadding="0" cellspacing="0" align="center">
             <tr>
                     
                 <td>
                     @Html.DropDownList("Sortby", new SelectListItem[]
-                       {
-                         new SelectListItem() { Text = "Select", Value = "0",Disabled=false },
+        {
+                         new SelectListItem() { Text = "Select", Value = "Select" },
                          new SelectListItem() { Text = "Date", Value = "Date" },
                          new SelectListItem() { Text = "Year", Value = "Year" }
-                       },
-                         new { @onchange = "CallChangefunc(this.value)" })
-                </td>               
+        },
+          new { @onchange = "CallChangefunc(this.value)", @id = "Sortby" })
+
+                </td>
                 <td>&nbsp;&nbsp;&nbsp;</td>
                 <td>From Date: </td>
                 <td>
-                    @Html.TextBoxFor(m => m.from_year,new { @id = "from_year" })
+                    @Html.TextBoxFor(m => m.from_year, new { @id = "from_year", @onclick="chkdrop()"})
                     @*@Html.TextBoxFor(m => m.from_dt)*@
                 </td>
                 <td>&nbsp;&nbsp;&nbsp;</td>
                 <td>To Date: </td>
                 <td>&nbsp;&nbsp;</td>
                 <td>
-                    @Html.TextBoxFor(m => m.to_year, new { @id = "to_year" })                  
+                    @Html.TextBoxFor(m => m.to_year, new { @id = "to_year", @onclick = "chkdrop()" })                  
                 </td>  
                 
                 <td> &nbsp;</td>
                 <!-- <td><input type="hidden" value=emp name="id" /></td>-->
-                <td><input type="submit" value="Submit" name="grid" />                  
+                <td><input type="submit" value="Submit" name="grid" onclick="DoAjaxPostAndMore(this)"/>                  
                 </td>
 
                 <td> &nbsp;</td>
@@ -153,7 +221,6 @@
             <th>VENDOR BANK MICR CODE</th>
             <th>VEDNOR BANK PHONE</th>
             <th>VENDOR BANK EMAIL</th>
-
         </tr>
         @foreach (var rec in Model.pfm_vclist)
         {
@@ -207,7 +274,6 @@
                 <td>@rec.VBankMICRCode</td>
                 <td>@rec.VbankPhoneNumber</td>
                 <td>@rec.VBankEmailID</td>
-
             </tr>
         }
     </table>

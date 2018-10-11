@@ -6,14 +6,14 @@ using System.Web;
 namespace Dashboard_New.Models.custom
 {
     public class pvc
-    {
-       
+    {      
         public string from_year { get; set; }
         public string to_year { get; set; }
         public string from_dt { get; set; }
         public string to_dt { get; set; }
         public System.DateTime DINP { get; set; }
         public System.DateTime DATE { get; set; }
+        //public string DATE { get; set; }
         public string VRNO { get; set; }
         public double AMOUNT { get; set; }
         public string NPRNO { get; set; }

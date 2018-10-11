@@ -19,7 +19,7 @@ namespace Dashboard_New.Controllers
     public class HomeController : Controller
     {
         string myVar;
-
+       
         // [DashboardAutherisation]
         public ActionResult Index()
         {
@@ -433,9 +433,10 @@ namespace Dashboard_New.Controllers
         //public ActionResult pfms_vc_post(Dashboard_New.Models.custom.pfms_vc v5, string grid, string export, string id)
         public ActionResult pvc_post(Dashboard_New.Models.custom.pvc v5, string grid, string export)
         {
-
-            Session["tid"] = Request.Form["Sortby"];
+            Session["tid"] = Request.Form["Sortby"];         
             myVar = Session["tid"].ToString();
+            Session["tid1"] = myVar;
+            //Request.Form["Sortby"]= Session["tid"].ToString();
             if (string.IsNullOrEmpty(v5.from_year))
             {
                 ModelState.AddModelError("From year", "Year Required");
@@ -446,10 +447,9 @@ namespace Dashboard_New.Controllers
             }
             if (ModelState.IsValid)
             {
-                //if ((string.Equals("Export To Excel", export))*/&& (string.Equals("Year", Session["tid"])))
-                if (string.Equals("Export To Excel", export))
-                {
-                   
+                if ((string.Equals("Export To Excel", export))&& (string.Equals("Year", myVar)))
+                //if (string.Equals("Export To Excel", export))
+                {                   
                     vcEntities entities = new vcEntities();
                     DataTable dt = new DataTable("Grid");
                     string from_dt = v5.from_year.Substring(2);
@@ -457,7 +457,7 @@ namespace Dashboard_New.Controllers
                     DateTime fromdt = DateTime.ParseExact(v5.from_year, "yyyy", CultureInfo.InvariantCulture);
                     DateTime todt = DateTime.ParseExact(v5.to_year, "yyyy", CultureInfo.InvariantCulture);
                     string tabname = "VOU" + from_dt + to_dt;
-                    dt.Columns.AddRange(new DataColumn[49] {new DataColumn("YEAR"), new DataColumn("DATE"), new DataColumn("AMOUNT"), new DataColumn("VRNO"), new DataColumn("NPRNO"), new DataColumn("PART"), new DataColumn("HEAD"), new DataColumn("DISC"), new DataColumn("DIS"), new DataColumn("ICCNO"), new DataColumn("PONO"), new DataColumn("COMNO"), new DataColumn("CQNO"), new DataColumn("BRNO"), new DataColumn("NATURE"), new DataColumn("CHECK"), new DataColumn("REGNO"),new DataColumn("LEDDIS"), new DataColumn("ECODE"), new DataColumn("VCTRNO"),new DataColumn("VPartyCode"), new DataColumn("ASSTCK"),new DataColumn("ACC1TCK"), new DataColumn("ACCTCK"), new DataColumn("SOCK"),new DataColumn("DRCK"), new DataColumn("CRDATE"), new DataColumn("CDSTATUS"), new DataColumn("TRANSFERED"), new DataColumn("EMAILID"), new DataColumn("VCTRBNO"), new DataColumn("LUSER"), new DataColumn("VName"), new DataColumn("VAddress"), new DataColumn("VPinCode"), new DataColumn("VMobile"), new DataColumn("VPhoneNumber"), new DataColumn("VEmailId"), new DataColumn("VPanNo"),new DataColumn("VTinNo"), new DataColumn("VserTaxRegNo"), new DataColumn("VAcctNameInBank"), new DataColumn("VBankName"),new DataColumn("VBranchName"), new DataColumn("VIFSCCode"), new DataColumn("VBankAcctNo"),new DataColumn("VBankMICRCode"), new DataColumn("VbankPhoneNumber"), new DataColumn("VBankEmailID") });
+                    dt.Columns.AddRange(new DataColumn[48] { new DataColumn("DATE"), new DataColumn("AMOUNT"), new DataColumn("VRNO"), new DataColumn("NPRNO"), new DataColumn("PART"), new DataColumn("HEAD"), new DataColumn("DISC"), new DataColumn("DIS"), new DataColumn("ICCNO"), new DataColumn("PONO"), new DataColumn("COMNO"), new DataColumn("CQNO"), new DataColumn("BRNO"), new DataColumn("NATURE"), new DataColumn("CHECK"), new DataColumn("REGNO"),new DataColumn("LEDDIS"), new DataColumn("ECODE"), new DataColumn("VCTRNO"),new DataColumn("VPartyCode"), new DataColumn("ASSTCK"),new DataColumn("ACC1TCK"), new DataColumn("ACCTCK"), new DataColumn("SOCK"),new DataColumn("DRCK"), new DataColumn("CRDATE"), new DataColumn("CDSTATUS"), new DataColumn("TRANSFERED"), new DataColumn("EMAILID"), new DataColumn("VCTRBNO"), new DataColumn("LUSER"), new DataColumn("VName"), new DataColumn("VAddress"), new DataColumn("VPinCode"), new DataColumn("VMobile"), new DataColumn("VPhoneNumber"), new DataColumn("VEmailId"), new DataColumn("VPanNo"),new DataColumn("VTinNo"), new DataColumn("VserTaxRegNo"), new DataColumn("VAcctNameInBank"), new DataColumn("VBankName"),new DataColumn("VBranchName"), new DataColumn("VIFSCCode"), new DataColumn("VBankAcctNo"),new DataColumn("VBankMICRCode"), new DataColumn("VbankPhoneNumber"), new DataColumn("VBankEmailID") });
                     var disp = entities.Database.SqlQuery<Dashboard_New.Models.custom.pfms_vc>(string.Format("select v.DATE,v.AMOUNT,v.VRNO,v.NPRNO,v.PART,v.HEAD,v.DISC,v.DIS , V.ICCNO, V.PONO, V.COMNO, V.CQNO, V.BRNO, v.NATURE, v.[CHECK], v.REGNO,v.LEDDIS, v.ECODE, c.VCTRNO, c.VPartyCode, c.ASSTCK, c.ACCT1CK, c.ACCTCK,c.SOCK, c.DRCK, c.CRDATE, c.CDSTATUS, c.TRANSFERED, c.EMAILID, c.VCTRBNO, C.LUSER, M.VName,m.VAddress, m.VPinCode, m.VMobile, m.VPhoneNumber, m.VEmailId,m.VPanNo, m.VTinNo, m.VSerTaxRegNo, m.VAcctNameInBank, m.VBankName, m.VBranchName, m.VIFSCCode,M.VBankAcctNo, M.VBankName, M.VBankMICRCode, M.VBankPhoneNumber, M.VBankEmailID  from " + tabname + "  V,VENDORDRAWN C,VendorMaster M WHERE V.VRNO=C.VRNO AND C.VPartyCode=M.VPartyCode and v.nprno in (select nprno from mstlst where ACCOUNTTYPE='pfms')", fromdt.ToString("yyyy", CultureInfo.InvariantCulture), todt.ToString("yyyy", CultureInfo.InvariantCulture))).ToList();
 
                     foreach (var x in disp)
@@ -466,20 +466,72 @@ namespace Dashboard_New.Controllers
                     }
                     using (XLWorkbook wb = new XLWorkbook())
                     {
-                        wb.Worksheets.Add("PFMS -VC");
+                        wb.Worksheets.Add("PFMS-VC-Yearwise");
                         wb.Worksheet(1).Cell(3, 1).InsertTable(dt);
-                        wb.Worksheet(1).Cell(1, 7).Value = "PFMS (VC) : VOU" + v5.from_year + " - " + v5.to_year;
+                        wb.Worksheet(1).Cell(1, 7).Value = "PFMS (VC-Yearwise) : VOU" + v5.from_year + " - " + v5.to_year;
                         wb.Worksheet(1).Cell(1, 7).Style.Font.Bold = true;
                         var wbs = wb.Worksheets.FirstOrDefault();
                         wbs.Tables.FirstOrDefault().ShowAutoFilter = false;
-                        wb.Properties.Title = "PFMS VC REPORT";
+                        wb.Properties.Title = "PFMS VC REPORT- Yearwise";
                         using (MemoryStream stream = new MemoryStream())
                         {
                             wb.SaveAs(stream);
-                            return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "PFMS-VC.xlsx");
+                            return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "PFMS-VC-Yearwise.xlsx");
                         }
                     }
-                }              
+                }
+
+                if ((string.Equals("Export To Excel", export)) && (string.Equals("Date", myVar)))
+                //if (string.Equals("Export To Excel", export))
+                {
+                    vcEntities entities = new vcEntities();
+                    DataTable dt = new DataTable("Grid");
+                    string from_dt = v5.from_year.Substring(8);
+                    string to_dt = v5.to_year.Substring(3, 2);
+                    int from_NT = Int32.Parse(from_dt) + 1;
+                    //string tabname = "VOU" + from_dt + from_NT.ToString();
+
+                    //DateTime fromdt = DateTime.ParseExact(v5.from_year, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    //DateTime todt = DateTime.ParseExact(v5.to_year, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    //string fdt = fromdt.Year.ToString();
+                    //fdt = fdt.Substring(2, 2);
+                    //string tdt = todt.Month.ToString();
+
+
+
+                    DateTime fromdt = DateTime.ParseExact(v5.from_year.ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    DateTime todt = DateTime.ParseExact(v5.to_year.ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
+
+                    string fm, tm;
+                    fm = fromdt.ToString("yyyy-MM-dd");
+                    tm = todt.ToString("yyyy-MM-dd");
+
+                    string tabname = "VOU" + from_dt + from_NT.ToString();
+                    dt.Columns.AddRange(new DataColumn[48] {  new DataColumn("DATE"), new DataColumn("AMOUNT"), new DataColumn("VRNO"), new DataColumn("NPRNO"), new DataColumn("PART"), new DataColumn("HEAD"), new DataColumn("DISC"), new DataColumn("DIS"), new DataColumn("ICCNO"), new DataColumn("PONO"), new DataColumn("COMNO"), new DataColumn("CQNO"), new DataColumn("BRNO"), new DataColumn("NATURE"), new DataColumn("CHECK"), new DataColumn("REGNO"), new DataColumn("LEDDIS"), new DataColumn("ECODE"), new DataColumn("VCTRNO"), new DataColumn("VPartyCode"), new DataColumn("ASSTCK"), new DataColumn("ACC1TCK"), new DataColumn("ACCTCK"), new DataColumn("SOCK"), new DataColumn("DRCK"), new DataColumn("CRDATE"), new DataColumn("CDSTATUS"), new DataColumn("TRANSFERED"), new DataColumn("EMAILID"), new DataColumn("VCTRBNO"), new DataColumn("LUSER"), new DataColumn("VName"), new DataColumn("VAddress"), new DataColumn("VPinCode"), new DataColumn("VMobile"), new DataColumn("VPhoneNumber"), new DataColumn("VEmailId"), new DataColumn("VPanNo"), new DataColumn("VTinNo"), new DataColumn("VserTaxRegNo"), new DataColumn("VAcctNameInBank"), new DataColumn("VBankName"), new DataColumn("VBranchName"), new DataColumn("VIFSCCode"), new DataColumn("VBankAcctNo"), new DataColumn("VBankMICRCode"), new DataColumn("VbankPhoneNumber"), new DataColumn("VBankEmailID") });
+
+                    //var disp = entities.Database.SqlQuery<Dashboard_New.Models.custom.pfms_vc>(string.Format("select v.DATE,v.AMOUNT,v.VRNO,v.NPRNO,v.PART,v.HEAD,v.DISC,v.DIS, V.ICCNO, V.PONO, V.COMNO, V.CQNO, V.BRNO, v.NATURE, v.[CHECK], v.REGNO,v.LEDDIS, v.ECODE, c.VCTRNO, c.VPartyCode, c.ASSTCK, c.ACCT1CK, c.ACCTCK,c.SOCK, c.DRCK, c.CRDATE, c.CDSTATUS, c.TRANSFERED, c.EMAILID, c.VCTRBNO, C.LUSER, M.VName,m.VAddress, m.VPinCode, m.VMobile, m.VPhoneNumber, m.VEmailId,m.VPanNo, m.VTinNo, m.VSerTaxRegNo, m.VAcctNameInBank, m.VBankName, m.VBranchName, m.VIFSCCode,M.VBankAcctNo, M.VBankName, M.VBankMICRCode, M.VBankPhoneNumber, M.VBankEmailID from " + tabname + " V, VENDORDRAWN C, VendorMaster M WHERE V.VRNO = C.VRNO AND C.VPartyCode = M.VPartyCode and v.nprno in (select nprno from mstlst where ACCOUNTTYPE = 'pfms')  and v.DATE>=  '{0}' AND v.DATE<= '{1}'", fromdt.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture), todt.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture))).ToList();
+                    var disp = entities.Database.SqlQuery<Dashboard_New.Models.custom.pfms_vc>(string.Format("select v.DATE,v.AMOUNT,v.VRNO,v.NPRNO,v.PART,v.HEAD,v.DISC,v.DIS, V.ICCNO, V.PONO, V.COMNO, V.CQNO, V.BRNO, v.NATURE, v.[CHECK], v.REGNO,v.LEDDIS, v.ECODE, c.VCTRNO, c.VPartyCode, c.ASSTCK, c.ACCT1CK, c.ACCTCK,c.SOCK, c.DRCK, c.CRDATE, c.CDSTATUS, c.TRANSFERED, c.EMAILID, c.VCTRBNO, C.LUSER, M.VName,m.VAddress, m.VPinCode, m.VMobile, m.VPhoneNumber, m.VEmailId,m.VPanNo, m.VTinNo, m.VSerTaxRegNo, m.VAcctNameInBank, m.VBankName, m.VBranchName, m.VIFSCCode,M.VBankAcctNo, M.VBankName, M.VBankMICRCode, M.VBankPhoneNumber, M.VBankEmailID from " + tabname + " V, VENDORDRAWN C, VendorMaster M WHERE V.VRNO = C.VRNO AND C.VPartyCode = M.VPartyCode and v.nprno in (select nprno from mstlst where ACCOUNTTYPE = 'pfms')  and v.DATE>='{0}' AND v.DATE<= '{1}'", fm, tm)).ToList();
+
+                    foreach (var x in disp)
+                    {
+                        dt.Rows.Add(x.DATE, x.AMOUNT, x.VRNO, x.NPRNO, x.PART, x.HEAD, x.DISC, x.DIS, x.ICCNO, x.PONO, x.COMNO, x.CQNO, x.BRNO, x.NATURE, x.CHECK, x.REGNO, x.LEDDIS, x.ECODE, x.VCTRNO, x.VPartyCode, x.ASSTCK, x.ACC1TCK, x.ACCTCK, x.SOCK, x.DRCK, x.CRDATE, x.CDSTATUS, x.TRANSFERED, x.EMAILID, x.VCTRBNO, x.LUSER, x.VName, x.VAddress, x.VPinCode, x.VMobile, x.VPhoneNumber, x.VEmailId, x.VPanNo, x.VTinNo, x.VserTaxRegNo, x.VAcctNameInBank, x.VBankName, x.VBranchName, x.VIFSCCode, x.VBankAcctNo, x.VBankMICRCode, x.VbankPhoneNumber, x.VBankEmailID);
+                    }
+                    using (XLWorkbook wb = new XLWorkbook())
+                    {
+                        wb.Worksheets.Add("PFMS -VC - Datewise");
+                        wb.Worksheet(1).Cell(3, 1).InsertTable(dt);
+                        wb.Worksheet(1).Cell(1, 7).Value = "PFMS (VC-Datewise) : " + tabname;
+                        wb.Worksheet(1).Cell(1, 7).Style.Font.Bold = true;
+                        var wbs = wb.Worksheets.FirstOrDefault();
+                        wbs.Tables.FirstOrDefault().ShowAutoFilter = false;
+                        wb.Properties.Title = "PFMS VC REPORT-Datewise";
+                        using (MemoryStream stream = new MemoryStream())
+                        {
+                            wb.SaveAs(stream);
+                            return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "PFMS-VC-datewise.xlsx");
+                        }
+                    }
+                }
                 if ((string.Equals("Submit", grid)) && (string.Equals("Year", myVar)))
                 {
                     string from_yr = v5.from_year.Substring(2);
@@ -508,17 +560,30 @@ namespace Dashboard_New.Controllers
                     return View("pvc", vd);
                 }
                 if ((string.Equals("Submit", grid)) && (string.Equals("Date", myVar)))
-                {             
+                {
                     string from_dt = v5.from_year.Substring(8);
-                    string to_dt= v5.to_year.Substring(3,2);
-                    DateTime fromdt = DateTime.ParseExact(v5.from_year, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-                    DateTime todt = DateTime.ParseExact(v5.from_year, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-                    string tabname = "V" + from_dt + to_dt;
+                    int from_NT = Int32.Parse(from_dt) + 1;
+                    string to_dt = v5.to_year.Substring(3, 2);
+                    //DateTime fromdt = DateTime.ParseExact(v5.from_year, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    //DateTime todt = DateTime.ParseExact(v5.to_year, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+
+                    DateTime fromdt = DateTime.ParseExact(v5.from_year.ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    DateTime todt = DateTime.ParseExact(v5.to_year.ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
+
+                    string fm, tm;
+                    fm = fromdt.ToString("yyyy-MM-dd");
+                    tm = todt.ToString("yyyy-MM-dd");                   
+
+                    string tabname = "VOU" + from_dt + from_NT.ToString();                   
                     List<pvc> records = new List<pvc>();
                     try
                     {
                         vcEntities vcobj = new vcEntities();
-                        records = vcobj.Database.SqlQuery<pvc>(string.Format("select v.DATE,v.AMOUNT,v.VRNO,v.NPRNO,v.PART,v.HEAD,v.DISC,v.DIS , V.ICCNO, V.PONO, V.COMNO, V.CQNO, V.BRNO, v.NATURE, v.[CHECK], v.REGNO,v.LEDDIS, v.ECODE, c.VCTRNO, c.VPartyCode, c.ASSTCK, c.ACCT1CK, c.ACCTCK,c.SOCK, c.DRCK, c.CRDATE, c.CDSTATUS, c.TRANSFERED, c.EMAILID, c.VCTRBNO, C.LUSER, M.VName,m.VAddress, m.VPinCode, m.VMobile, m.VPhoneNumber, m.VEmailId,m.VPanNo, m.VTinNo, m.VSerTaxRegNo, m.VAcctNameInBank, m.VBankName, m.VBranchName, m.VIFSCCode,M.VBankAcctNo, M.VBankName, M.VBankMICRCode, M.VBankPhoneNumber, M.VBankEmailID  from " + tabname + "  V,VENDORDRAWN C,VendorMaster M WHERE V.VRNO=C.VRNO AND C.VPartyCode=M.VPartyCode and v.nprno in (select nprno from mstlst where ACCOUNTTYPE='pfms')", fromdt.ToString("yyyy", CultureInfo.InvariantCulture), todt.ToString("yyyy", CultureInfo.InvariantCulture))).ToList();
+                        // records = vcobj.Database.SqlQuery<pvc>(string.Format("select v.DATE,v.AMOUNT,v.VRNO,v.NPRNO,v.PART,v.HEAD,v.DISC,v.DIS , V.ICCNO, V.PONO, V.COMNO, V.CQNO, V.BRNO, v.NATURE, v.[CHECK], v.REGNO,v.LEDDIS, v.ECODE, c.VCTRNO, c.VPartyCode, c.ASSTCK, c.ACCT1CK, c.ACCTCK,c.SOCK, c.DRCK, c.CRDATE, c.CDSTATUS, c.TRANSFERED, c.EMAILID, c.VCTRBNO, C.LUSER, M.VName,m.VAddress, m.VPinCode, m.VMobile, m.VPhoneNumber, m.VEmailId,m.VPanNo, m.VTinNo, m.VSerTaxRegNo, m.VAcctNameInBank, m.VBankName, m.VBranchName, m.VIFSCCode,M.VBankAcctNo, M.VBankName, M.VBankMICRCode, M.VBankPhoneNumber, M.VBankEmailID  from " + tabname + "  V,VENDORDRAWN C,VendorMaster M WHERE V.VRNO=C.VRNO AND C.VPartyCode=M.VPartyCode and v.nprno in (select nprno from mstlst where ACCOUNTTYPE='pfms')", fromdt.ToString("yyyy", CultureInfo.InvariantCulture), todt.ToString("yyyy", CultureInfo.InvariantCulture))).ToList();
+                        //records = vcobj.Database.SqlQuery<pvc>(string.Format("select v.DATE,v.AMOUNT,v.VRNO,v.NPRNO,v.PART,v.HEAD,v.DISC,v.DIS, V.ICCNO, V.PONO, V.COMNO, V.CQNO, V.BRNO, v.NATURE, v.[CHECK], v.REGNO,v.LEDDIS, v.ECODE, c.VCTRNO, c.VPartyCode, c.ASSTCK, c.ACCT1CK, c.ACCTCK,c.SOCK, c.DRCK, c.CRDATE, c.CDSTATUS, c.TRANSFERED, c.EMAILID, c.VCTRBNO, C.LUSER, M.VName,m.VAddress, m.VPinCode, m.VMobile, m.VPhoneNumber, m.VEmailId,m.VPanNo, m.VTinNo, m.VSerTaxRegNo, m.VAcctNameInBank, m.VBankName, m.VBranchName, m.VIFSCCode,M.VBankAcctNo, M.VBankName, M.VBankMICRCode, M.VBankPhoneNumber, M.VBankEmailID from " + tabname + " V, VENDORDRAWN C, VendorMaster M WHERE V.VRNO = C.VRNO AND C.VPartyCode = M.VPartyCode and v.nprno in (select nprno from mstlst where ACCOUNTTYPE = 'pfms')  and v.DATE>='{0}' AND v.DATE<= '{1}'", fromdt.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture), todt.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture))).ToList();
+                        records = vcobj.Database.SqlQuery<pvc>(string.Format("select v.DATE,v.AMOUNT,v.VRNO,v.NPRNO,v.PART,v.HEAD,v.DISC,v.DIS, V.ICCNO, V.PONO, V.COMNO, V.CQNO, V.BRNO, v.NATURE, v.[CHECK], v.REGNO,v.LEDDIS, v.ECODE, c.VCTRNO, c.VPartyCode, c.ASSTCK, c.ACCT1CK, c.ACCTCK,c.SOCK, c.DRCK, c.CRDATE, c.CDSTATUS, c.TRANSFERED, c.EMAILID, c.VCTRBNO, C.LUSER, M.VName,m.VAddress, m.VPinCode, m.VMobile, m.VPhoneNumber, m.VEmailId,m.VPanNo, m.VTinNo, m.VSerTaxRegNo, m.VAcctNameInBank, m.VBankName, m.VBranchName, m.VIFSCCode,M.VBankAcctNo, M.VBankName, M.VBankMICRCode, M.VBankPhoneNumber, M.VBankEmailID from " + tabname + " V, VENDORDRAWN C, VendorMaster M WHERE V.VRNO = C.VRNO AND C.VPartyCode = M.VPartyCode and v.nprno in (select nprno from mstlst where ACCOUNTTYPE = 'pfms')  and v.DATE>='{0}' AND v.DATE<= '{1}'", fm, tm)).ToList();
+                        //records = vcobj.Database.SqlQuery<pvc>(string.Format("select * from " + tabname + " V  WHERE v.DATE>='{0}' AND v.DATE<= '{1}'", fm, tm)).ToList();
+
                         Dashboard_New.Models.VModel dv = new VModel();
                         dv.from_year = v5.from_year;
                         dv.to_year = v5.to_year;

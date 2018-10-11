@@ -16,7 +16,6 @@ E:\PREETHY\MVC\Dashboard-New\Dashboard-New\bin\Dashboard-New.dll
 E:\PREETHY\MVC\Dashboard-New\Dashboard-New\bin\Dashboard-New.pdb
 E:\PREETHY\MVC\Dashboard-New\Dashboard-New\obj\Debug\Dashboard-New.dll
 E:\PREETHY\MVC\Dashboard-New\Dashboard-New\obj\Debug\Dashboard-New.pdb
-E:\PREETHY\MVC\Dashboard-New\Dashboard-New\obj\Debug\Dashboard-New.csprojResolveAssemblyReference.cache
 C:\Users\Administrator\Desktop\dashboard-master\Dashboard-New\bin\ApplicationInsights.config
 C:\Users\Administrator\Desktop\dashboard-master\Dashboard-New\bin\roslyn\csc.exe
 C:\Users\Administrator\Desktop\dashboard-master\Dashboard-New\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
