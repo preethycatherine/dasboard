@@ -4,7 +4,11 @@
 @{
     ViewBag.Title = "nirf";
     Layout = "~/Views/Shared/_Layout.cshtml";
+  //  var emp = Session["idd"];
 }
+
+  
+
 @*<script src="~/Scripts/datepicker/jquery-ui.js"></script>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -24,38 +28,72 @@
 
 
 <script>
-   $(function () {
+   //$(function () {
+   //     var sd = new Date(), ed = new Date();
+   //     var temp2; 
+   //     var temp;
+   //     $('#from_year').datetimepicker({
+   //         format: "YY",
+   //         //defaultDate: sd,
+   //         //maxDate: ed,
+   //         minDate: '1990'          
+   //     });
+
+   //     //temp2 = $('#from_year').data('date');
+   //     //temp = new Date(temp2);
+   //     //$('#to_year').val(temp.getFullYear() + 1);
+
+   //     /*$("#from_year").on("dp.change", function (e) {
+   //         temp2 = $('#from_year').data('date');
+   //         temp = new Date(temp2);
+   //         $('#to_year').val(temp.getFullYear() + 1);
+   //     });*/
+
+
+   //     $('#to_year').datetimepicker({
+   //         //format: "YYYY",
+   //         format: 'MM',
+   //         //defaultDate: sd,
+   //         //maxDate: ed,
+   //         minDate: '1990'
+   //     });
+
+   // });
+    
+    $(function () {
         var sd = new Date(), ed = new Date();
-        var temp2; 
+        var temp2;
         var temp;
         $('#from_year').datetimepicker({
-            format: "YY",
+            format: "YYYY",
             //defaultDate: sd,
             //maxDate: ed,
-            minDate: '1990'          
+            minDate: '1990'
         });
 
         //temp2 = $('#from_year').data('date');
         //temp = new Date(temp2);
         //$('#to_year').val(temp.getFullYear() + 1);
 
-        /*$("#from_year").on("dp.change", function (e) {
+        $("#from_year").on("dp.change", function (e) {
             temp2 = $('#from_year').data('date');
             temp = new Date(temp2);
             $('#to_year').val(temp.getFullYear() + 1);
-        });*/
+        });
 
 
-        $('#to_year').datetimepicker({
+        /*$('#to_year').datetimepicker({
             //format: "YYYY",
-            format: 'MM',
+            //format: 'MM',
+             format: 'YYYY', 
             //defaultDate: sd,
             //maxDate: ed,
             minDate: '1990'
-        });
+        });*/
 
     });
-    
+
+
 
 </script>
 <style>
@@ -75,9 +113,6 @@
                 <td>
                     @*<input id="from_year" name="from_year" type="text" class="form-control" />*@
                     @Html.TextBoxFor(m => m.from_year, new { @Class = "startDate" })
-
-
-
                     @* @Html.ValidationMessageFor(m => m.from_year)*@
                 </td>
                 <td> &nbsp; &nbsp; &nbsp; &nbsp;</td>
@@ -85,14 +120,13 @@
                 <td> &nbsp;</td>
                 <td>
                     @Html.TextBoxFor(m => m.to_year, new { @Class = "endDate" })
-
-
-
                     @*@Html.ValidationMessageFor(m => m.to_year)*@
                     @*<input id="to_year" name="to_year" type="text" class="form-control" />*@
                 </td>
                 <td> &nbsp;</td>
+               <!-- <td><input type="hidden" value=emp name="id" /></td>-->
                 <td><input type="submit" value="Submit" name="grid" /></td>
+
                 <td> &nbsp;</td>
                 <td><input type="submit" value="Export To Excel" name="export" /></td>
             </tr>
@@ -101,56 +135,47 @@
                 <td> &nbsp; &nbsp; &nbsp; &nbsp;</td>
                 <td> &nbsp; &nbsp; &nbsp; &nbsp;</td>
                 <td> &nbsp; &nbsp; </td>
-                <td align="center">(MM)</td>
+                <td align="center">(yyyy)</td>
             </tr>
-        </table>
-       
+        </table>       
             <table>
-
                 <tr>
                     <td align="center">
                         &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
                         &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;
                         &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
-                        &nbsp;  &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;(Example: R1805)
+                        &nbsp;  &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;(Example: REC1819)
                     </td>
                 </tr>
             </table>
-
-
-
             }
 </div>
 <br />
 <div class="dclist" id='scrolly'>
     <table border="1" id="customers">
         <tr style="color:#024b72">
-            <th>Receipt</th>
-            <th>Date</th>
-            <th>Months</th>
-            <th>CPRNO</th>           
-            <th>CONS_TYPE</th>
-            <th>DEPARTMENT CODE</th>
+            <th>YEAR</th>
+            <th>MONTH</th>
+            <th>NPRNO</th>
             <th>COORDINATOR NAME</th>
-            <th>AGENCY CODE</th>
             <th>AGENCY</th>
-            <th>DESCRIPTION</th>
-            <th>RT</th>
+            <th>TITLE</th>
+            <th>SANCTION NUMBER</th>
+            <th>SANCTION DATE</th>
+            <th>AMOUNT</th>
         </tr>
         @foreach (var rec in Model.nirf)
         {
             <tr>
-                <td>@rec.Receipt</td>  
-                <td>@rec.Date</td>   
-                <td>@rec.Months</td>       
-                <td>@rec.CPRNO</td>
-                <td>@rec.CONS_TYPE</td>
-                <td>@rec.DEPT_CODE</td>
-                <td>@rec.COOR_NAME1</td>
-                <td>@rec.AGENCY_CODE</td>
+                <td>@rec.YEAR</td>
+                <td>@rec.MONTH</td>
+                <td>@rec.NPRNO</td>
+                <td>@rec.COOR_NAME</td>
                 <td>@rec.AGENCY</td>
-                <td>@rec.DESCRIPTION</td>
-                <td>@rec.RT</td>
+                <td>@rec.TITLE</td>
+                <td>@rec.SANCTNNO</td>
+                <td>@rec.SANCTDTE</td>
+                <td>@rec.AMOUNT</td>
             </tr>
         }
     </table>

@@ -1,34 +1,16 @@
 ﻿@model Dashboard_New.Models.VModel
 @using System.Globalization
-@*@model Dashboard_New.Models.custom.rec*@
 @{
-    ViewBag.Title = "nirf";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-    //  var emp = Session["idd"];
+    ViewBag.Title = "pfms_vc";
+    Layout = "~/Views/Shared/_Layout.cshtml";  
 }
-
-
-
-@*<script src="~/Scripts/datepicker/jquery-ui.js"></script>
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="~/plugins/bootstrapDatepicker/js/bootstrap-datetimepicker.min.js"></script>
-
-
-    <link href="~/plugins/bootstrapDatepicker/css/bootstrap-datetimepicker.css" rel="stylesheet" />
-    <link href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"  rel="stylesheet">
-
-    <link href="~/Content/datepicker/jquery-ui.css" rel="stylesheet" />*@
 <link href="~/Content/datepicker/table.css" rel="stylesheet" />
 <link href="~/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker-standalone.css" rel="stylesheet" />
 <link href="~/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" rel="stylesheet" />
 <script src="~/Scripts/jquery-1.10.2.js"></script>
 <script src="~/Scripts/moment.js"></script>
 <script src="~/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
-
-
-<script>
-   
+<script>   
     $(function () {
         var sd = new Date(), ed = new Date();
         var temp2;
@@ -44,9 +26,6 @@
             $('#to_year').val(temp.getFullYear() + 1);
         });
     });
-
-
-
 </script>
 <style>
     .field-validation-error {

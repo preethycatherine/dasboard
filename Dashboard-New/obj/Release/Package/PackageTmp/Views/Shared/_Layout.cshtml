@@ -87,8 +87,31 @@
                                     <ul class="nav child_menu">
                                         <li><a href="@Url.Action("vc", "Home", new { area="" })">Vendor Credit (VC)</a></li>
                                         <li><a href="@Url.Action("dc", "Home", new { area=""})">Direct Credit (DC)</a></li>
-                                        <li><a href="@Url.Action("nirf", "Home", new { area=""})">NIRF</a></li>
-                                    </ul>
+                                     <!--  <li><a href="@Url.Action("nirf", "Home", new { area=""})">NIRF</a></li> -->                                       
+                                        <li>
+                                            <a>NIRF <span class="fa fa-chevron-down"></span></a>
+                                            <ul class="nav child_menu">     
+                                                        <li class="sub_menu">
+                                                            <a href="@Url.Action("nirf", "Home", new {id="spons"})">Sponsor</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="@Url.Action("nirf", "Home", new {id= "nirfcons" })">Consultancy</a>
+                                                        </li>                                                       
+                                             </ul>   
+                                        </li>   
+                                        <li>
+                                            <a>PFMS<span class="fa fa-chevron-down"></span></a>
+                                            <ul class="nav child_menu">
+                                                <li class="sub_menu">
+                                                    <a href="@Url.Action("pvc", "Home", new {id="pvc"})">Vendor Credit (VC)</a>
+                                                </li>
+                                                <li>
+                                                    <a href="@Url.Action("pdc", "Home", new {id= "pdc" })">Direct Credit (DC)</a>
+                                                </li>
+                                            </ul>
+                                        </li>   
+                                       @* <li><a href="@Url.Action("pfms_vc", "Home", new { area=""})">PFMS Expenditure</a></li>*@                                            
+                                     </ul>                                  
                                 </li>
                                 <li>
                                     <a><i class="fa fa-desktop"></i> Purchase <span class="fa fa-chevron-down"></span></a>

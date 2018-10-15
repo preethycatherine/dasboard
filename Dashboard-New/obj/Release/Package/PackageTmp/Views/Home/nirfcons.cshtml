@@ -2,23 +2,23 @@
 @using System.Globalization
 @*@model Dashboard_New.Models.custom.rec*@
 @{
-    ViewBag.Title = "nirf";
+    ViewBag.Title = "nirfcons";
     Layout = "~/Views/Shared/_Layout.cshtml";
-  //  var emp = Session["idd"];
+    //  var emp = Session["idd"];
 }
 
-  
+
 
 @*<script src="~/Scripts/datepicker/jquery-ui.js"></script>
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="~/plugins/bootstrapDatepicker/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="~/plugins/bootstrapDatepicker/js/bootstrap-datetimepicker.min.js"></script>
 
 
-<link href="~/plugins/bootstrapDatepicker/css/bootstrap-datetimepicker.css" rel="stylesheet" />
-<link href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"  rel="stylesheet">
+    <link href="~/plugins/bootstrapDatepicker/css/bootstrap-datetimepicker.css" rel="stylesheet" />
+    <link href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"  rel="stylesheet">
 
-<link href="~/Content/datepicker/jquery-ui.css" rel="stylesheet" />*@
+    <link href="~/Content/datepicker/jquery-ui.css" rel="stylesheet" />*@
 <link href="~/Content/datepicker/table.css" rel="stylesheet" />
 <link href="~/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker-standalone.css" rel="stylesheet" />
 <link href="~/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" rel="stylesheet" />
@@ -30,13 +30,13 @@
 <script>
    //$(function () {
    //     var sd = new Date(), ed = new Date();
-   //     var temp2; 
+   //     var temp2;
    //     var temp;
    //     $('#from_year').datetimepicker({
    //         format: "YY",
    //         //defaultDate: sd,
    //         //maxDate: ed,
-   //         minDate: '1990'          
+   //         minDate: '1990'
    //     });
 
    //     //temp2 = $('#from_year').data('date');
@@ -59,7 +59,7 @@
    //     });
 
    // });
-    
+
     $(function () {
         var sd = new Date(), ed = new Date();
         var temp2;
@@ -75,7 +75,7 @@
         //temp = new Date(temp2);
         //$('#to_year').val(temp.getFullYear() + 1);
 
-        $("#from_year").on("dp.change", function (e) {
+        $("#from_year").on("dp.change", function (e) {          
             temp2 = $('#from_year').data('date');
             temp = new Date(temp2);
             $('#to_year').val(temp.getFullYear() + 1);
@@ -85,7 +85,7 @@
         /*$('#to_year').datetimepicker({
             //format: "YYYY",
             //format: 'MM',
-             format: 'YYYY', 
+             format: 'YYYY',
             //defaultDate: sd,
             //maxDate: ed,
             minDate: '1990'
@@ -97,10 +97,9 @@
 
 </script>
 <style>
- .field-validation-error 
- {
+    .field-validation-error {
         color: goldenrod;
- }
+    }
 </style>
 
 <div class="container body">
@@ -113,6 +112,9 @@
                 <td>
                     @*<input id="from_year" name="from_year" type="text" class="form-control" />*@
                     @Html.TextBoxFor(m => m.from_year, new { @Class = "startDate" })
+
+
+
                     @* @Html.ValidationMessageFor(m => m.from_year)*@
                 </td>
                 <td> &nbsp; &nbsp; &nbsp; &nbsp;</td>
@@ -124,9 +126,8 @@
                     @*<input id="to_year" name="to_year" type="text" class="form-control" />*@
                 </td>
                 <td> &nbsp;</td>
-               <!-- <td><input type="hidden" value=emp name="id" /></td>-->
+                <!-- <td><input type="hidden" value=emp name="id" /></td>-->
                 <td><input type="submit" value="Submit" name="grid" /></td>
-
                 <td> &nbsp;</td>
                 <td><input type="submit" value="Export To Excel" name="export" /></td>
             </tr>
@@ -137,45 +138,49 @@
                 <td> &nbsp; &nbsp; </td>
                 <td align="center">(yyyy)</td>
             </tr>
-        </table>       
-            <table>
-                <tr>
-                    <td align="center">
-                        &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
-                        &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;
-                        &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
-                        &nbsp;  &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;(Example: REC1819)
-                    </td>
-                </tr>
-            </table>
-            }
+        </table>
+        <table>
+            <tr>
+                <td align="center">
+                    &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+                    &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;
+                    &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+                    &nbsp;  &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;(Example: REC1819)
+                </td>
+            </tr>
+        </table>
+    }
 </div>
 <br />
 <div class="dclist" id='scrolly'>
     <table border="1" id="customers">
         <tr style="color:#024b72">
             <th>YEAR</th>
+            <th>DATE</th>
             <th>MONTH</th>
-            <th>NPRNO</th>
+            <th>PROJECT NUMBER</th>
+            <th>CONSULTANCY TYPE</th>
+            <th>DEPATMENT CODE</th>
             <th>COORDINATOR NAME</th>
+            <th>AGENCY CODE</th>
             <th>AGENCY</th>
-            <th>TITLE</th>
-            <th>SANCTION NUMBER</th>
-            <th>SANCTION DATE</th>
+            <th>TITLE</th>            
             <th>AMOUNT</th>
         </tr>
         @foreach (var rec in Model.nirf)
         {
             <tr>
                 <td>@rec.YEAR</td>
+                <td>@rec.DATE</td>
                 <td>@rec.MONTH</td>
-                <td>@rec.NPRNO</td>
-                <td>@rec.COOR_NAME</td>
+                <td>@rec.CPRNO</td>
+                <td>@rec.CONS_TYPE</td>
+                <td>@rec.DEPT_CODE</td>
+                <td>@rec.COOR_NAME1</td>
+                <td>@rec.AGENCY_CODE</td>
                 <td>@rec.AGENCY</td>
                 <td>@rec.TITLE</td>
-                <td>@rec.SANCTNNO</td>
-                <td>@rec.SANCTDTE</td>
-                <td>@rec.AMOUNT</td>
+                <td>@rec.rt</td>
             </tr>
         }
     </table>

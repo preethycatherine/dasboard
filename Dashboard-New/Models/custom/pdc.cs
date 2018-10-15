@@ -4,16 +4,14 @@ using System.Linq;
 using System.Web;
 
 namespace Dashboard_New.Models.custom
-{
-    public class pfms_vc
+{    public class pdc
     {
-       
         public string from_year { get; set; }
         public string to_year { get; set; }
         public string from_dt { get; set; }
-        public string to_dt { get; set; }     
+        public string to_dt { get; set; }
         public System.DateTime DINP { get; set; }
-        public System.DateTime DATE { get; set; }
+        public System.DateTime DATE { get; set; }       
         public string VRNO { get; set; }
         public double AMOUNT { get; set; }
         public string NPRNO { get; set; }
@@ -32,8 +30,8 @@ namespace Dashboard_New.Models.custom
         public string REGNO { get; set; }
         public string LEDDIS { get; set; }
         public string ECODE { get; set; }
-        public string VCTRNO { get; set; }
-        public string VPartyCode { get; set; }
+        public string DCTRNO { get; set; }        
+        public string DCID { get; set; }
         public string ASSTCK { get; set; }
         public string ACCTCK { get; set; }
         public string ACC1TCK { get; set; }
@@ -43,26 +41,18 @@ namespace Dashboard_New.Models.custom
         public string CDSTATUS { get; set; }
         public string TRANSFERED { get; set; }
         public string EMAILID { get; set; }
-        public string VCTRBNO { get; set; }
+        public string DCTRBNO { get; set; }
         public string LUSER { get; set; }
-        public string VName { get; set; }
-        public string VAddress { get; set; }
-        public string VPinCode { get; set; }
-        public string VMobile { get; set; }
+        public string INSTID { get; set; }
+        public string COORNAME { get; set; }
+        public string DEPTNAME { get; set; }
+        public string BANKTYPE { get; set; }
         public string VPhoneNumber { get; set; }
-        public string VEmailId { get; set; }
-        public string VPanNo { get; set; }
+        public string CBANKACCTNO { get; set; }
+        public string COOREMAILID { get; set; }
         public string VTinNo { get; set; }
-        public string VserTaxRegNo { get; set; }
-        public string VAcctNameInBank { get; set; }
-        public string VBankName { get; set; }
-        public string VBranchName { get; set; }
-        public string VIFSCCode { get; set; }
-        public string VBankAcctNo { get; set; }
-        public string VBankNature { get; set; }
-        public string VBankMICRCode { get; set; }
-        public string VbankPhoneNumber { get; set; }
-        public string VBankEmailID { get; set; }
-     
+        public string ACCOUNTTYPE { get; set; }
+        
+
     }
 }

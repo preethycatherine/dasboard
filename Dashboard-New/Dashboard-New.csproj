@@ -238,7 +238,7 @@
     <Compile Include="Models\custom\dcvendor.cs" />
     <Compile Include="Models\custom\nirf.cs" />
     <Compile Include="Models\custom\NIRF_RPT.cs" />
-    <Compile Include="Models\custom\pfms_vc.cs" />
+    <Compile Include="Models\custom\pdc.cs" />
     <Compile Include="Models\custom\ppo.cs" />
     <Compile Include="Models\custom\pvc.cs" />
     <Compile Include="Models\custom\vcvendor.cs" />
@@ -4912,7 +4912,6 @@
     <Content Include="Views\Login\Alert.cshtml" />
     <Content Include="Views\Home\Ppo.cshtml" />
     <Content Include="Views\Home\nirfcons.cshtml" />
-    <Content Include="Views\Home\pfms_vc.cshtml" />
     <Content Include="Views\Home\pvc.cshtml" />
     <Content Include="Views\Home\pdc.cshtml" />
   </ItemGroup>
