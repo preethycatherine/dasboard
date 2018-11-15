@@ -87,6 +87,7 @@
                                     <ul class="nav child_menu">
                                         <li><a href="@Url.Action("vc", "Home", new { area="" })">Vendor Credit (VC)</a></li>
                                         <li><a href="@Url.Action("dc", "Home", new { area=""})">Direct Credit (DC)</a></li>
+                                    
                                      <!--  <li><a href="@Url.Action("nirf", "Home", new { area=""})">NIRF</a></li> -->                                       
                                         <li>
                                             <a>NIRF <span class="fa fa-chevron-down"></span></a>
@@ -98,7 +99,21 @@
                                                             <a href="@Url.Action("nirf", "Home", new {id= "nirfcons" })">Consultancy</a>
                                                         </li>                                                       
                                              </ul>   
-                                        </li>   
+                                        </li>  
+                                        <li>
+                                            <a>Bill Tracking<span class="fa fa-chevron-down"></span></a>
+                                            <ul class="nav child_menu">
+                                                <li class="sub_menu">
+                                                    <a href="@Url.Action("bill", "Home", new {id="spons"})">Sponsor</a>
+                                                </li>
+                                                <li>
+                                                    <a href="@Url.Action("bill", "Home", new {id= "billcons" })">Consultancy</a>
+                                                </li>
+                                            </ul>
+                                        </li>  
+                                        <li>
+                                            <a href="@Url.Action("voucher", "Home", new { area="" })">Cheques </a>
+                                        </li>
                                         <li>
                                             <a>PFMS<span class="fa fa-chevron-down"></span></a>
                                             <ul class="nav child_menu">
@@ -337,6 +352,7 @@
             <!-- /top navigation -->
             <!-- page content -->
             <div class="right_col" role="main">
+                      
                 @RenderBody()
             </div>
            
@@ -390,6 +406,6 @@
     <script src="~/plugins/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
     <!-- Custom Theme Scripts -->
     <script src="~/plugins/build/js/custom.min.js"></script>
-
+    
 </body>
 </html>

@@ -235,6 +235,9 @@
     <Compile Include="Models\account_access.cs">
       <DependentUpon>dashboard.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\custom\bill.cs" />
+    <Compile Include="Models\custom\billcons.cs" />
+    <Compile Include="Models\custom\chqdrawn.cs" />
     <Compile Include="Models\custom\dcvendor.cs" />
     <Compile Include="Models\custom\nirf.cs" />
     <Compile Include="Models\custom\NIRF_RPT.cs" />
@@ -305,6 +308,7 @@
     <Compile Include="Models\useraccount.cs">
       <DependentUpon>login.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\User_Roles.cs">
       <DependentUpon>dashboard.tt</DependentUpon>
     </Compile>
@@ -416,6 +420,9 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="images\cheques.jpg" />
+    <Content Include="images\cheques1.jpg" />
+    <Content Include="images\modify.jpg" />
     <Content Include="js\main.js" />
     <Content Include="js\map-custom.js" />
     <Content Include="Models\dashboard.Context.tt">
@@ -4881,7 +4888,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
@@ -4903,17 +4909,23 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Home\dc.cshtml" />
-    <Content Include="Views\Home\nirf.cshtml" />
-    <Content Include="Views\Home\vc.cshtml" />
-    <Content Include="Views\Home\login.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Shared\_Layout1.cshtml" />
     <Content Include="Views\Login\Alert.cshtml" />
-    <Content Include="Views\Home\Ppo.cshtml" />
+    <Content Include="Views\Home\bill.cshtml" />
+    <Content Include="Views\Home\billcons.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\dc.cshtml" />
+    <Content Include="Views\Home\login.cshtml" />
+    <Content Include="Views\Home\nirf.cshtml" />
     <Content Include="Views\Home\nirfcons.cshtml" />
-    <Content Include="Views\Home\pvc.cshtml" />
     <Content Include="Views\Home\pdc.cshtml" />
+    <Content Include="Views\Home\Ppo.cshtml" />
+    <Content Include="Views\Home\pvc.cshtml" />
+    <Content Include="Views\Home\vc.cshtml" />
+    <Content Include="Views\Home\cheque_vouchno.cshtml" />
+    <Content Include="Views\Home\voucher.cshtml" />
+    <Content Include="Views\Home\modify_cheques.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

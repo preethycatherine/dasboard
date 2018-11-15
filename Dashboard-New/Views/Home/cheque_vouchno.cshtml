@@ -1,0 +1,90 @@
+﻿@model Dashboard_New.Models.VModel
+@using System.Globalization
+@*@model Dashboard_New.Models.custom.dcvendor*@
+@{
+    ViewBag.Title = "dc";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/datepicker/table.css" rel="stylesheet" />
+<link href="~/Content/datepicker/jquery-ui.css" rel="stylesheet" />
+<script src="~/Scripts/datepicker/jquery-ui.js"></script>
+<script>
+
+    $(function () {
+        $(".datepicker").datepicker({
+            dateFormat: 'dd/mm/yy'
+        });
+
+    });
+</script>
+<style>
+    .field-validation-error {
+        color: goldenrod;
+    }
+</style>
+
+<div class="container body">
+    @using (Html.BeginForm("chqdawn_post", "Home", FormMethod.Post))
+    {
+        <table cellpadding="0" cellspacing="0" align="center">
+            <tr>
+                <td>From Date: </td>
+                <td> &nbsp;</td>
+                <td>
+                    @Html.TextBoxFor(m => m.from_dt, new { Class = "datepicker" })
+                    @Html.ValidationMessageFor(m => m.from_dt)
+                </td>
+                <td> &nbsp; &nbsp; &nbsp; &nbsp;</td>
+                <td>To Date: </td>
+                <td> &nbsp;</td>
+                <td>
+                    @Html.TextBoxFor(m => m.to_dt, new { Class = "datepicker" })
+                    @Html.ValidationMessageFor(m => m.to_dt)
+                </td>
+                <td> &nbsp;</td>
+                <td><input type="submit" value="Submit" name="grid" /></td>
+                <td> &nbsp;</td>
+               
+            </tr>
+            <tr>
+                <td align="center">(dd/mm/yyyy)</td>
+                <td> &nbsp; &nbsp; &nbsp; &nbsp;</td>
+                <td> &nbsp; &nbsp; &nbsp; &nbsp;</td>
+                <td> &nbsp; &nbsp; </td>
+                <td align="center">(dd/mm/yyyy)</td>
+            </tr>
+        </table>
+
+    }
+</div>
+<br />
+<div class="dclist" id='scrolly'>
+    <table border="1" id="customers">
+        <tr style="color:#024b72">          
+            <th>CHEQUE DATE</th>
+            <th>CHEQUE NUMBER</th>    
+            <th>PARTY</th>       
+            <th>BILL NUMBER</th>
+            <th>PROJECT NUMBER</th>
+            <th>AMOUNT</th>
+            <th>VOUCHER NUMBER</th>
+            <th>CHEQUE TYPE</th>
+           
+        </tr>
+        @foreach (var rec in Model.chq)
+        {
+            <tr>
+                <td>@rec.CQDATE</td>
+                <td>@rec.CHEQ_NO</td>
+                <td>@rec.PARTY</td>
+                <td>@rec.BRNO</td>
+                <td>@rec.NPRNO</td>
+                <td>@rec.RSAMT</td>
+                <td>@rec.VOUCHNO</td>
+                <td>@rec.CHEK</td>
+             
+            </tr>
+        }
+    </table>   
+</div>

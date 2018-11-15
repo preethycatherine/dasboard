@@ -14,17 +14,33 @@ using Dashboard_New.Models.custom;
 
 namespace Dashboard_New.Controllers
 {
-    [DashboardAutherisation]
 
+    [DashboardAutherisation]
     public class HomeController : Controller
     {
-        string myVar;
-       
+        [DashboardAutherisation("chqmdy")]
+        public ActionResult modify_cheques()
+        {
+            List<chqdrawn> users = chqdrawn.getUsers();              
+            return View(users);
+        }
+
+        public JsonResult UpdateUser(chqdrawn model)
+        {
+            // Update model to your db
+            string message = "Success";
+            return Json(message, JsonRequestBehavior.AllowGet);
+        }
+
+
+
+        string myVar;       
         // [DashboardAutherisation]
         public ActionResult Index()
         {
             return View();
         }
+     
 
         [DashboardAutherisation("vc")]
         public ActionResult vc()
@@ -323,7 +339,7 @@ namespace Dashboard_New.Controllers
                         return View("nirfcons", dv);
                     }
                     catch (Exception e)
-                    { Console.WriteLine("Erorrr : " + e); }
+                    { Console.WriteLine("Error : " + e); }
                     VModel vd = new VModel();
                     vd.nirf = records;
                     vd.from_year = v3.from_year;
@@ -722,7 +738,233 @@ namespace Dashboard_New.Controllers
             }
             return null;
         }
+        [DashboardAutherisation("bill")]
+     
+        public ActionResult bill(string id)
+        {
+            Session["bid"] = id;
+            return View(new VModel());
+        }
 
+        public ActionResult billcons(string id)
+        {
+            Session["bid"] = id;
+            return View(new VModel());
+        }
+
+        [HttpPost]
+        public ActionResult billspons_post(Dashboard_New.Models.custom.bill v7, string grid, string export, string id)
+        {
+            if (string.IsNullOrEmpty(v7.from_dt))
+            {
+                ModelState.AddModelError("From date", "Year Required");
+            }
+            if (string.IsNullOrEmpty(v7.to_dt))
+            {
+                ModelState.AddModelError("To date", "Year Required");
+            }
+            if (ModelState.IsValid)
+            {              
+                if ((string.Equals("Export To Excel", export)) && (string.Equals("spons", Session["bid"])))
+                {
+                    string idd = v7.id;
+                    vcEntities entities = new vcEntities();
+                    DataTable dt = new DataTable("Grid");                 
+                    DateTime fromdt = DateTime.ParseExact(v7.from_dt, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    DateTime todt = DateTime.ParseExact(v7.to_dt, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    string fm, tm;
+                    fm = fromdt.ToString("yyyy-MM-dd");
+                    tm = todt.ToString("yyyy-MM-dd");
+                    dt.Columns.AddRange(new DataColumn[46] { new DataColumn("BILL DATE"), new DataColumn("BILL NO"), new DataColumn("CASHDATE"), new DataColumn("BILLNO_DT"), new DataColumn("NPRNO"), new DataColumn("HEAD"), new DataColumn("COMNO"), new DataColumn("PONO"), new DataColumn("VOCHNO"), new DataColumn("VAMOUNT"), new DataColumn("PARTY"), new DataColumn("ITEM"), new DataColumn("ADD1"), new DataColumn("ADD2"), new DataColumn("ADD3"), new DataColumn("CITY"), new DataColumn("NARATION1"), new DataColumn("NARATION2"), new DataColumn("SPNSTOCSH"), new DataColumn("SPNSTOCSH1"), new DataColumn("CQCK"), new DataColumn("LEDGER1"), new DataColumn("LEDGER"), new DataColumn("LEDGER2"), new DataColumn("SCHOLAR"), new DataColumn("TIME"), new DataColumn("ADJ"), new DataColumn("ECODE"), new DataColumn("IT"), new DataColumn("PT"), new DataColumn("PARTYCODE"), new DataColumn("PANNUMBER"), new DataColumn("TPNO"), new DataColumn("TPLDATE"), new DataColumn("ACCOUNTTYPE"), new DataColumn("TDSPERSENT"), new DataColumn("TDSSECTION"), new DataColumn("TDSAMOUNT"), new DataColumn("PARTYAMOUNT"), new DataColumn("TAXABLEAMOUNT"), new DataColumn("INVOICEAMOUNT"), new DataColumn("VOUCHERNUMBER"), new DataColumn("VOUCHERDATE"), new DataColumn("TDSGSTVALUE"), new DataColumn("TDSGSTAMOUNT"), new DataColumn("SLNO") });
+                    var disp = entities.Database.SqlQuery<Dashboard_New.Models.custom.bill>(string.Format("select BRDATE,BRNO,CASHDATE,NPRNO,HEAD,COMNO,PONO,VOCHNO,VAMOUNT,ITEM,PARTY,ADD1, ADD2,ADD3,CITY,NARATION1,NARATION2,SPNSTOCSH,SPNSTOCSH1,CQCK,LEDGER1,LEDGER,LEDGER2,SCHOLAR,TIME,ADJ,ECODE,IT,PT,PARTYCODE,PANNUMBER,TPNO,TPLDATE,ACCOUNTTYPE,TDSPERSENT,TDSSECTION,TDSAMOUNT,PARTYAMOUNT,TAXABLEAMOUNT,INVOICEAMOUNT,VOUCHERNUMBER, VOUCHERDATE,TDSGSTVALUE,TDSGSTAMOUNT,SLNO from br where  brdate >='{0}' and brdate <='{1}'", fromdt.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture), todt.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture))).ToList();
+                    dt.Columns[9].DataType = typeof(Int32);
+                    dt.Columns[38].DataType = typeof(Int32);
+                    dt.Columns[39].DataType = typeof(Int32);
+                    dt.Columns[40].DataType = typeof(Int32);
+                    dt.Columns[43].DataType = typeof(Int32);
+                    dt.Columns[44].DataType = typeof(Int32);
+                    dt.Columns[45].DataType = typeof(Int32);
+                    foreach (var x in disp)
+                    {
+                        dt.Rows.Add(x.BRDATE, x.BRNO,x.CASHDATE,x.BILLNO_DT,x.NPRNO,x.HEAD, x.COMNO, x.PONO, x.VOCHNO, x.VAMOUNT,x.ITEM,x.PARTY, x.ADD1, x.ADD2, x.ADD3,x.CITY, x.NARATION1, x.NARATION2, x.SPNSTOCSH, x.SPNSTOCSH1, x.CQCK, x.LEDGER1, x.LEDGER, x.LEDGER2, x.SCHOLAR, x.TIME, x.ADD1, x.ECODE, x.IT, x.PT, x.PARTYCODE, x.PANNUMBER, x.TPNO, x.TPLDATE, x.ACCOUNTTYPE, x.TDSPERSENT, x.TDSSECTION, x.TDSAMOUNT, x.PARTYAMOUNT, (x.TAXABLEAMOUNT), x.INVOICEAMOUNT, x.VOUCHERNUMBER, x.VOUCHERDATE,x.TDSGSTVALUE, x.TDSGSTAMOUNT, x.SLNO);
+                    }
+                    using (XLWorkbook wb = new XLWorkbook())
+                    {
+                        wb.Worksheets.Add("BILL SPONSORED");
+                        wb.Worksheet(1).Cell(3, 1).InsertTable(dt);
+                        wb.Worksheet(1).Cell(1, 7).Value = "BILL(Sponsored) : " + v7.from_dt + " - " + v7.to_dt;
+                        wb.Worksheet(1).Cell(1, 7).Style.Font.Bold = true;
+                        var wbs = wb.Worksheets.FirstOrDefault();
+                        wbs.Tables.FirstOrDefault().ShowAutoFilter = false;
+                        wb.Properties.Title = "BILL SPONSORED REPORT";
+                        using (MemoryStream stream = new MemoryStream())
+                        {
+                            wb.SaveAs(stream);
+                            return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "BILL-SPONSORED.xlsx");
+                        }
+                    }
+                }
+                if ((string.Equals("Export To Excel", export)) && (string.Equals("billcons", Session["bid"])))
+                {
+                    string idd = v7.id;
+                    vcEntities entities = new vcEntities();
+                    DataTable dt = new DataTable("Grid");
+                    DateTime fromdt = DateTime.ParseExact(v7.from_dt, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    DateTime todt = DateTime.ParseExact(v7.to_dt, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    string fm, tm;
+                    fm = fromdt.ToString("yyyy-MM-dd");
+                    tm = todt.ToString("yyyy-MM-dd");
+                    dt.Columns.AddRange(new DataColumn[40] { new DataColumn("BILL DATE"), new DataColumn("BILL NO"), new DataColumn("CASHDATE"),  new DataColumn("NPRNO"), new DataColumn("HEAD"), new DataColumn("COMNO"), new DataColumn("PONO"), new DataColumn("VOCHNO"), new DataColumn("VAMOUNT"), new DataColumn("PARTY"), new DataColumn("ITEM"), new DataColumn("ADD1"), new DataColumn("CITY"), new DataColumn("NARATION1"), new DataColumn("NARATION2"), new DataColumn("SPNSTOCSH"), new DataColumn("SPNSTOCSH1"), new DataColumn("SPNSTOCSH2"), new DataColumn("CQCK"), new DataColumn("LEDGER"), new DataColumn("SCHOLAR"), new DataColumn("TIME"), new DataColumn("ADJ"), new DataColumn("ECODE"), new DataColumn("PARTYCODE"), new DataColumn("PANNUMBER"), new DataColumn("TPNO"), new DataColumn("TPLDATE"), new DataColumn("ACCOUNTTYPE"), new DataColumn("TDSPERSENT"), new DataColumn("TDSSECTION"), new DataColumn("TDSAMOUNT"), new DataColumn("PARTYAMOUNT"), new DataColumn("TAXABLEAMOUNT"), new DataColumn("INVOICEAMOUNT"), new DataColumn("VOUCHERNUMBER"), new DataColumn("VOUCHERDATE"), new DataColumn("TDSGSTVALUE"), new DataColumn("TDSGSTAMOUNT"), new DataColumn("SLNO") });
+                    var disp = entities.Database.SqlQuery<Dashboard_New.Models.custom.bill>(string.Format("select BRDATE,BRNO,CASHDATE,BILLNO_DT,NPRNO,HEAD,COMNO,PONO,VOCHNO,VAMOUNT,ITEM,PARTY,ADD1,CITY,NARATION1,NARATION2,SPNSTOCSH1,SPNSTOCSH,SPNSTOCSH2,CQCK,LEDGER,TIME,ADJ,ECODE,PARTYCODE,PANNUMBER,TPLNO,TPLDATE,ACCOUNTTYPE,TDSPERSENT,TDSSECTION,TDSAMOUNT,PARTYAMOUNT,TAXABLEAMOUNT,INVOICEAMOUNT,VOUCHERNUMBER,VOUCHERDATE,TDSGSTVALUE,TDSGSTAMOUNT,SLNO from CONbr where  brdate >='{0}' and brdate <='{1}'", fromdt.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture), todt.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture))).ToList();
+                    dt.Columns[8].DataType = typeof(Int32);
+                    dt.Columns[32].DataType = typeof(Int32);
+                    dt.Columns[33].DataType = typeof(Int32);
+                    dt.Columns[34].DataType = typeof(Int32);
+                    dt.Columns[35].DataType = typeof(Int32);
+                    dt.Columns[38].DataType = typeof(Int32);
+                   // dt.Columns[39].DataType = typeof(Int32);
+                    foreach (var x in disp)
+                    {
+                        dt.Rows.Add(x.BILLNO_DT, x.BRNO, x.CASHDATE, x.NPRNO, x.HEAD, x.COMNO, x.PONO, x.VOCHNO, x.VAMOUNT, x.PARTY, x.ITEM, x.ADD1, x.CITY, x.NARATION1, x.NARATION2, x.SPNSTOCSH, x.SPNSTOCSH1, x.SPNSTOCSH2, x.CQCK, x.LEDGER, x.SCHOLAR, x.TIME, x.ADJ, x.ECODE, x.PARTYCODE, x.PANNUMBER, x.TPNO, x.TPLDATE, x.ACCOUNTTYPE, x.TDSPERSENT, x.TDSSECTION, x.TDSAMOUNT, x.PARTYAMOUNT, x.TAXABLEAMOUNT, x.INVOICEAMOUNT, x.VOUCHERNUMBER, x.VOUCHERDATE, x.TDSGSTVALUE, x.TDSGSTAMOUNT, x.SLNO);
+                    }
+                    using (XLWorkbook wb = new XLWorkbook())
+                    {
+                        wb.Worksheets.Add("CONSULTANCY BILL SPONSORED");
+                        wb.Worksheet(1).Cell(3, 1).InsertTable(dt);
+                        wb.Worksheet(1).Cell(1, 7).Value = "CONSULTANCY BILL(Sponsored) : " + v7.from_dt + " - " + v7.to_dt;
+                        wb.Worksheet(1).Cell(1, 7).Style.Font.Bold = true;
+                        var wbs = wb.Worksheets.FirstOrDefault();
+                        wbs.Tables.FirstOrDefault().ShowAutoFilter = false;
+                        wb.Properties.Title = "CONSULTANCY BILL SPONSORED REPORT";
+                        using (MemoryStream stream = new MemoryStream())
+                        {
+                            wb.SaveAs(stream);
+                            return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "CONSULTANCY BILL-SPONSORED.xlsx");
+                        }
+                    }
+                }
+                if ((string.Equals("Submit", grid)) && (string.Equals("spons", Session["bid"])))
+                {
+                    string from_dt = v7.from_dt;
+                    string to_dt = v7.to_dt;
+                    DateTime fromdt = DateTime.ParseExact(v7.from_dt, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    DateTime todt = DateTime.ParseExact(v7.to_dt, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    string fm, tm;
+                    fm = fromdt.ToString("yyyy-MM-dd");
+                    tm = todt.ToString("yyyy-MM-dd");
+                    List<bill> records = new List<bill>();
+                    try
+                    {
+                        vcEntities vcobj = new vcEntities();
+                        records = vcobj.Database.SqlQuery<bill>(string.Format("select BRDATE,BRNO,CASHDATE,BILLNO_DT,NPRNO,HEAD,COMNO,PONO,VOCHNO,VAMOUNT,ITEM,PARTY,ADD1, ADD2,ADD3,CITY,NARATION1,NARATION2,SPNSTOCSH,SPNSTOCSH1,CQCK,LEDGER1,LEDGER,LEDGER2,SCHOLAR,TIME,ADJ,ECODE,IT,PT,PARTYCODE,PANNUMBER,TPNO,TPLDATE,ACCOUNTTYPE,TDSPERSENT,TDSSECTION,TDSAMOUNT,PARTYAMOUNT,TAXABLEAMOUNT,INVOICEAMOUNT,VOUCHERNUMBER, VOUCHERDATE,TDSGSTVALUE,TDSGSTAMOUNT,SLNO from br where  brdate >='{0}' and brdate <='{1}'", fromdt.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture), todt.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture))).ToList();
+                        Dashboard_New.Models.VModel dv = new VModel();
+                        dv.from_year = v7.from_dt;
+                        dv.to_year = v7.to_dt;
+                        dv.bill_sp = records;
+                        return View("bill", dv);
+                    }
+                    catch (Exception e)
+                    { Console.WriteLine("Error : " + e); }
+                    VModel vd = new VModel();
+                    vd.bill_sp = records;
+                    vd.from_year = v7.from_year;
+                    vd.to_year = v7.to_year;
+                    return View("bill", vd);
+                }
+                if ((string.Equals("Submit", grid)) && (string.Equals("billcons", Session["bid"])))
+                {
+                    string from_dt = v7.from_dt;
+                    string to_dt = v7.to_dt;
+                    DateTime fromdt = DateTime.ParseExact(v7.from_dt, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    DateTime todt = DateTime.ParseExact(v7.to_dt, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    string fm, tm;
+                    fm = fromdt.ToString("yyyy-MM-dd");
+                    tm = todt.ToString("yyyy-MM-dd");
+                    List<billcons> records = new List<billcons>();
+                    try
+                    {
+                        vcEntities vcobj = new vcEntities();
+                        records = vcobj.Database.SqlQuery<billcons>(string.Format("select BRDATE,BRNO,CASHDATE,BILLNO_DT,NPRNO,HEAD,COMNO,PONO,VOCHNO,VAMOUNT,ITEM,PARTY,ADD1,CITY,NARATION1,NARATION2,SPNSTOCSH1,SPNSTOCSH,SPNSTOCSH2,CQCK,LEDGER,TIME,ADJ,ECODE,PARTYCODE,PANNUMBER,TPLNO,TPLDATE,ACCOUNTTYPE,TDSPERSENT,TDSSECTION,TDSAMOUNT,PARTYAMOUNT,TAXABLEAMOUNT,INVOICEAMOUNT,VOUCHERNUMBER,VOUCHERDATE,TDSGSTVALUE,TDSGSTAMOUNT,SLNO from conbr where  brdate >='{0}' and brdate <='{1}'", fromdt.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture), todt.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture))).ToList();
+                        Dashboard_New.Models.VModel dv = new VModel();
+                        dv.from_year = v7.from_dt;
+                        dv.to_year = v7.to_dt;
+                        dv.bill_con = records;
+                        return View("billcons", dv);
+                    }
+                    catch (Exception e)
+                    { Console.WriteLine("Error : " + e); }
+                    VModel vd = new VModel();
+                    vd.bill_con = records;
+                    vd.from_year = v7.from_year;
+                    vd.to_year = v7.to_year;
+                    return View("billcons", vd);
+                }
+            }
+            else
+            {
+                return View("bill", v7);
+            }
+            return null;
+        }
+       
+        [DashboardAutherisation("chq")]
+        public ActionResult voucher()
+        {
+            return View(new VModel());
+        }
+        [DashboardAutherisation("chq")]
+        public ActionResult cheque_vouchno()
+        {
+            return View(new VModel());
+        }
+        [HttpPost]
+        public ActionResult chqdawn_post(Dashboard_New.Models.custom.chqdrawn v8, string grid)
+        {
+            if (string.IsNullOrEmpty(v8.from_dt))
+            {
+                ModelState.AddModelError("from_dt", "Date Required");
+            }
+            if (string.IsNullOrEmpty(v8.to_dt))
+            {
+                ModelState.AddModelError("to_dt", "Date Required");
+            }
+            if (ModelState.IsValid)
+            {                
+                
+                if (string.Equals("Submit", grid))
+                {
+                    string from_dt = v8.from_dt;
+                    string to_dt = v8.to_dt;
+                    DateTime fromdt = DateTime.ParseExact(v8.from_dt, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    DateTime todt = DateTime.ParseExact(v8.to_dt, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    List<chqdrawn> records = new List<chqdrawn>();
+                    try
+                    {
+                        vcEntities vcobj = new vcEntities();
+                        records = vcobj.Database.SqlQuery<chqdrawn>(string.Format("select PARTY,BRNO,NPRNO,CQDATE,CHEQ_NO,RSAMT,VOUCHNO,CHEK  from CHECKDRAWN WHERE CQDATE >= '{0}' AND CQDATE<= '{1}'", fromdt.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture), todt.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture))).ToList();
+                        Dashboard_New.Models.VModel hg = new VModel();
+                        hg.chq = records;
+                        return View("cheque_vouchno", hg);
+                    }
+                    catch (Exception e)
+                    { Console.WriteLine("Erorrr : " + e); }
+                    VModel vd = new VModel();
+                    vd.chq = records;
+                    return View("cheque_vouchno", vd);
+                }
+            }
+            else
+            {
+                return View("cheque_vouchno", v8);
+            }
+            return null;
+
+        }
+        //[DashboardAutherisation("chqmdy")]
+        //public ActionResult modify_cheques()
+        //{
+        //    return View(new VModel());
+        //}
         public ActionResult Contact()
         { return View(); }
 

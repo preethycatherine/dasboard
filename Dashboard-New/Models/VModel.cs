@@ -35,18 +35,24 @@ namespace Dashboard_New.Models
         public List<Dashboard_New.Models.custom.ppo> ppoo { get; set; }
         public List<Dashboard_New.Models.custom.pvc> pfm_vclist { get; set; }
         public List<Dashboard_New.Models.custom.pdc> pfm_dclist { get; set; }
+        public List<Dashboard_New.Models.custom.bill> bill_sp { get; set; }
+        public List<Dashboard_New.Models.custom.billcons> bill_con { get; set; }
+        public List<Dashboard_New.Models.custom.chqdrawn> chq { get; set; }
         public VModel()
         {
             vclist = new List<VCVOUCH>();
             dclist = new List<DVOUCH>();
             mstlist = new List<MSTLST>();
             reclist = new List<REC1718>();
+            chq = new List<Dashboard_New.Models.custom.chqdrawn>();
             vm = new List<Dashboard_New.Models.custom.vcvendor>();
             dm = new List<Dashboard_New.Models.custom.dcvendor>();
             nirf = new List<Dashboard_New.Models.custom.NIRF_RPT>();
             ppoo = new List<Dashboard_New.Models.custom.ppo>();
             pfm_vclist = new List<Dashboard_New.Models.custom.pvc>();
             pfm_dclist = new List<Dashboard_New.Models.custom.pdc>();
+            bill_sp = new List<Dashboard_New.Models.custom.bill>();
+            bill_con = new List<Dashboard_New.Models.custom.billcons>();
         }
     }
 }

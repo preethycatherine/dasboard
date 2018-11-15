@@ -1,0 +1,157 @@
+﻿@model Dashboard_New.Models.VModel
+@using System.Globalization
+@{
+    ViewBag.Title = "billcons";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/datepicker/table.css" rel="stylesheet" />
+<link href="~/Content/datepicker/jquery-ui.css" rel="stylesheet" />
+<script src="~/Scripts/datepicker/jquery-ui.js"></script>
+<script>
+
+    $(function () {
+        $(".datepicker").datepicker({
+            dateFormat: 'dd/mm/yy'
+        });
+
+    });
+</script>
+<style>
+    .field-validation-error {
+        color: goldenrod;
+    }
+</style>
+
+<div class="container body">
+    @using (Html.BeginForm("billspons_post", "Home", FormMethod.Post))
+    {
+        <table cellpadding="0" cellspacing="0" align="center">
+            <tr>
+                <td>From Date: </td>
+                <td> &nbsp;</td>
+                <td>
+                    @Html.TextBoxFor(m => m.from_dt, new { Class = "datepicker" })
+                    @Html.ValidationMessageFor(m => m.from_dt)
+                </td>
+                <td> &nbsp; &nbsp; &nbsp; &nbsp;</td>
+                <td>To Date: </td>
+                <td> &nbsp;</td>
+                <td>
+                    @Html.TextBoxFor(m => m.to_dt, new { Class = "datepicker" })
+                    @Html.ValidationMessageFor(m => m.to_dt)
+                </td>
+                <td> &nbsp;</td>
+                <td><input type="submit" value="Submit" name="grid" /></td>
+                <td> &nbsp;</td>
+                <td><input type="submit" value="Export To Excel" name="export" /></td>
+            </tr>
+            <tr>
+                <td align="center">(dd/mm/yyyy)</td>
+                <td> &nbsp; &nbsp; &nbsp; &nbsp;</td>
+                <td> &nbsp; &nbsp; &nbsp; &nbsp;</td>
+                <td> &nbsp; &nbsp; </td>
+                <td align="center">(dd/mm/yyyy)</td>
+            </tr>
+        </table>
+
+    }
+</div>
+<br />
+<div class="DClist" id='scrolly'>
+    <table border="1" id="customers">
+        <tr style="color:#024b72">
+            <th>BRNO</th>
+            <th>BRDATE</th>
+            <th>CASHDATE</th>
+            <th>BILLNO_DT</th>
+            <th>NPRNO</th>
+            <th>HEAD</th>
+            <th>COMNO</th>
+            <th>PONO</th>
+            <th>VOCHNO</th>
+            <th>VAMOUNT</th>
+            <th>ITEM</th>
+            <th>PARTY</th>
+            <th>ADD1</th>
+            <th>CITY</th>
+            <th>NARATION1</th>
+            <th>NARATION2</th>
+            <th>SPNSTOCSH</th>
+            <th>SPNSTOCSH1</th>
+            <th>SPNSTOCSH2</th>
+            <th>CQCK</th>
+            <th>LEDGER</th>
+            <th>SCHOLAR</th>
+            <th>TIME</th>
+            <th>ADJ</th>
+            <th>ECODE</th>
+            <th>PARTYCODE</th>
+            <th>PANNUMBER</th>
+            <th>TPLNO</th>
+            <th>TPLDATE</th>
+            <th>ACCOUNTTYPE</th>
+            <th>TDSPERSENT</th>
+            <th>TDSSECTION</th>
+            <th>TDSAMOUNT</th>
+            <th>PARTYAMOUNT</th>
+            <th>TAXABLEAMOUNT</th>
+            <th>INVOICEAMOUNT</th>
+            <th>VOUCHERNUMBER</th>
+            <th>VOUCHERDATE</th>
+            <th>TDSGSTVALUE</th>
+            <th>TDSGSTAMOUNT</th>
+            <th>SLNO</th>
+        </tr>
+        @foreach (var rec in Model.bill_con)
+        {
+            <tr>
+                <td>@rec.BRNO </td>
+                <td>@rec.BRDATE </td>
+                <td>@rec.CASHDATE </td>
+                <td>@rec.BILLNO_DT </td>
+                <td>@rec.NPRNO </td>
+                <td>@rec.HEAD </td>
+                <td>@rec.COMNO </td>
+                <td>@rec.PONO </td>
+                <td>@rec.VOCHNO </td>
+                <td>@rec.VAMOUNT </td>
+                <td>@rec.ITEM </td>
+                <td>@rec.PARTY </td>
+                <td>@rec.ADD1 </td>
+                <td>@rec.CITY </td>
+                <td>@rec.NARATION1 </td>
+                <td>@rec.NARATION2 </td>
+                <td>@rec.SPNSTOCSH </td>
+                <td>@rec.SPNSTOCSH1 </td>
+                <td>@rec.SPNSTOCSH2 </td>
+                <td>@rec.CQCK </td>
+                <td>@rec.LEDGER </td>
+                <td>@rec.SCHOLAR </td>
+                <td>@rec.TIME </td>
+                <td>@rec.ADJ </td>
+                <td>@rec.ECODE </td>
+                <td>@rec.PARTYCODE </td>
+                <td>@rec.PANNUMBER </td>
+                <td>@rec.TPLNO </td>
+                <td>@rec.TPLDATE </td>
+                <td>@rec.ACCOUNTTYPE </td>
+                <td>@rec.TDSPERSENT </td>
+                <td>@rec.TDSSECTION </td>
+                <td>@rec.TDSAMOUNT </td>
+                <td>@rec.PARTYAMOUNT </td>
+                <td>@rec.TAXABLEAMOUNT </td>
+                <td>@rec.INVOICEAMOUNT </td>
+                <td>@rec.VOUCHERNUMBER </td>
+                <td>@rec.VOUCHERDATE </td>
+                <td>@rec.TDSGSTVALUE </td>
+                <td>@rec.TDSGSTAMOUNT </td>
+                <td>@rec.SLNO </td>
+            </tr>
+        }
+    </table>
+</div>
+
+
+
+
+
