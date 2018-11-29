@@ -18,18 +18,93 @@ namespace Dashboard_New.Controllers
     [DashboardAutherisation]
     public class HomeController : Controller
     {
-        [DashboardAutherisation("chqmdy")]
+        DateTime date1,date2;
+        string party_d;
+       [DashboardAutherisation("chqmdy")]      
         public ActionResult modify_cheques()
         {
-            List<chqdrawn> users = chqdrawn.getUsers();              
-            return View(users);
+        //http://www.dotnetawesome.com/2017/12/basic-inplace-editing-in-aspnet-mvc-webgrid.html
+        //https://www.c-sharpcorner.com/UploadFile/4d9083/filter-webgrid-with-cascading-dropdownlist-along-with-paging/
+            //List<chqdrawn> users = chqdrawn.getUsers();              
+            //return View(users);
+            List<chqdrawn> users = new List<chqdrawn>();
+            vcEntities mdcc = new vcEntities();
+            Session["stdt"] = Request.Form["from_dt"];
+            date1 = Convert.ToDateTime(Session["stdt"]);
+            Session["todt"] = Request.Form["to_dt"];
+            date2 = Convert.ToDateTime(Session["todt"]);
+            using (vcEntities mdc = new vcEntities())
+            {
+                users = (from a in mdc.CHECKDRAWNs
+                         where a.CQDATE >= date1 & a.CQDATE <= date2
+                         select new chqdrawn
+                         {
+                             CQDATE = a.CQDATE,
+                             BRNO = a.BRNO,
+                             NPRNO = a.NPRNO,
+                             PARTY = a.PARTY,
+                             CHEQ_NO = a.CHEQ_NO,
+                             RSAMT = a.RSAMT,
+                             VOUCHNO = a.VOUCHNO,
+                             CHEK = a.CHEK
+                         }).ToList();
+              
+            }
+            //return View(users);
+            return View(new chqmdf() { chqdrawn_dup=users});
+        }
+        [HttpPost]
+        public ActionResult Movies(string movieId)
+        {
+            party_d = movieId;
+
+            return Json(party_d, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
+        //public JsonResult UpdateUser(chqdrawn model)
         public JsonResult UpdateUser(chqdrawn model)
         {
-            // Update model to your db
+            string ch = model.CQDATE_dup.ToString();
+            ch = ch.Substring(0, 10);        
+
+            string to_dt = ch;
+            DateTime todt = DateTime.ParseExact(ch, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            ch = todt.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+         
+
+
+            //DateTime CQDATE_dupc = Convert.ToDateTime(ch);
+            //CQDATE_dupc=CQDATE_dupc.Date;
+            //DateTime CQDATE_dupc = DateTime.ParseExact(ch, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+
+            vcEntities mdc = new vcEntities();
+            //var upd = (from a in mdc.CHECKDRAWNs
+            //            where a.CHEQ_NO == model.CHEQ_NO
+            //            select a).FirstOrDefault();
+            //var upd = mdc.CHECKDRAWNs.Where(m => string.Equals(m.CHEQ_NO,model.CHEQ_NO_dup.Trim())).SingleOrDefault();
+            var upd = mdc.CHECKDRAWNs.Where(m => string.Equals(m.CHEQ_NO, model.CHEQ_NO_dup.Trim()) && string.Equals(m.VOUCHNO, model.VOUCHNO_dup.Trim())
+            && string.Equals(m.BRNO, model.BRNO_dup.Trim()) && string.Equals(m.PARTY, model.PARTY_dup.Trim())  && (m.CQDATE== model.CQDATE_dup)
+            && (m.RSAMT== model.RSAMT_dup) && string.Equals(m.CHEK, model.CHEK_dup.Trim())).SingleOrDefault();
+            //string nari = string.Format("update CHECKDRAWN set  CHEQ_NO = '{0}',VOUCHNO='{1}'  where CHEQ_NO = '{2}'", model.CHEQ_NO, model.VOUCHNO, party_d);
+            string nari = string.Format("update CHECKDRAWN set  CHEQ_NO = '{0}',VOUCHNO='{1}'  where CHEQ_NO = '{2}' and VOUCHNO='{3}'  and PARTY='{4}'and BRNO='{5}'and CQDATE='{6}'and RSAMT='{7}' AND CHEK='{8}'",
+            model.CHEQ_NO, model.VOUCHNO,model.CHEQ_NO_dup, model.VOUCHNO_dup, model.PARTY_dup, model.BRNO_dup,ch, model.RSAMT_dup,model.CHEK_dup);
+            mdc.Database.ExecuteSqlCommand(nari);
+            //upd.CHEQ_NO = model.CHEQ_NO;
+            //upd.VOUCHNO = model.VOUCHNO;
+            //int count = mdc.SaveChanges();
+
+            //List<chqdrawn> records = new List<chqdrawn>();
+            //vcEntities chq_update = new vcEntities();         
+            //records = chq_update.Database.SqlQuery<chqdrawn>(string.Format("update CHECKDRAWN set  CHEQ_NO = model.CHEQ_NO,VOUCHNO=a.VOUCHNO  where CQDATE = a.CQDATE and BRNO = a.BRNO,NPRNO = a.NPRNO,PARTY = a.PARTY,CHEQ_NO = a.CHEQ_NO,RSAMT = a.RSAMT,VOUCHNO = a.VOUCHNO,CHEK = a.CHEK")).ToList();
+            //Dashboard_New.Models.VModel hg = new VModel();
+            //hg.chq = records;
+            //return View(new chqmdf() { chqdrawn_dup = records });
+
             string message = "Success";
             return Json(message, JsonRequestBehavior.AllowGet);
+            //return new EmptyResult();
         }
 
 
@@ -917,49 +992,49 @@ namespace Dashboard_New.Controllers
         {
             return View(new VModel());
         }
-        [HttpPost]
-        public ActionResult chqdawn_post(Dashboard_New.Models.custom.chqdrawn v8, string grid)
-        {
-            if (string.IsNullOrEmpty(v8.from_dt))
-            {
-                ModelState.AddModelError("from_dt", "Date Required");
-            }
-            if (string.IsNullOrEmpty(v8.to_dt))
-            {
-                ModelState.AddModelError("to_dt", "Date Required");
-            }
-            if (ModelState.IsValid)
-            {                
+        //[HttpPost]
+        //public ActionResult chqdawn_post(Dashboard_New.Models.custom.chqdrawn v8, string grid)
+        //{
+        //    if (string.IsNullOrEmpty(v8.from_dt))
+        //    {
+        //        ModelState.AddModelError("from_dt", "Date Required");
+        //    }
+        //    if (string.IsNullOrEmpty(v8.to_dt))
+        //    {
+        //        ModelState.AddModelError("to_dt", "Date Required");
+        //    }
+        //    if (ModelState.IsValid)
+        //    {                
                 
-                if (string.Equals("Submit", grid))
-                {
-                    string from_dt = v8.from_dt;
-                    string to_dt = v8.to_dt;
-                    DateTime fromdt = DateTime.ParseExact(v8.from_dt, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-                    DateTime todt = DateTime.ParseExact(v8.to_dt, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-                    List<chqdrawn> records = new List<chqdrawn>();
-                    try
-                    {
-                        vcEntities vcobj = new vcEntities();
-                        records = vcobj.Database.SqlQuery<chqdrawn>(string.Format("select PARTY,BRNO,NPRNO,CQDATE,CHEQ_NO,RSAMT,VOUCHNO,CHEK  from CHECKDRAWN WHERE CQDATE >= '{0}' AND CQDATE<= '{1}'", fromdt.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture), todt.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture))).ToList();
-                        Dashboard_New.Models.VModel hg = new VModel();
-                        hg.chq = records;
-                        return View("cheque_vouchno", hg);
-                    }
-                    catch (Exception e)
-                    { Console.WriteLine("Erorrr : " + e); }
-                    VModel vd = new VModel();
-                    vd.chq = records;
-                    return View("cheque_vouchno", vd);
-                }
-            }
-            else
-            {
-                return View("cheque_vouchno", v8);
-            }
-            return null;
+        //        if (string.Equals("Submit", grid))
+        //        {
+        //            string from_dt = v8.from_dt;
+        //            string to_dt = v8.to_dt;
+        //            DateTime fromdt = DateTime.ParseExact(v8.from_dt, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+        //            DateTime todt = DateTime.ParseExact(v8.to_dt, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+        //            List<chqdrawn> records = new List<chqdrawn>();
+        //            try
+        //            {
+        //                vcEntities vcobj = new vcEntities();
+        //                records = vcobj.Database.SqlQuery<chqdrawn>(string.Format("select PARTY,BRNO,NPRNO,CQDATE,CHEQ_NO,RSAMT,VOUCHNO,CHEK  from CHECKDRAWN WHERE CQDATE >= '{0}' AND CQDATE<= '{1}'", fromdt.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture), todt.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture))).ToList();
+        //                Dashboard_New.Models.VModel hg = new VModel();
+        //                hg.chq = records;
+        //                return View("cheque_vouchno", hg);
+        //            }
+        //            catch (Exception e)
+        //            { Console.WriteLine("Erorrr : " + e); }
+        //            VModel vd = new VModel();
+        //            vd.chq = records;
+        //            return View("cheque_vouchno", vd);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        return View("cheque_vouchno", v8);
+        //    }
+        //    return null;
 
-        }
+        //}
         //[DashboardAutherisation("chqmdy")]
         //public ActionResult modify_cheques()
         //{

@@ -235,9 +235,13 @@
     <Compile Include="Models\account_access.cs">
       <DependentUpon>dashboard.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CHECKDRAWN.cs">
+      <DependentUpon>VCModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\custom\bill.cs" />
     <Compile Include="Models\custom\billcons.cs" />
     <Compile Include="Models\custom\chqdrawn.cs" />
+    <Compile Include="Models\custom\chqmdf.cs" />
     <Compile Include="Models\custom\dcvendor.cs" />
     <Compile Include="Models\custom\nirf.cs" />
     <Compile Include="Models\custom\NIRF_RPT.cs" />
@@ -328,9 +332,6 @@
       <DependentUpon>VCModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\VCVOUCH.cs">
-      <DependentUpon>VCModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\VendorMaster.cs">
       <DependentUpon>VCModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\VModel.cs" />
@@ -4864,10 +4865,20 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <None Include="Scripts\jquery-1.7.1-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.7.1.js" />
+    <Content Include="Scripts\jquery-1.7.1.min.js" />
+    <Content Include="Scripts\jquery-ui-1.8.20.js" />
+    <Content Include="Scripts\jquery-ui-1.8.20.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\knockout-2.1.0.debug.js" />
+    <Content Include="Scripts\knockout-2.1.0.js" />
+    <Content Include="Scripts\modernizr-2.5.3.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\respond.js" />

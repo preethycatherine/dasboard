@@ -29,9 +29,9 @@ namespace Dashboard_New.Controllers
         {
             using (FACCTEntities lge = new FACCTEntities())
             {
-               var v=lge.useraccounts.Where(m=>m.UserName.Trim()==username.Trim() && m.Password==password).ToList();
+               //var v=lge.useraccounts.Where(m=>m.UserName.Trim()==username.Trim() && m.Password==password).ToList();
                 //var v = lge.useraccounts.Where(a => string.Equals(a.Name,username) && string.Equals(a.Password,password)).FirstOrDefault();
-                if (v !=null)
+                //if (v !=null)
                 {
                     Session["role"] = "admin";
                     Session["username"] = username;

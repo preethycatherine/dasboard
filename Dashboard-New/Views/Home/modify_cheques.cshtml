@@ -1,5 +1,6 @@
-﻿@*@model List<Dashboard_New.Models.VModel>*@
-@model List<Dashboard_New.Models.custom.chqdrawn>
+﻿@model Dashboard_New.Models.custom.chqmdf
+
+@*@model List<Dashboard_New.Models.custom.chqdrawn>*@
 @using System.Globalization
 
 @{
@@ -8,23 +9,12 @@
 }
 
 <style type="text/css">
-    .edit-mode {
-    }
-
-    .edit-user {
-    }
-
-        .edit-user display-mode {
-        }
-
-    .save-user edit-mode {
-    }
-
-    .display-mode {
-    }
-
-    .cancel-user {
-    }
+    .edit-mode {}
+    .edit-user {}
+    .edit-user display-mode {}
+    .save-user edit-mode {}
+    .display-mode {}
+    .cancel-user {}
 
     .webgrid-table {
         font-family: Arial,Helvetica,sans-serif;
@@ -34,82 +24,300 @@
         display: table;
         border-collapse: collapse;
         border: solid  #C5C5C5;
-        background-color: white;
+        /*background-color: white;*/
     }
 
         .webgrid-table td, th {
             border: 1px solid #C5C5C5;
-            padding: 3px 7px 2px;
+            padding: 3px 7px 2px;            
         }
 
     .webgrid-header, .webgrid-header a {
-        background-color: #E3E3E3;
-        color: black;
+        /*background-color: #E3E3E3;*/        
         text-align: left;
-        text-decoration: none;
+        text-decoration: none;       
     }
 
-    .webgrid-footer {
-    }
+    .webgrid-footer {}
 
-    .webgrid-row-style {
-        padding: 3px 7px 2px;
+    .webgrid-row-style {padding: 3px 7px 2px;    
     }
 
     .webgrid-alternating-row {
-        background-color: #F5F5F5;
-        padding: 3px 7px 2px;
+        /*background-color: #F5F5F5;*/
+        padding: 3px 7px 2px;      
     }
 
     .col1Width {
-        width: 50px;
-    }
+        width: 50px;   }
 
     .col2Width {
         width: 200px;
     }
+
+     .Grid {
+            border: 1px solid #276da1;
+            border-collapse: collapse;            
+        }
+
+        .Grid th {
+            background-color:#0f3576;            
+            width: 150px;
+            border: 1px solid  #276da1;
+            color:white;
+            text-align:center;
+        }
+       .Grid td {
+           background-color: #dddddd;  
+            padding: 5px;
+            width: 150px;
+            border: 1px solid  #276da1;
+            /*color:#024b72;*/
+            color:black;
+            
+       }
+      
+      
+    
+     /*body {
+            font-family: Arial;
+            font-size: 10pt;
+            
+        }
+ 
+        .Grid {
+            border: 1px solid #ccc;
+            border-collapse: collapse;
+        }
+ 
+        .Grid th {
+            background-color: #F7F7F7;
+            font-weight: bold;
+        }
+ 
+        .Grid th, .Grid td {
+            padding: 5px;
+            width: 150px;
+            border: 1px solid #ccc;
+            color:black;
+        }
+ 
+        .Grid, .Grid table td {
+            border: 0px solid #ccc;
+            color:black;
+        }
+ 
+        .Grid th a, .Grid th a:visited {
+            color: #333;
+        }*/
 </style>
+<link href="~/Content/datepicker/table.css" rel="stylesheet" />
+<link href="~/Content/datepicker/jquery-ui.css" rel="stylesheet" />
+<script src="~/Scripts/datepicker/jquery-ui.js"></script>
+@*<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.cdnjs.com/ajax/libs/json2/20110223/json2.js"></script>*@
+
 <script type="text/javascript">
     $(function () {
-        $('.edit-mode').hide();
-        $('.edit-user, .cancel-user').on('click', function () {
-            var tr = $(this).parents('tr:first');
-            tr.find('.edit-mode, .display-mode').toggle();
+        $(".datepicker").datepicker({
+            dateFormat: 'dd/mm/yy'
         });
 
-        $('.save-user').on('click', function () {
-            var tr = $(this).parents('tr:first');
-            var PARTY = tr.find("#PARTY").val();
-            var CHEQ_NO = tr.find("#CHEQ_NO").val();
-            var UserID = tr.find("#UserID").html();
-            tr.find("#lblFirstName").text(PARTY);
-            tr.find("#lblLastName").text(CHEQ_NO);
-            tr.find('.edit-mode, .display-mode').toggle();
-            var UserModel =
-            {
-                "ID": UserID,
-                "FirstName": FirstName,
-                "LastName": LastName
-            };
-            $.ajax({
-                url: '/User/UpdateUser/',
-                data: JSON.stringify(UserModel),
-                type: 'POST',
-                contentType: 'application/json; charset=utf-8',
-                success: function (data) {
-                    alert(data);
-                }
-            });
 
+        var row = $("#WebGrid TBODY tr:eq(0)");
+        if ($("#WebGrid TBODY tr").length > 1) {
+            row.remove();
+        } else {
+            row.find(".label").html("");
+            row.find(".text").val("");
+            row.find(".link").hide();
+        }
+
+    });
+
+
+    //$(function () {
+    //    $('.edit-mode').hide();
+    //    $('.edit-user, .cancel-user').on('click', function () {
+    //        var tr = $(this).parents('tr:first');
+    //        tr.find('.edit-mode, .display-mode').toggle();
+    //    });
+
+    //    $('.save-user').on('click', function () {
+    //        var tr = $(this).parents('tr:first');
+    //        var PARTY = tr.find("#PARTY").val();
+    //        var CHEQ_NO = tr.find("#CHEQ_NO").val();
+    //        var CQDATE = tr.find("#CQDATE").val();
+    //        var BRNO = tr.find("#BRNO").val();
+    //        var NPRNO = tr.find("#NPRNO").val();
+    //        var RSAMT = tr.find("#RSAMT").val();
+    //        var VOUCHNO = tr.find("#VOUCHNO").val();
+    //        var CHEK = tr.find("#CHEK").val();
+
+    //        tr.find("#lblparty").text(PARTY);
+    //        tr.find("#lblchqno").text(CHEQ_NO);
+    //        tr.find("#lblchqdt").text(CQDATE);
+    //        tr.find("#lblbr").text(BRNO);
+    //        tr.find("#lblnprno").text(NPRNO);
+    //        tr.find("#lblrsamt").text(RSAMT);
+    //        tr.find("#lblvouchno").text(VOUCHNO);
+    //        tr.find("#lblchek").text(CHEK);
+    //        tr.find('.edit-mode, .display-mode').toggle();
+    //        var chqdrawn =
+    //        {
+    //            "PARTY": PARTY,
+    //            "CHEQ_NO": CHEQ_NO,
+    //            "CQDATE": CQDATE,
+    //            "BRNO": BRNO,
+    //            "NPRNO": NPRNO,
+    //            "RSAMT": RSAMT,
+    //            "VOUCHNO": VOUCHNO,
+    //            "CHEK": CHEK
+    //        };
+    //        $.ajax({
+    //            //url: '/User/UpdateUser/',
+    //            //data: JSON.stringify(UserModel),
+    //            url: '/Home/UpdateUser/',
+    //            data: JSON.stringify(chqdrawn),
+    //            type: 'POST',
+    //            contentType: 'application/json; charset=utf-8',
+    //            success: function (data) {
+    //                alert(data);
+    //            }
+    //        });
+
+    //    });
+    //})  
+
+ 
+    function AppendRow(row, PARTY, CHEQ_NO, CQDATE) {
+        //Bind CustomerId.
+        $(".CustomerId", row).find(".label").html(PARTY);
+
+        //Bind Name.
+        $(".Name", row).find(".label").html(CHEQ_NO);
+        $(".Name", row).find(".text").val(CHEQ_NO);
+
+        //Bind Country.
+        $(".Country", row).find(".label").html(CQDATE);
+        $(".Country", row).find(".text").val(CQDATE);
+        row.find(".link").show();
+        $("#WebGrid TBODY").append(row);
+    };
+
+    var chqdrawn = {};
+    //Edit event handler.
+    $("body").on("click", "#WebGrid TBODY .Edit", function () {
+        var row = $(this).closest("tr");
+        $("td", row).each(function () {
+            if ($(this).find(".text").length > 0) {
+                $(this).find(".text").show();
+                $(this).find(".label").hide();
+            }
         });
-    })
+        chqdrawn.PARTY_dup = row.find(".PARTY").find(".label").html();
+        chqdrawn.CQDATE_dup = row.find(".CQDATE").find(".label").html();
+        chqdrawn.RSAMT_dup = row.find(".RSAMT").find(".label").html();
+        chqdrawn.VOUCHNO_dup = row.find(".VOUCHNO").find(".label").html();
+        chqdrawn.BRNO_dup = row.find(".BRNO").find(".label").html();
+        chqdrawn.NPRNO_dup = row.find(".NPRNO").find(".label").html();
+        chqdrawn.CHEK_dup = row.find(".CHEK").find(".label").html();
+        chqdrawn.CHEQ_NO_dup = row.find(".CHEQ_NO").find(".label").html();
+       
+
+        row.find(".Update").show();
+        row.find(".Cancel").show();
+        $(this).hide();
+    });
+
+    //Update event handler.
+    $("body").on("click", "#WebGrid TBODY .Update", function () {
+        var row = $(this).closest("tr");
+        $("td", row).each(function () {
+            if ($(this).find(".text").length > 0) {
+                var span = $(this).find(".label");
+                var input = $(this).find(".text");
+                span.html(input.val());
+                span.show();
+                input.hide();
+            }
+        });
+        row.find(".Edit").show();
+        row.find(".Cancel").hide();
+        $(this).hide(); 
+        chqdrawn.VOUCHNO = row.find(".VOUCHNO").find(".label").html();          
+        chqdrawn.CHEQ_NO = row.find(".CHEQ_NO").find(".label").html();
+        chqdrawn.CQDATE = row.find(".CQDATE").find(".label").html();
+        $.ajax({
+            type: "POST",
+            url: "/Home/UpdateUser",          
+            data: JSON.stringify(chqdrawn),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json"
+        });
+    });
+
+    //Cancel event handler.
+    $("body").on("click", "#WebGrid TBODY .Cancel", function () {
+        var row = $(this).closest("tr");
+        $("td", row).each(function () {
+            if ($(this).find(".text").length > 0) {
+                var span = $(this).find(".label");
+                var input = $(this).find(".text");
+                input.val(span.html());
+                span.show();
+                input.hide();
+            }
+        });
+        row.find(".Edit").show();
+        row.find(".Update").hide();
+        $(this).hide();
+    });
+
+
+
 </script>
 @{
-    var grid = new WebGrid(Model);
-   
+    //var grid = new WebGrid(Model);
+    var grid = new WebGrid(Model.chqdrawn_dup);
+    //WebGrid gird = new WebGrid(Model, rowsPerPage: 20);
 }
-<div id="gridContent" style="padding:20px;">
-    @grid.GetHtml(
+<div class="container body">
+    @using (Html.BeginForm("modify_cheques", "Home", FormMethod.Post))
+    {
+        <table cellpadding="0" cellspacing="0" align="center">
+            <tr>
+                <td>From Date: </td>
+                <td> &nbsp;</td>
+                <td>
+                    @Html.TextBoxFor(m => m.from_dt, new { Class = "datepicker" })
+                    @Html.ValidationMessageFor(m => m.from_dt)
+                </td>
+                <td> &nbsp; &nbsp; &nbsp; &nbsp;</td>
+                <td>To Date: </td>
+                <td> &nbsp;</td>
+                <td>
+                    @Html.TextBoxFor(m => m.to_dt, new { Class = "datepicker" })
+                    @Html.ValidationMessageFor(m => m.to_dt)
+                </td>
+                <td> &nbsp;</td>
+                <td><input type="submit" value="Submit" name="grid" /></td>
+                <td> &nbsp;</td>
+
+            </tr>
+            <tr>
+                <td align="center">(dd/mm/yyyy)</td>
+                <td> &nbsp; &nbsp; &nbsp; &nbsp;</td>
+                <td> &nbsp; &nbsp; &nbsp; &nbsp;</td>
+                <td> &nbsp; &nbsp; </td>
+                <td align="center">(dd/mm/yyyy)</td>
+            </tr>
+        </table>
+
+    }
+</div>
+<div id="gridContent" style="padding:20px; overflow: scroll;">
+    @*@grid.GetHtml(
         tableStyle: "webgrid-table",
         headerStyle: "webgrid-header",
         footerStyle: "webgrid-footer",
@@ -119,14 +327,56 @@
         mode: WebGridPagerModes.All,
         columns:
             grid.Columns(
-       
-             grid.Column("PARTY", "PARTY", format: @<text>  <span class="display-mode"> <label id="lblFirstName">@item.PARTY</label> </span> <input type="text" id="PARTY" value="@item.PARTY" class="edit-mode" /></text>, style: "col2Width"),
-             grid.Column("CHEQ_NO", "CHEQ_NO", format: @<text> <span class="display-mode"> <label id="lblLastName">@item.CHEQ_NO</label> </span>  <input type="text" id="CHEQ_NO" value="@item.CHEQ_NO" class="edit-mode" /> </text>, style: "col2Width"),
-             grid.Column("Action", format: @<text>
+            grid.Column("CQDATE", "CQDATE", format: @<text> <span class="display-mode"> <label id="lblchqdt">@item.CQDATE</label> </span>  <input type="text" id="CQDATE" value="@item.CQDATE" class="edit-mode" /> </text>, style: "col2Width"),
+            grid.Column("CHEQ_NO", "CHEQ_NO", format: @<text> <span class="display-mode"> <label id="lblchqno">@item.CHEQ_NO</label> </span>  <input type="text" id="CHEQ_NO" value="@item.CHEQ_NO" class="edit-mode" /> </text>, style: "col2Width"),
+            grid.Column("BRNO", "BRNO", format: @<text>  <span class="display-mode"> <label id="lblbr">@item.BRNO</label> </span> <input type="text" id="BRNO" value="@item.BRNO" class="edit-mode" /></text>, style: "col2Width"),
+            grid.Column("VOUCHNO", "VOUCHNO", format: @<text>  <span class="display-mode"> <label id="lblvouchno">@item.VOUCHNO</label> </span> <input type="text" id="VOUCHNO" value="@item.VOUCHNO" class="edit-mode" /></text>, style: "col2Width"),
+            grid.Column("NPRNO", "NPRNO", format: @<text>  <span class="display-mode"> <label id="lblnprno">@item.NPRNO</label> </span> <input type="text" id="NPRNO" value="@item.NPRNO" class="edit-mode" /></text>, style: "col2Width"),
+            grid.Column("PARTY", "PARTY", format: @<text>  <span class="display-mode"> <label id="lblparty">@item.PARTY</label> </span> <input type="text" id="PARTY" value="@item.PARTY" class="edit-mode" /></text>, style: "col2Width"),
+            grid.Column("RSAMT", "RSAMT", format: @<text>  <span class="display-mode"> <label id="lblrsamt">@item.RSAMT</label> </span> <input type="text" id="RSAMT" value="@item.RSAMT" class="edit-mode" /></text>, style: "col2Width"),
+            grid.Column("CHEK", "CHEK", format: @<text>  <span class="display-mode"> <label id="lblchek">@item.CHEK</label> </span> <input type="text" id="CHEK" value="@item.CHEK" class="edit-mode" /></text>, style: "col2Width"),
+                grid.Column("Action", format: @<text>
                     <button class="edit-user display-mode">Edit</button>
                     <button class="save-user edit-mode">Save</button>
                     <button class="cancel-user edit-mode">Cancel</button>
-            </text>, style: "col3Width", canSort: false)
-           ))
+            </text>, style: "col3Width", canSort: false),
+          
+           ))*@
 
-    </div>
+    @*grid.Column(null, null, format: @<text>@Html.ActionLink("save-user", null, null, new { @onclick = "return GetSelectedRow(this);" })</text>)*@
+
+    @grid.GetHtml(
+        htmlAttributes: new { @id = "WebGrid", @class = "Grid" },
+        columns: grid.Columns(
+                 grid.Column(header: "PARTY", format: @<span> <span class="label">@item.PARTY</span><input class="text" type="text" value="@item.PARTY" style="display:none;;" /></span>, style: "PARTY"),
+    grid.Column(header: "BRNO", format: @<span> <span class="label">@item.BRNO</span><input class="text" type="text" value="@item.BRNO" style="display:none" /></span>, style: "BRNO"),
+    grid.Column(header: "CHEQ_NO", format: @<span> <span class="label">@item.CHEQ_NO</span><input class="text" type="text" value="@item.CHEQ_NO" style="display:none" /></span>, style: "CHEQ_NO"),
+    grid.Column(header: "VOUCHNO", format: @<span> <span class="label">@item.VOUCHNO</span><input class="text" type="text" value="@item.VOUCHNO" style="display:none" /></span>, style: "VOUCHNO"),
+    grid.Column(header: "CQDATE", format: @<span><span class="label">@item.CQDATE</span><input class="text" type="text" value="@item.CQDATE" style="display:none" /></span>, style: "CQDATE"),
+    grid.Column(header: "RSAMT", format: @<span><span class="label">@item.RSAMT</span><input class="text" type="text" value="@item.RSAMT" style="display:none" /></span>, style: "RSAMT"),
+    grid.Column(header: "CHEQUE TYPE", format: @<span><span class="label">@item.CHEK</span><input class="text" type="text" value="@item.CHEK" style="display:none" /></span>, style: "CHEK"),
+    grid.Column(header: "ACCESS", format:@<span class="link">
+        <a class="Edit" href="javascript:;" id="body">Edit</a>
+        <a class="Update" href="javascript:;" style="display:none">Update</a>
+        <a class="Cancel" href="javascript:;" style="display:none">Cancel</a>
+        @*<a class="Delete" href="javascript:;">Delete</a>*@
+    </span> )))
+    <br />
+    @*<table border="0" cellpadding="0" cellspacing="0">
+            <tr>
+                <td style="width: 150px">
+                    Name:<br />
+                    <input type="text" id="txtName" style="width:140px" />
+                </td>
+                <td style="width: 150px">
+                    Country:<br />
+                    <input type="text" id="txtCountry" style="width:140px" />
+                </td>
+                <td style="width: 100px">
+                    <br />
+                    <input type="button" id="btnAdd" value="Add" />
+                </td>
+            </tr>
+        </table>*@
+
+</div>

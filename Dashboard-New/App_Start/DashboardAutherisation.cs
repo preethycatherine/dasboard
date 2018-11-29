@@ -29,7 +29,7 @@ namespace Dashboard_New.App_Start
             foreach (var role in allowedroles)
             {
                 string users = (string)HttpContext.Current.Session["username"];
-                var user = data.useraccounts.Where(m => string.Equals(m.Name, users)).SingleOrDefault(); // checking active users with allowed roles.  
+                //var user = data.useraccounts.Where(m => string.Equals(m.Name, users)).SingleOrDefault(); // checking active users with allowed roles.  
                 string[] userroles;
                 using (DashboardEntities d = new DashboardEntities())
                 {                   

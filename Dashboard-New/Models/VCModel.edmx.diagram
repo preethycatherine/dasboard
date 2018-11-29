@@ -7,9 +7,9 @@
       <Diagram DiagramId="0a11d437284043b5b68b6b98353586b9" Name="Diagram1">
         <EntityTypeShape EntityType="FACCTModel.DVOUCH" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="FACCTModel.VCVOUCH" Width="1.5" PointX="2.625" PointY="0.75" />
-        <EntityTypeShape EntityType="FACCTModel.VendorMaster" Width="1.5" PointX="4.625" PointY="0.75" />
         <EntityTypeShape EntityType="FACCTModel.REC1718" Width="1.5" PointX="6.5" PointY="0.75" />
-        <EntityTypeShape EntityType="FACCTModel.MSTLST" Width="1.5" PointX="0.75" PointY="6.75" />
+        <EntityTypeShape EntityType="FACCTModel.MSTLST" Width="1.5" PointX="0.875" PointY="5.375" />
+        <EntityTypeShape EntityType="FACCTModel.CHECKDRAWN" Width="1.5" PointX="9.5" PointY="3.25" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
