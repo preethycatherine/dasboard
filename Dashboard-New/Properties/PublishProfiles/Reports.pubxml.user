@@ -19,10 +19,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/20/2018 21:30:26</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>11/14/2018 13:04:37</publishTime>
+      <publishTime>12/04/2018 14:43:41</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>11/14/2018 13:04:37</publishTime>
+      <publishTime>12/04/2018 14:43:41</publishTime>
     </File>
     <File Include="bin/ClosedXML.dll">
       <publishTime>08/20/2018 21:30:26</publishTime>
@@ -31,10 +31,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/20/2018 21:30:26</publishTime>
     </File>
     <File Include="bin/Dashboard-New.dll">
-      <publishTime>11/14/2018 13:04:27</publishTime>
+      <publishTime>12/04/2018 14:32:06</publishTime>
     </File>
     <File Include="bin/Dashboard-New.dll.config">
-      <publishTime>09/19/2018 11:37:01</publishTime>
+      <publishTime>12/03/2018 16:48:18</publishTime>
     </File>
     <File Include="bin/DocumentFormat.OpenXml.dll">
       <publishTime>08/20/2018 21:30:26</publishTime>
@@ -292,10 +292,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/20/2018 21:30:26</publishTime>
     </File>
     <File Include="images/cheques.jpg">
-      <publishTime>11/13/2018 12:36:37</publishTime>
+      <publishTime>11/13/2018 13:06:19</publishTime>
     </File>
     <File Include="images/cheques1.jpg">
       <publishTime>11/13/2018 13:06:19</publishTime>
+    </File>
+    <File Include="images/modify.jpg">
+      <publishTime>11/14/2018 15:24:59</publishTime>
     </File>
     <File Include="js/main.js">
       <publishTime>08/20/2018 21:30:26</publishTime>
@@ -313,7 +316,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/20/2018 21:30:26</publishTime>
     </File>
     <File Include="Models/VCModel.edmx.diagram">
-      <publishTime>08/20/2018 21:30:26</publishTime>
+      <publishTime>11/19/2018 15:09:57</publishTime>
     </File>
     <File Include="packages.config">
       <publishTime>08/20/2018 21:30:26</publishTime>
@@ -13369,7 +13372,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/20/2018 21:30:26</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>11/14/2018 13:04:31</publishTime>
+      <publishTime>12/04/2018 14:43:34</publishTime>
     </File>
     <File Include="Scripts/ai.0.15.0-build58334.js">
       <publishTime>08/20/2018 21:30:26</publishTime>
@@ -13395,17 +13398,44 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Scripts/jquery-1.10.2.min.map">
       <publishTime>08/20/2018 21:30:26</publishTime>
     </File>
+    <File Include="Scripts/jquery-1.7.1.js">
+      <publishTime>04/23/2013 11:14:22</publishTime>
+    </File>
+    <File Include="Scripts/jquery-1.7.1.min.js">
+      <publishTime>04/23/2013 11:14:22</publishTime>
+    </File>
+    <File Include="Scripts/jquery-ui-1.8.20.js">
+      <publishTime>04/23/2013 11:14:22</publishTime>
+    </File>
+    <File Include="Scripts/jquery-ui-1.8.20.min.js">
+      <publishTime>04/23/2013 11:14:22</publishTime>
+    </File>
+    <File Include="Scripts/jquery.unobtrusive-ajax.js">
+      <publishTime>04/23/2013 11:14:24</publishTime>
+    </File>
+    <File Include="Scripts/jquery.unobtrusive-ajax.min.js">
+      <publishTime>04/23/2013 11:14:24</publishTime>
+    </File>
     <File Include="Scripts/jquery.validate.js">
-      <publishTime>08/20/2018 21:30:26</publishTime>
+      <publishTime>04/23/2013 11:14:22</publishTime>
     </File>
     <File Include="Scripts/jquery.validate.min.js">
-      <publishTime>08/20/2018 21:30:26</publishTime>
+      <publishTime>04/23/2013 11:14:22</publishTime>
     </File>
     <File Include="Scripts/jquery.validate.unobtrusive.js">
-      <publishTime>08/20/2018 21:30:26</publishTime>
+      <publishTime>04/23/2013 11:14:24</publishTime>
     </File>
     <File Include="Scripts/jquery.validate.unobtrusive.min.js">
-      <publishTime>08/20/2018 21:30:26</publishTime>
+      <publishTime>04/23/2013 11:14:22</publishTime>
+    </File>
+    <File Include="Scripts/knockout-2.1.0.debug.js">
+      <publishTime>04/23/2013 11:14:28</publishTime>
+    </File>
+    <File Include="Scripts/knockout-2.1.0.js">
+      <publishTime>04/23/2013 11:14:28</publishTime>
+    </File>
+    <File Include="Scripts/modernizr-2.5.3.js">
+      <publishTime>04/23/2013 11:14:24</publishTime>
     </File>
     <File Include="Scripts/modernizr-2.6.2.js">
       <publishTime>08/20/2018 21:30:26</publishTime>
@@ -13420,7 +13450,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/20/2018 21:30:26</publishTime>
     </File>
     <File Include="Scripts/_references.js">
-      <publishTime>08/20/2018 21:30:26</publishTime>
+      <publishTime>04/23/2013 11:14:14</publishTime>
     </File>
     <File Include="Views/Account/ConfirmEmail.cshtml">
       <publishTime>08/20/2018 21:30:26</publishTime>
@@ -13465,7 +13495,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/09/2018 10:40:17</publishTime>
     </File>
     <File Include="Views/Home/cheque_vouchno.cshtml">
-      <publishTime>11/14/2018 12:24:11</publishTime>
+      <publishTime>11/19/2018 16:06:15</publishTime>
     </File>
     <File Include="Views/Home/Contact.cshtml">
       <publishTime>08/20/2018 21:30:26</publishTime>
@@ -13478,6 +13508,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Views/Home/login.cshtml">
       <publishTime>08/20/2018 21:30:26</publishTime>
+    </File>
+    <File Include="Views/Home/modify_cheques.cshtml">
+      <publishTime>12/04/2018 14:40:45</publishTime>
     </File>
     <File Include="Views/Home/nirf.cshtml">
       <publishTime>11/01/2018 12:11:40</publishTime>
@@ -13501,7 +13534,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/20/2018 21:30:26</publishTime>
     </File>
     <File Include="Views/Home/voucher.cshtml">
-      <publishTime>11/14/2018 12:54:12</publishTime>
+      <publishTime>12/03/2018 16:29:09</publishTime>
     </File>
     <File Include="Views/Login/Alert.cshtml">
       <publishTime>08/20/2018 21:30:26</publishTime>
@@ -13534,7 +13567,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/20/2018 21:30:26</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>11/14/2018 13:02:31</publishTime>
+      <publishTime>11/14/2018 15:14:39</publishTime>
     </File>
     <File Include="Views/Shared/_Layout1.cshtml">
       <publishTime>08/20/2018 21:30:26</publishTime>
@@ -13552,7 +13585,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/20/2018 21:30:26</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>10/15/2018 09:52:36</publishTime>
+      <publishTime>12/03/2018 16:56:58</publishTime>
     </File>
   </ItemGroup>
 </Project>

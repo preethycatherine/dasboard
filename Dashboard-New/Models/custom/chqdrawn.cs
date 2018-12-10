@@ -6,8 +6,11 @@ using System.Web;
 namespace Dashboard_New.Models.custom
 {
     public class chqdrawn
-    { 
-     
+    {
+        public int PageIndex { get; set; }
+        public int PageSize { get; set; }
+        public int RecordCount { get; set; }
+
         public string PARTY { get; set; }
         public DateTime? CQDATE { get; set; }
         public string CHEQ_NO { get; set; }
@@ -26,6 +29,18 @@ namespace Dashboard_New.Models.custom
         public string BRNO_dup { get; set; }
         public string NPRNO_dup { get; set; }
         public string CHEK_dup { get; set; }
+
+        public chqdrawn()
+        {
+            PARTY_dup = string.Empty;
+            CQDATE_dup = DateTime.Now;
+        CHEQ_NO_dup = string.Empty;
+            RSAMT_dup = 0;
+            VOUCHNO_dup = string.Empty;
+            BRNO_dup = string.Empty;
+            NPRNO_dup = string.Empty;
+            CHEK_dup = string.Empty;
+        }
 
     }
 }

@@ -1,6 +1,36 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="FACCTModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <!--Errors Found During Generation:
+warning 6002: The table/view 'FACCT.dbo.CHECKDRAWN' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="CHECKDRAWN">
+    <Key>
+      <PropertyRef Name="PARTY" />
+      <PropertyRef Name="CQDATE" />
+      <PropertyRef Name="RSAMT" />
+    </Key>
+    <Property Name="PARTY" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="CQDATE" Type="datetime" Nullable="false" />
+    <Property Name="CHEQ_NO" Type="nvarchar" MaxLength="10" />
+    <Property Name="RPTWRD" Type="nvarchar" MaxLength="200" />
+    <Property Name="RSAMT" Type="float" Nullable="false" />
+    <Property Name="AUTH1" Type="nvarchar" MaxLength="30" />
+    <Property Name="AUTH2" Type="nvarchar" MaxLength="30" />
+    <Property Name="VOUCHNO" Type="nvarchar" MaxLength="12" />
+    <Property Name="BRNO" Type="nvarchar" MaxLength="20" />
+    <Property Name="AUTH" Type="nvarchar" MaxLength="30" />
+    <Property Name="ADJ" Type="nvarchar" MaxLength="1" />
+    <Property Name="PRINT" Type="char" MaxLength="1" />
+    <Property Name="CHECK" Type="char" MaxLength="1" />
+    <Property Name="NPRNO" Type="char" MaxLength="20" />
+    <Property Name="ICCNO" Type="char" MaxLength="20" />
+    <Property Name="INSTID" Type="char" MaxLength="6" />
+    <Property Name="STATUS" Type="char" MaxLength="1" />
+    <Property Name="EMAILID" Type="char" MaxLength="1" />
+    <Property Name="PARTYCODE" Type="varchar" MaxLength="20" />
+    <Property Name="option_val" Type="varchar" MaxLength="10" />
+    <Property Name="CHEK" Type="varchar" MaxLength="1" />
+  </EntityType>
+  <!--Errors Found During Generation:
 warning 6002: The table/view 'FACCT.dbo.DVOUCH' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="DVOUCH">
     <Key>
@@ -108,35 +138,33 @@ warning 6002: The table/view 'FACCT.dbo.VCVOUCH' does not have a primary key def
     <Property Name="VCTRBNO" Type="nvarchar" MaxLength="12" />
     <Property Name="LUSER" Type="nvarchar" MaxLength="50" Nullable="false" />
   </EntityType>
-  <EntityType Name="VendorMaster">
-    <Key>
-      <PropertyRef Name="VPartyCode" />
-    </Key>
-    <Property Name="DINP" Type="smalldatetime" Nullable="false" />
-    <Property Name="VPartyCode" Type="nvarchar" MaxLength="9" Nullable="false" />
-    <Property Name="VName" Type="nvarchar" MaxLength="100" Nullable="false" />
-    <Property Name="VAddress" Type="nvarchar" MaxLength="250" />
-    <Property Name="VPinCode" Type="nvarchar" MaxLength="6" />
-    <Property Name="VMobile" Type="nvarchar" MaxLength="50" />
-    <Property Name="VPhoneNumber" Type="nvarchar" MaxLength="30" />
-    <Property Name="VEmailId" Type="nvarchar" MaxLength="60" />
-    <Property Name="VPanNo" Type="nvarchar" MaxLength="12" />
-    <Property Name="VTinNo" Type="nvarchar" MaxLength="18" />
-    <Property Name="VSerTaxRegNo" Type="nvarchar" MaxLength="20" />
-    <Property Name="VAcctNameInBank" Type="nvarchar" MaxLength="200" />
-    <Property Name="VBankName" Type="nvarchar" MaxLength="60" />
-    <Property Name="VBranchName" Type="nvarchar" MaxLength="60" />
-    <Property Name="VIFSCCode" Type="nvarchar" MaxLength="15" />
-    <Property Name="VBankAcctNo" Type="nvarchar" MaxLength="20" />
-    <Property Name="VBankNature" Type="nvarchar" MaxLength="20" />
-    <Property Name="VBankMICRCode" Type="nvarchar" MaxLength="20" />
-    <Property Name="VBankPhoneNumber" Type="nvarchar" MaxLength="60" />
-    <Property Name="VBankEmailID" Type="nvarchar" MaxLength="50" />
-    <Property Name="Luser" Type="nvarchar" MaxLength="30" />
-  </EntityType>
   <EntityContainer Name="FACCTModelStoreContainer">
     <EntitySet Name="MSTLST" EntityType="Self.MSTLST" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="VendorMaster" EntityType="Self.VendorMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CHECKDRAWN" EntityType="Self.CHECKDRAWN" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [CHECKDRAWN].[PARTY] AS [PARTY], 
+    [CHECKDRAWN].[CQDATE] AS [CQDATE], 
+    [CHECKDRAWN].[CHEQ_NO] AS [CHEQ_NO], 
+    [CHECKDRAWN].[RPTWRD] AS [RPTWRD], 
+    [CHECKDRAWN].[RSAMT] AS [RSAMT], 
+    [CHECKDRAWN].[AUTH1] AS [AUTH1], 
+    [CHECKDRAWN].[AUTH2] AS [AUTH2], 
+    [CHECKDRAWN].[VOUCHNO] AS [VOUCHNO], 
+    [CHECKDRAWN].[BRNO] AS [BRNO], 
+    [CHECKDRAWN].[AUTH] AS [AUTH], 
+    [CHECKDRAWN].[ADJ] AS [ADJ], 
+    [CHECKDRAWN].[PRINT] AS [PRINT], 
+    [CHECKDRAWN].[CHECK] AS [CHECK], 
+    [CHECKDRAWN].[NPRNO] AS [NPRNO], 
+    [CHECKDRAWN].[ICCNO] AS [ICCNO], 
+    [CHECKDRAWN].[INSTID] AS [INSTID], 
+    [CHECKDRAWN].[STATUS] AS [STATUS], 
+    [CHECKDRAWN].[EMAILID] AS [EMAILID], 
+    [CHECKDRAWN].[PARTYCODE] AS [PARTYCODE], 
+    [CHECKDRAWN].[option_val] AS [option_val], 
+    [CHECKDRAWN].[CHEK] AS [CHEK]
+    FROM [dbo].[CHECKDRAWN] AS [CHECKDRAWN]</DefiningQuery>
+    </EntitySet>
     <EntitySet Name="DVOUCH" EntityType="Self.DVOUCH" store:Type="Tables" store:Schema="dbo">
       <DefiningQuery>SELECT 
     [DVOUCH].[DINP] AS [DINP], 

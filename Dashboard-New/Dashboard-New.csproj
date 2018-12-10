@@ -422,7 +422,6 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="images\cheques.jpg" />
-    <Content Include="images\cheques1.jpg" />
     <Content Include="images\modify.jpg" />
     <Content Include="js\main.js" />
     <Content Include="js\map-custom.js" />

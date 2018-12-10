@@ -47,33 +47,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="VendorMasters">
-      <EntityTypeMapping TypeName="FACCTModel.VendorMaster">
-        <MappingFragment StoreEntitySet="VendorMaster">
-          <ScalarProperty Name="Luser" ColumnName="Luser" />
-          <ScalarProperty Name="VBankEmailID" ColumnName="VBankEmailID" />
-          <ScalarProperty Name="VBankPhoneNumber" ColumnName="VBankPhoneNumber" />
-          <ScalarProperty Name="VBankMICRCode" ColumnName="VBankMICRCode" />
-          <ScalarProperty Name="VBankNature" ColumnName="VBankNature" />
-          <ScalarProperty Name="VBankAcctNo" ColumnName="VBankAcctNo" />
-          <ScalarProperty Name="VIFSCCode" ColumnName="VIFSCCode" />
-          <ScalarProperty Name="VBranchName" ColumnName="VBranchName" />
-          <ScalarProperty Name="VBankName" ColumnName="VBankName" />
-          <ScalarProperty Name="VAcctNameInBank" ColumnName="VAcctNameInBank" />
-          <ScalarProperty Name="VSerTaxRegNo" ColumnName="VSerTaxRegNo" />
-          <ScalarProperty Name="VTinNo" ColumnName="VTinNo" />
-          <ScalarProperty Name="VPanNo" ColumnName="VPanNo" />
-          <ScalarProperty Name="VEmailId" ColumnName="VEmailId" />
-          <ScalarProperty Name="VPhoneNumber" ColumnName="VPhoneNumber" />
-          <ScalarProperty Name="VMobile" ColumnName="VMobile" />
-          <ScalarProperty Name="VPinCode" ColumnName="VPinCode" />
-          <ScalarProperty Name="VAddress" ColumnName="VAddress" />
-          <ScalarProperty Name="VName" ColumnName="VName" />
-          <ScalarProperty Name="VPartyCode" ColumnName="VPartyCode" />
-          <ScalarProperty Name="DINP" ColumnName="DINP" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="REC1718">
       <EntityTypeMapping TypeName="FACCTModel.REC1718">
         <MappingFragment StoreEntitySet="REC1718">
@@ -120,6 +93,33 @@
           <ScalarProperty Name="COOR_NAME" ColumnName="COOR_NAME" />
           <ScalarProperty Name="TITLE" ColumnName="TITLE" />
           <ScalarProperty Name="NPRNO" ColumnName="NPRNO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CHECKDRAWNs">
+      <EntityTypeMapping TypeName="FACCTModel.CHECKDRAWN">
+        <MappingFragment StoreEntitySet="CHECKDRAWN">
+          <ScalarProperty Name="CHEK" ColumnName="CHEK" />
+          <ScalarProperty Name="option_val" ColumnName="option_val" />
+          <ScalarProperty Name="PARTYCODE" ColumnName="PARTYCODE" />
+          <ScalarProperty Name="EMAILID" ColumnName="EMAILID" />
+          <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+          <ScalarProperty Name="INSTID" ColumnName="INSTID" />
+          <ScalarProperty Name="ICCNO" ColumnName="ICCNO" />
+          <ScalarProperty Name="NPRNO" ColumnName="NPRNO" />
+          <ScalarProperty Name="CHECK" ColumnName="CHECK" />
+          <ScalarProperty Name="PRINT" ColumnName="PRINT" />
+          <ScalarProperty Name="ADJ" ColumnName="ADJ" />
+          <ScalarProperty Name="AUTH" ColumnName="AUTH" />
+          <ScalarProperty Name="BRNO" ColumnName="BRNO" />
+          <ScalarProperty Name="VOUCHNO" ColumnName="VOUCHNO" />
+          <ScalarProperty Name="AUTH2" ColumnName="AUTH2" />
+          <ScalarProperty Name="AUTH1" ColumnName="AUTH1" />
+          <ScalarProperty Name="RSAMT" ColumnName="RSAMT" />
+          <ScalarProperty Name="RPTWRD" ColumnName="RPTWRD" />
+          <ScalarProperty Name="CHEQ_NO" ColumnName="CHEQ_NO" />
+          <ScalarProperty Name="CQDATE" ColumnName="CQDATE" />
+          <ScalarProperty Name="PARTY" ColumnName="PARTY" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

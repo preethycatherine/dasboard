@@ -28,9 +28,9 @@
   <EntityContainer Name="vcEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="DVOUCHes" EntityType="Self.DVOUCH" />
     <EntitySet Name="VCVOUCHes" EntityType="FACCTModel.VCVOUCH" />
-    <EntitySet Name="VendorMasters" EntityType="FACCTModel.VendorMaster" />
     <EntitySet Name="REC1718" EntityType="FACCTModel.REC1718" />
     <EntitySet Name="MSTLSTs" EntityType="FACCTModel.MSTLST" />
+    <EntitySet Name="CHECKDRAWNs" EntityType="FACCTModel.CHECKDRAWN" />
   </EntityContainer>
   <EntityType Name="VCVOUCH">
     <Key>
@@ -56,32 +56,6 @@
     <Property Name="CRDATE" Type="DateTime" Precision="0" />
     <Property Name="VCTRBNO" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
     <Property Name="LUSER" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-  </EntityType>
-  <EntityType Name="VendorMaster">
-    <Key>
-      <PropertyRef Name="VPartyCode" />
-    </Key>
-    <Property Name="DINP" Type="DateTime" Nullable="false" Precision="0" />
-    <Property Name="VPartyCode" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="true" />
-    <Property Name="VName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="VAddress" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-    <Property Name="VPinCode" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
-    <Property Name="VMobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="VPhoneNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-    <Property Name="VEmailId" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
-    <Property Name="VPanNo" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
-    <Property Name="VTinNo" Type="String" MaxLength="18" FixedLength="false" Unicode="true" />
-    <Property Name="VSerTaxRegNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-    <Property Name="VAcctNameInBank" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-    <Property Name="VBankName" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
-    <Property Name="VBranchName" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
-    <Property Name="VIFSCCode" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-    <Property Name="VBankAcctNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-    <Property Name="VBankNature" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-    <Property Name="VBankMICRCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-    <Property Name="VBankPhoneNumber" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
-    <Property Name="VBankEmailID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="Luser" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="REC1718">
     <Key>
@@ -134,5 +108,33 @@
     <Property Name="INSTID1" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
     <Property Name="USERNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="ACCOUNTTYPE" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="CHECKDRAWN">
+    <Key>
+      <PropertyRef Name="PARTY" />
+      <PropertyRef Name="CQDATE" />
+      <PropertyRef Name="RSAMT" />
+    </Key>
+    <Property Name="PARTY" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="CQDATE" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CHEQ_NO" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="RPTWRD" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="RSAMT" Type="Double" Nullable="false" />
+    <Property Name="AUTH1" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="AUTH2" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="VOUCHNO" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+    <Property Name="BRNO" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="AUTH" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="ADJ" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="PRINT" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="CHECK" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="NPRNO" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+    <Property Name="ICCNO" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+    <Property Name="INSTID" Type="String" MaxLength="6" FixedLength="true" Unicode="false" />
+    <Property Name="STATUS" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="EMAILID" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="PARTYCODE" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="option_val" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="CHEK" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
   </EntityType>
 </Schema>
