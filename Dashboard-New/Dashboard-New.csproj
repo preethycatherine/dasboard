@@ -245,6 +245,7 @@
     <Compile Include="Models\custom\dcvendor.cs" />
     <Compile Include="Models\custom\nirf.cs" />
     <Compile Include="Models\custom\NIRF_RPT.cs" />
+    <Compile Include="Models\custom\PBVoucher_pfms.cs" />
     <Compile Include="Models\custom\pdc.cs" />
     <Compile Include="Models\custom\ppo.cs" />
     <Compile Include="Models\custom\pvc.cs" />
@@ -4936,12 +4937,11 @@
     <Content Include="Views\Home\cheque_vouchno.cshtml" />
     <Content Include="Views\Home\voucher.cshtml" />
     <Content Include="Views\Home\modify_cheques.cshtml" />
+    <Content Include="Views\Home\pfms_pb_voucher.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\dcvendor\" />
-    <Folder Include="Views\nirfrpt\" />
-    <Folder Include="Views\pfms_vc\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

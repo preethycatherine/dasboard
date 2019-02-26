@@ -1,0 +1,222 @@
+﻿
+@model Dashboard_New.Models.VModel
+@using System.Globalization
+@{
+    ViewBag.Title = "pfms_pb";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/datepicker/table.css" rel="stylesheet" />
+<link href="~/Content/datepicker/jquery-ui.css" rel="stylesheet" />
+<link href="~/Content/datepicker/table.css" rel="stylesheet" />
+<link href="~/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker-standalone.css" rel="stylesheet" />
+<link href="~/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Scripts/moment.js"></script>
+<script src="~/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+<script src="~/Scripts/datepicker/jquery-ui.js"></script>
+<script>
+
+  function DoAjaxPostAndMore(btnClicked) {
+        var $form = $(btnClicked).parents('form');
+        $.ajax({
+            type: "POST",
+            url: $form.attr('action'),
+            data: $form.serialize(),
+            error: function (xhr, status, error) {
+            },
+            success: function (response) {
+                LoadBooks();
+            }
+        });
+        return false;
+    }
+
+    flag = 0;
+    $('document').ready(function () {
+        $("#Sortby").val(window.localStorage.getItem("Sortby"));
+
+    });
+
+    function chkdrop()
+    {
+        var val = $("#Sortby option:selected").val();
+        if (val == "Date") {
+            $('#from_year').datepicker({
+                dateFormat: 'dd/mm/yy'
+            });
+            if (flag == 1) {
+                $('#from_year').data('DateTimePicker').destroy();
+                $('#from_year').click(function () {
+                    $('#from_year').datepicker('show');
+                });
+            }
+            $('#to_year').datepicker({
+                dateFormat: 'dd/mm/yy'
+            });
+        }
+        else if (val == "Year") {
+            sessionStorage.setItem("stype", "Year");
+            var value = sessionStorage.getItem("stype");
+            flag = 1;
+            $('#to_year').datepicker("destroy");
+            $('#from_year').datetimepicker({
+                format: "YYYY",
+                minDate: '1990'
+            });
+            $("#from_year").on("dp.change", function (e) {
+                temp2 = $('#from_year').data('date');
+                temp = new Date(temp2);
+                $('#to_year').val(temp.getFullYear() + 1);
+            });
+        }
+    }
+
+
+    function CallChangefunc(val)
+    {
+
+        window.localStorage.setItem("Sortby", $("#Sortby option:selected").val());
+
+        if (val == "Date")
+        {
+            $('#from_year').val = '';
+            $('#from_year').datepicker({
+                dateFormat: 'dd/mm/yy'
+            });
+            if (flag == 1)
+            {
+                $('#from_year').data('DateTimePicker').destroy();
+                $('#from_year').click(function () {
+                    $('#from_year').datepicker('show');
+                });
+            }
+            $('#to_year').datepicker({
+                dateFormat: 'dd/mm/yy'
+            });
+        }
+        else if (val == "Year")
+        {
+            sessionStorage.setItem("stype", "Year");
+            var value = sessionStorage.getItem("stype");
+            flag = 1;
+            $('#to_year').datepicker("destroy");
+            $('#from_year').datetimepicker({
+                format: "YYYY",
+                minDate: '1990'
+            });
+            $("#from_year").on("dp.change", function (e) {
+                temp2 = $('#from_year').data('date');
+                temp = new Date(temp2);
+                $('#to_year').val(temp.getFullYear() + 1);
+            });
+        }
+    }
+
+
+    $(function () {
+        $(".datepicker").datepicker({
+            dateFormat: 'dd/mm/yy'
+        });
+
+    });
+</script>
+ <div class="container body">
+    @using (Html.BeginForm("pbpfms_post", "Home", FormMethod.Post))
+    {
+        <table cellpadding="0" cellspacing="0" align="center">
+            <tr>
+                @*<td>
+                    @Html.DropDownList("Sortby", new SelectListItem[]
+        {
+                         new SelectListItem() { Text = "Select", Value = "Select" },
+                         new SelectListItem() { Text = "Date", Value = "Date" },
+                         new SelectListItem() { Text = "Year", Value = "Year" }
+        },
+          new { @onchange = "CallChangefunc(this.value)", @id = "Sortby" })
+
+                </td>*@
+                <td>&nbsp;&nbsp;&nbsp;</td>
+                <td>From Date: </td>
+                <td>
+                    @*@Html.TextBoxFor(m => m.from_year, new { @id = "from_year", @onclick = "chkdrop()" })*@
+                    @Html.TextBoxFor(m => m.from_year, new { Class = "datepicker" })
+                    @*@Html.TextBoxFor(m => m.from_dt)*@
+                </td>
+                <td>&nbsp;&nbsp;&nbsp;</td>
+                <td>To Date: </td>
+                <td>&nbsp;&nbsp;</td>
+                <td>
+                    @*@Html.TextBoxFor(m => m.to_year, new { @id = "to_year", @onclick = "chkdrop()" })*@
+                    @Html.TextBoxFor(m => m.to_year, new { Class = "datepicker" })
+                </td>
+
+                <td> &nbsp;</td>
+
+                <td>
+                    @*<input type="submit" value="Submit" name="grid" onclick="DoAjaxPostAndMore(this)" />*@
+                    <input type="submit" value="Submit" name="grid"  />
+                </td>
+
+                <td> &nbsp;</td>
+                <td><input type="submit" value="Export To Excel" name="export" /></td>
+            </tr>
+        </table>
+    }
+</div>
+<br />
+<div class="DClist" id='scrolly'>
+    <table border="1" id="customers">
+        <tr style="color:#024b72">
+            <th>DATE</th>
+            <th>MONTH</th>
+            <th>BRNO</th>
+            <th>VRNO</th>
+            <th>NPRNO</th>
+            <th>PART</th>
+            <th>HEAD</th>
+            <th>PONO</th>
+            <th>COMNO</th>
+            <th>CQNO</th>
+            <th>BANK_NAME</th>
+            <th>BRANCH_NAME</th>
+            <th>IFSC_CODE</th>
+            <th>BANK_ACCOUNT_NO</th>
+            <th>NATURE</th>
+            <th>REGNO</th>
+            <th>LEDDIS</th>
+            <th>ECODE</th>
+            <th>DISC</th>
+         
+        </tr>
+        @foreach (var rec in Model.pfms_pbvouchers)
+        {
+        <tr>
+            <td>@rec.DATE</td>
+            <td>@rec.MONTH</td>
+            <td>@rec.BRNO</td>
+            <td>@rec.VRNO</td>
+            <td>@rec.NPRNO</td>
+            <td>@rec.PART</td>
+            <td>@rec.HEAD</td>
+            <td>@rec.PONO</td>
+            <td>@rec.COMNO</td>
+            <td>@rec.CQNO</td>
+            <td>@rec.BANK_ACCOUNT_NO</td>
+            <td>@rec.BANK_NAME</td>
+            <td>@rec.BRANCH_NAME</td>
+            <td>@rec.IFSC_CODE</td>
+            <td>@rec.NATURE</td>
+            <td>@rec.REGNO</td>
+            <td>@rec.LEDDIS</td>
+            <td>@rec.ECODE</td>
+            <td>@rec.DISC</td>
+                             
+         </tr>
+        }
+</table>
+    </div>
+
+
+
+
+

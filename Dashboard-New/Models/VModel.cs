@@ -38,6 +38,7 @@ namespace Dashboard_New.Models
         public List<Dashboard_New.Models.custom.bill> bill_sp { get; set; }
         public List<Dashboard_New.Models.custom.billcons> bill_con { get; set; }
         public List<Dashboard_New.Models.custom.chqdrawn> chq { get; set; }
+        public List<Dashboard_New.Models.custom.PBVoucher_pfms> pfms_pbvouchers { get; set; }
         public VModel()
         {
             vclist = new List<VCVOUCH>();
@@ -53,6 +54,7 @@ namespace Dashboard_New.Models
             pfm_dclist = new List<Dashboard_New.Models.custom.pdc>();
             bill_sp = new List<Dashboard_New.Models.custom.bill>();
             bill_con = new List<Dashboard_New.Models.custom.billcons>();
+            pfms_pbvouchers = new List<Dashboard_New.Models.custom.PBVoucher_pfms>();
         }
     }
 }

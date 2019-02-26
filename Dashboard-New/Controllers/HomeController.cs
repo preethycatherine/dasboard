@@ -843,6 +843,109 @@ namespace Dashboard_New.Controllers
             }
             return null;
         }
+
+
+        [DashboardAutherisation("pfms_b")]
+
+        public ActionResult pfms_pb_voucher()
+        {
+            return View(new VModel());
+        }
+        [HttpPost]
+        public ActionResult pbpfms_post(Dashboard_New.Models.custom.PBVoucher_pfms v13, string grid, string export)
+        {
+            if (ModelState.IsValid)
+            {
+                //Session["tid"] = Request.Form["Sortby"];
+                //myVar = Session["tid"].ToString();
+                //Session["tid1"] = myVar;
+                if (string.IsNullOrEmpty(v13.from_year))
+                {
+                    ModelState.AddModelError("From year", "Year Required");
+                }
+                if (string.IsNullOrEmpty(v13.to_year))
+                {
+                    ModelState.AddModelError("To year", "Year Required");
+                }
+                //if ((string.Equals("Export To Excel", export)) && (string.Equals("Date", myVar)))
+                if (string.Equals("Export To Excel", export))
+                {
+                    vcEntities entities = new vcEntities();
+                    DataTable dt = new DataTable("Grid");
+                    string from_dt = v13.from_year.Substring(8);
+                    string to_dt = v13.to_year.Substring(3, 2);               
+                    DateTime fromdt = DateTime.ParseExact(v13.from_year.ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    DateTime todt = DateTime.ParseExact(v13.to_year.ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    string fm, tm;
+                    fm = fromdt.ToString("yyyy-MM-dd");
+                    tm = todt.ToString("yyyy-MM-dd");
+                    string tabname = "V" + from_dt + to_dt.ToString();
+                    dt.Columns.AddRange(new DataColumn[19] { new DataColumn("DATE"), new DataColumn("MONTH"), new DataColumn("BRNO"), new DataColumn("VRNO"), new DataColumn("NPRNO"), new DataColumn("PART"), new DataColumn("HEAD"), new DataColumn("PONO"), new DataColumn("COMMITMENT NO"), new DataColumn("CHEQUE NO"), new DataColumn("BANK_ACCOUNT_NO"), new DataColumn("BANK_NAME"), new DataColumn("BRANCH_NAME"), new DataColumn("IFSC_CODE"), new DataColumn("NATURE"), new DataColumn("REGNO"), new DataColumn("LEDDIS"), new DataColumn("ECODE"), new DataColumn("DISC") });
+                     var disp = entities.Database.SqlQuery<Dashboard_New.Models.custom.PBVoucher_pfms>(string.Format("select c.*,d.* from FACCT.dbo." + tabname + " d inner join FACCT.dbo.pfms_month_voucher_details c on d.VRNO = c.VRNO and c.VRNO like 'pb%' and d.DATE>='{0}' AND d.DATE<= '{1}'", fm, tm)).ToList();
+                    //dt.Columns[10].DataType = typeof(Int32);
+                    //dt.Columns[11].DataType = typeof(Int32);
+                    foreach (var x in disp)
+                    {
+                        dt.Rows.Add(x.DATE, x.MONTH, x.BRNO, x.VRNO, x.NPRNO, x.PART, x.HEAD, x.PONO, x.COMNO, x.CQNO, x.BANK_ACCOUNT_NO, x.BANK_NAME, x.BRANCH_NAME, x.IFSC_CODE,x.NATURE,x.REGNO,x.LEDDIS,x.ECODE,x.DISC);
+                       
+
+                    }
+                    using (XLWorkbook wb = new XLWorkbook())
+                    {
+                        wb.Worksheets.Add("PFMS -B VOUCHER - Datewise");
+                        wb.Worksheet(1).Cell(3, 1).InsertTable(dt);
+                        wb.Worksheet(1).Cell(1, 7).Value = "PFMS (B VOUCHER-Datewise) : " + tabname;
+                        wb.Worksheet(1).Cell(1, 7).Style.Font.Bold = true;
+                        var wbs = wb.Worksheets.FirstOrDefault();
+                        wbs.Tables.FirstOrDefault().ShowAutoFilter = false;
+                        wb.Properties.Title = "PFMS B VOUCHER REPORT-Datewise";
+                        using (MemoryStream stream = new MemoryStream())
+                        {
+                            wb.SaveAs(stream);
+                            return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "PFMS B-VOUCHER-datewise.xlsx");
+                        }
+                    }
+                }
+                if (string.Equals("Submit", grid))
+                {
+                   vcEntities entities = new vcEntities();
+                    DataTable dt = new DataTable("Grid");
+                    string from_dt = v13.from_year.Substring(8);
+                    string to_dt = v13.to_year.Substring(3, 2);
+                    DateTime fromdt = DateTime.ParseExact(v13.from_year.ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    DateTime todt = DateTime.ParseExact(v13.to_year.ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    string fm, tm;
+                    fm = fromdt.ToString("yyyy-MM-dd");
+                    tm = todt.ToString("yyyy-MM-dd");
+                    string tabname = "V" + from_dt + to_dt.ToString();
+                    List<PBVoucher_pfms> records = new List<PBVoucher_pfms>();
+                    try
+                    {
+                        vcEntities vcobj = new vcEntities();
+                        records = vcobj.Database.SqlQuery<PBVoucher_pfms>(string.Format("select c.*,d.* from FACCT.dbo." + tabname + " d inner join FACCT.dbo.pfms_month_voucher_details c on d.VRNO = c.VRNO and c.VRNO like 'pb%' and d.DATE>='{0}' AND d.DATE<= '{1}'", fm, tm)).ToList();
+                        Dashboard_New.Models.VModel dv = new VModel();
+                        dv.from_year = v13.from_year;
+                        dv.to_year = v13.to_year;
+                        dv.pfms_pbvouchers = records;
+                        return View("pfms_pb_voucher", dv);
+                    }
+                    catch (Exception e)
+                    { Console.WriteLine("Error : " + e); }
+                    VModel vd = new VModel();
+                    vd.pfms_pbvouchers = records;
+                    vd.from_year = v13.from_year;
+                    vd.to_year = v13.to_year;
+                    return View("pfms_pb_voucher", vd);
+                }
+                
+            }
+            else
+            {
+                return View("pfms_pb_voucher", v13);
+            }
+            return null;
+        }
+
         [DashboardAutherisation("bill")]
 
         public ActionResult bill(string id)
@@ -850,7 +953,6 @@ namespace Dashboard_New.Controllers
             Session["bid"] = id;
             return View(new VModel());
         }
-
         public ActionResult billcons(string id)
         {
             Session["bid"] = id;
@@ -1022,49 +1124,79 @@ namespace Dashboard_New.Controllers
         {
             return View(new VModel());
         }
-        //[HttpPost]
-        //public ActionResult chqdawn_post(Dashboard_New.Models.custom.chqdrawn v8, string grid)
-        //{
-        //    if (string.IsNullOrEmpty(v8.from_dt))
-        //    {
-        //        ModelState.AddModelError("from_dt", "Date Required");
-        //    }
-        //    if (string.IsNullOrEmpty(v8.to_dt))
-        //    {
-        //        ModelState.AddModelError("to_dt", "Date Required");
-        //    }
-        //    if (ModelState.IsValid)
-        //    {                
+        [HttpPost]
+        public ActionResult chqdawn_post(Dashboard_New.Models.custom.chqdrawn v8, string grid, string export)
+        {
+            if (string.IsNullOrEmpty(v8.from_dt))
+            {
+                ModelState.AddModelError("from_dt", "Date Required");
+            }
+            if (string.IsNullOrEmpty(v8.to_dt))
+            {
+                ModelState.AddModelError("to_dt", "Date Required");
+            }
+            if (ModelState.IsValid)
+            {
+                if (string.Equals("Export To Excel", export))
+                {
+                    vcEntities entities = new vcEntities();
+                    DataTable dt = new DataTable("Grid");
+                    dt.Columns.AddRange(new DataColumn[8] { new DataColumn("PARTY"),new DataColumn("BILL NUMBER"), new DataColumn("PROJECT NUMBER"), new DataColumn("CHEQUE DATE"), new DataColumn("CHEQUE NUMBER")
+                    , new DataColumn("AMOUNT"),new DataColumn("VOUCHER NUMBER"), new DataColumn("CHEQUE TYPE")});
+                    DateTime fromdt = DateTime.ParseExact(v8.from_dt, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    DateTime todt = DateTime.ParseExact(v8.to_dt, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    var disp = entities.Database.SqlQuery<Dashboard_New.Models.custom.chqdrawn>(string.Format("select PARTY,BRNO,NPRNO,CQDATE,CHEQ_NO,RSAMT,VOUCHNO,CHEK  from CHECKDRAWN WHERE CQDATE >= '{0}' AND CQDATE<= '{1}'", fromdt.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture), todt.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture))).ToList();
+                    dt.Columns[4].DataType = typeof(decimal);
+                    dt.Columns[5].DataType = typeof(decimal);
+                    dt.Columns[6].DataType = typeof(decimal);
+                    foreach (var x in disp)
+                    {
+                        dt.Rows.Add(x.PARTY, x.BRNO, x.NPRNO, x.CQDATE, x.CHEQ_NO, x.RSAMT, x.VOUCHNO, x.CHEK);
+                    }
+                    using (XLWorkbook wb = new XLWorkbook())
+                    {
+                        wb.Worksheets.Add("cheques");
+                        wb.Worksheet(1).Cell(1, 7).Value = "CHEQUES FROM : " + v8.from_dt + " to " + v8.to_dt;
+                        wb.Worksheet(1).Cell(1, 7).Style.Font.Bold = true;
+                        wb.Worksheet(1).Cell(3, 1).InsertTable(dt);
+                        var wbs = wb.Worksheets.FirstOrDefault();
+                        wbs.Tables.FirstOrDefault().ShowAutoFilter = false;
+                        using (MemoryStream stream = new MemoryStream())
+                        {
+                            wb.SaveAs(stream);
+                            return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "cheques.xlsx");
+                        }
+                    }
+                }
+                else if (string.Equals("Submit", grid))
+                {
+                    string from_dt = v8.from_dt;
+                    string to_dt = v8.to_dt;
+                    DateTime fromdt = DateTime.ParseExact(v8.from_dt, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    DateTime todt = DateTime.ParseExact(v8.to_dt, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    List<chqdrawn> records = new List<chqdrawn>();
+                    try
+                    {
+                        vcEntities vcobj = new vcEntities();
+                        records = vcobj.Database.SqlQuery<chqdrawn>(string.Format("select PARTY,BRNO,NPRNO,CQDATE,CHEQ_NO,RSAMT,VOUCHNO,CHEK  from CHECKDRAWN WHERE CQDATE >= '{0}' AND CQDATE<= '{1}'", fromdt.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture), todt.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture))).ToList();
+                        Dashboard_New.Models.VModel hg = new VModel();
+                        hg.chq = records;
+                        return View("cheque_vouchno", hg);
+                    }
+                    catch (Exception e)
+                    { Console.WriteLine("Erorrr : " + e); }
+                    VModel vd = new VModel();
+                    vd.chq = records;
+                    return View("cheque_vouchno", vd);
+                }
+            }
+            else
+            {
+                return View("cheque_vouchno", v8);
+            }
+            return null;
 
-        //        if (string.Equals("Submit", grid))
-        //        {
-        //            string from_dt = v8.from_dt;
-        //            string to_dt = v8.to_dt;
-        //            DateTime fromdt = DateTime.ParseExact(v8.from_dt, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-        //            DateTime todt = DateTime.ParseExact(v8.to_dt, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-        //            List<chqdrawn> records = new List<chqdrawn>();
-        //            try
-        //            {
-        //                vcEntities vcobj = new vcEntities();
-        //                records = vcobj.Database.SqlQuery<chqdrawn>(string.Format("select PARTY,BRNO,NPRNO,CQDATE,CHEQ_NO,RSAMT,VOUCHNO,CHEK  from CHECKDRAWN WHERE CQDATE >= '{0}' AND CQDATE<= '{1}'", fromdt.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture), todt.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture))).ToList();
-        //                Dashboard_New.Models.VModel hg = new VModel();
-        //                hg.chq = records;
-        //                return View("cheque_vouchno", hg);
-        //            }
-        //            catch (Exception e)
-        //            { Console.WriteLine("Erorrr : " + e); }
-        //            VModel vd = new VModel();
-        //            vd.chq = records;
-        //            return View("cheque_vouchno", vd);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        return View("cheque_vouchno", v8);
-        //    }
-        //    return null;
-
-        //}
+        }
         //[DashboardAutherisation("chqmdy")]
         //public ActionResult modify_cheques()
         //{

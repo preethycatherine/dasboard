@@ -7,6 +7,8 @@ namespace Dashboard_New.Models.custom
 {
     public class chqdrawn
     {
+        public string from_dt { get; set; }
+        public string to_dt { get; set; }
         public int PageIndex { get; set; }
         public int PageSize { get; set; }
         public int RecordCount { get; set; }
