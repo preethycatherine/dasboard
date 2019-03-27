@@ -19,7 +19,7 @@ namespace Dashboard_New.Models.custom
         public string VRNO { get; set; }
         public DateTime DATE { get; set; }
         //public DateTime DINP { get; set; }
-        //public double AMOUNT { get; set; }
+        public double AMOUNT { get; set; }
         public string NPRNO { get; set; }
         public string PART { get; set; }
        public string HEAD { get; set; }
